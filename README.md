@@ -1,12 +1,10 @@
-# PolarisBiosEditor v1.6.7
+# PolarisBiosEditor v1.6.9
 
 ### Important: You need to disable SecureBoot / Activate CSM in your
 ### Motherboard UEFI because the modification will make
 ### the cryptographic signature invalid.
 
 If you don't trust the EXE just build on Linux with ```sh build.sh```. Quick and easy.
-
-For donations or other requests please contact me by email: jk@jascha-knack.de
 
 VirusTotal Report: https://www.virustotal.com/de/file/da96cd604093c686e8b1488726ae10a43a550aea5aaba0c0f308183b86f340f3/analysis/1505395469/
 
@@ -19,6 +17,18 @@ works on linux with mono, executable is build against .net 3.5
 one click timing feature should be used with care, it maybe not stable for you
 
 please build the executable yourself or decompile the existing one if you don't trust
+
+### v1.6.9
+- Fixed UI (updated design)
+- Fixed and Updated all Timing's
+- Added New strap for Micron and Hynix
+- Added option for choosing straps on samsung beetwen uber-mix 3.1 and 3.2, and on Micron beetwen Good Micron timing and S Micron timing.
+- Added Icon
+
+### v1.6.8
+- Fixed Samsung Uber-Mix strap
+- Added support for Hynix H5GQ4H24AJ
+- Fixed fan mod option
 
 ### v1.6.7
 - created solution and project files for ide
