@@ -24,6 +24,7 @@ please build the executable yourself or decompile the existing one if you don't 
 - Added New strap for Micron and Hynix
 - Added option for choosing timings on samsung between uber-mix 3.1 and 3.2, and on Micron between Good Micron timing and S Micron timing.
 - Added Icon
+- Added option for max. Mem. freq. (after one click timing patch button click automatically change max. mem. to 2300 MHz)
 
 ### v1.6.8
 - Fixed Samsung Uber-Mix strap
