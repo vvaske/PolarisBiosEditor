@@ -22,7 +22,7 @@ please build the executable yourself or decompile the existing one if you don't 
 - Fixed UI (updated design)
 - Fixed and Updated all Timing's
 - Added New strap for Micron and Hynix
-- Added option for choosing straps on samsung between uber-mix 3.1 and 3.2, and on Micron between Good Micron timing and S Micron timing.
+- Added option for choosing timings on samsung between uber-mix 3.1 and 3.2, and on Micron between Good Micron timing and S Micron timing.
 - Added Icon
 
 ### v1.6.8
