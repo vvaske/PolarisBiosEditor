@@ -354,6 +354,7 @@ namespace PolarisBiosEditor
             // columnHeader16
             // 
             this.columnHeader16.Text = "Timing Strap";
+            this.columnHeader16.Width = 110;
             // 
             // listVRAM
             // 

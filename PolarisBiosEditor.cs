@@ -49,7 +49,7 @@ namespace PolarisBiosEditor
         // Good Micron
     	//"777000000000000022AA1C0073626C41B0551016BA0D260B006AE60004061420EA8940AA030000001914292EB22E3B16", old
          "777000000000000022AA1C0073626C41B0551016BA0D260B0060060004061420EA8940AA030000001914292EB22E3B16", // new tested timings (much better xmr performance @ rx560 sapphire pulse)
-         "777000000000000022AA1C00B56A6D4690551014BE8E060C0060060074081420EA8900AB020000001B162C31C02E3F15",// new Micron strap it's actually from Samsung
+         "777000000000000022AA1C00B56A6D4690551014BE8E060C0060060074081420EA8900AB020000001B162C31C02E3F15",// new Micron timing it's actually from Samsung
         
     	// Good Hynix_1
     	 "999000000000000022559D0010DE5B4480551312B74C450A00400600750414206A8900A00200312010112D34A42A3816",
@@ -1518,6 +1518,8 @@ namespace PolarisBiosEditor
             {
                 MessageBox.Show("Sorry, no supported memory found. If you think this is an error, please file a bugreport @ github.com/vvaske/PolarisBiosEditor");
             }
+
+            this.tablePOWERPLAY.Items[1].SubItems[1].Text = "2300";
 
         }
     }
