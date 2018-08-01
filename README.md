@@ -1,4 +1,4 @@
-# PolarisBiosEditor v1.6.9
+# PolarisBiosEditor v1.7.0
 
 ### Important: You need to disable SecureBoot / Activate CSM in your
 ### Motherboard UEFI because the modification will make
@@ -17,6 +17,12 @@ works on linux with mono, executable is build against .net 3.5
 one click timing feature should be used with care, it maybe not stable for you
 
 please build the executable yourself or decompile the existing one if you don't trust
+
+### v1.7.0
+- Added New timing for Hynix.
+- Added Clock Stretch Amount.
+- Added option for choosing timings on hynix Between Universal Hynix timing and Good hynix timing.
+- Universal Hynix timing work on: H5GC8H24MJ, H5GQ8H24MJ, H5GQ4H24AJ.
 
 ### v1.6.9
 - Fixed UI (updated design)
