@@ -1,5 +1,7 @@
 # PolarisBiosEditor v1.7.0
 
+### PolarisBiosEditor tweaked by vaske version 3.4 and 3.4.1 with pro timings can buy on miningbios.com
+
 ### Important: You need to disable SecureBoot / Activate CSM in your
 ### Motherboard UEFI because the modification will make
 ### the cryptographic signature invalid.
