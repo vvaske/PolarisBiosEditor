@@ -21,7 +21,8 @@ namespace PolarisBiosEditor
         string programTitle = "PolarisBiosEditor";
 
 
-        string[] manufacturers = new string[] {
+        string[] manufacturers = new string[] 
+        {
             "SAMSUNG",
             "ELPIDA",
             "HYNIX",
@@ -115,9 +116,9 @@ namespace PolarisBiosEditor
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct ATOM_COMMON_TABLE_HEADER
         {
-            Int16 usStructureSize;
-            Byte ucTableFormatRevision;
-            Byte ucTableContentRevision;
+            public Int16 usStructureSize;
+            public Byte ucTableFormatRevision;
+            public Byte ucTableContentRevision;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -260,7 +261,7 @@ namespace PolarisBiosEditor
         {
             public Byte ucRevId;
             public Byte ucNumEntries;
-            // public unsafe fixed byte ATOM_SCLK_ENTRY entries[ucNumEntries]; [7]
+            // public unsafe fixed byte ATOM_SCLK_ENTRY entries[ucNumEntries]; [8]
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -277,7 +278,7 @@ namespace PolarisBiosEditor
         {
             public Byte ucRevId;
             public Byte ucNumEntries;
-            // public unsafe fixed byte ATOM_VOLTAGE_ENTRY entries[ucNumEntries]; [7]
+            // public unsafe fixed byte ATOM_VOLTAGE_ENTRY entries[ucNumEntries]; [8]
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -398,7 +399,6 @@ namespace PolarisBiosEditor
             public Byte ucMcPhyTileNum;
             // public ATOM_VRAM_ENTRY aVramInfo[ucNumOfVRAMModule];
         }
-
 
         [STAThread]
         static void Main(string[] args)
@@ -544,7 +544,6 @@ namespace PolarisBiosEditor
             tablePOWERPLAY.MouseClick += new MouseEventHandler(listView_ChangeSelection);
             tableROM.MouseClick += new MouseEventHandler(listView_ChangeSelection);
 
-            //MessageBox.Show("Modifying your BIOS is dangerous and could cause irreversible damage to your GPU.\nUsing a modified BIOS may void your warranty.\nThe author will not be held accountable for your actions.", "DISCLAIMER", MessageBoxButtons.OK, MessageBoxImage.Warning);
         }
 
         private void PolarisBiosEditor_Load(object sender, EventArgs e)
@@ -1032,7 +1031,6 @@ namespace PolarisBiosEditor
                     var name = container.Text;
                     var value = container.SubItems[1].Text;
 
-
                     if (name == "VendorID")
                     {
                         var num = (int)int32.ConvertFromString(value);
@@ -1325,10 +1323,8 @@ namespace PolarisBiosEditor
 
         public void updateVRAM_entries()
         {
-
             for (var i = 0; i < tableVRAM.Items.Count; i++)
             {
-
                 ListViewItem container = tableVRAM.Items[i];
                 var name = container.Text;
                 var value = container.SubItems[1].Text;
@@ -1378,6 +1374,11 @@ namespace PolarisBiosEditor
                 tableVRAM.Items.Add(new ListViewItem(new string[] {
                     "Type",
                     "0x" + atom_vram_entries [atom_vram_index].ucMemoryType.ToString ("X")
+                }
+                ));
+                tableVRAM.Items.Add(new ListViewItem(new string[] {
+                    "Num Of VRAM Module",
+                     atom_vram_info.ucNumOfVRAMModule.ToString ("X")
                 }
                 ));
             }
@@ -1491,8 +1492,6 @@ namespace PolarisBiosEditor
                             hynix_3_index = i;
                             break;
                     }
-
-
                 }
             }
 
@@ -1561,9 +1560,7 @@ namespace PolarisBiosEditor
             if (elpida_index != -1)
             {
                 MessageBox.Show("Elpida Memory found at index #" + elpida_index + ", now applying GOOD ELPIDA MINING timings to 1500+ strap(s)");
-
                 apply_timings(elpida_index, 7);
-
             }
             if (samsung_index == -1 && hynix_2_index == -1 && hynix_3_index == -1 && hynix_1_index == -1 && elpida_index == -1 && micron_index == -1)
             {
