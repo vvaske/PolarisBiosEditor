@@ -17,7 +17,7 @@ namespace PolarisBiosEditor
 
         /* DATA */
 
-        string version = "1.7.0";
+        string version = "1.7.1";
         string programTitle = "PolarisBiosEditor";
 
 
@@ -55,8 +55,8 @@ namespace PolarisBiosEditor
     	// Good Hynix_1
     	 "999000000000000022559D0010DE5B4480551312B74C450A00400600750414206A8900A00200312010112D34A42A3816",
         
-    	// Good Elpida (fixed with version 1.6.4, see issue #19)
-    	 "777000000000000022AA1C00315A5B36A0550F15B68C1506004082007C041420CA8980A9020004C01712262B612B3715",
+    	// Good Elpida (fixed by VASKE)
+    	 "777000000000000022AA1C00EF595B36A0550F15B68C1506004082007C041420CA8980A9020004C01712262B612B3715",
         //"777000000000000022AA1C00AC615B3CA0550F142C8C1506006004007C041420CA8980A9020004C01712262B612B3715" // new, please test
 
         // Universal Hynix
@@ -1449,6 +1449,7 @@ namespace PolarisBiosEditor
 
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
             int samsung_index = -1;
             int micron_index = -1;
             int elpida_index = -1;
@@ -1492,6 +1493,48 @@ namespace PolarisBiosEditor
                             hynix_3_index = i;
                             break;
                     }
+                }
+            }
+            */
+            int samsung_index = -1;
+            int micron_index = -1;
+            int elpida_index = -1;
+            int hynix_1_index = -1;
+            int hynix_2_index = -1;
+            int hynix_3_index = -1;
+            for (int index = 0; index < (int)this.atom_vram_info.ucNumOfVRAMModule; ++index)
+            {
+                if ((int)this.atom_vram_entries[index].strMemPNString[0] != 0)
+                {
+                    string key = Encoding.UTF8.GetString(this.atom_vram_entries[index].strMemPNString).Substring(0, 10);
+                    string str = !this.rc.ContainsKey(key) ? "[ UNKNOWN ]" : this.rc[key];
+                    if (!(str == "SAMSUNG"))
+                    {
+                        if (!(str == "MICRON"))
+                        {
+                            if (!(str == "ELPIDA"))
+                            {
+                                if (!(str == "HYNIX_1"))
+                                {
+                                    if (!(str == "HYNIX_2"))
+                                    {
+                                        if (str == "HYNIX_3")
+                                            hynix_3_index = index;
+                                    }
+                                    else
+                                        hynix_2_index = index;
+                                }
+                                else
+                                    hynix_1_index = index;
+                            }
+                            else
+                                elpida_index = index;
+                        }
+                        else
+                            micron_index = index;
+                    }
+                    else
+                        samsung_index = index;
                 }
             }
 
@@ -1569,6 +1612,11 @@ namespace PolarisBiosEditor
 
             this.tablePOWERPLAY.Items[1].SubItems[1].Text = "2300";
 
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.miningbios.com/product/polaris-bios-editor-3-4-1-srbpolaris-style/");
         }
     }
 }
