@@ -19,6 +19,8 @@ works on linux with mono, executable is build against .net 3.5
 one click timing feature should be used with care, it maybe not stable for you
 
 please build the executable yourself or decompile the existing one if you don't trust
+### v1.7.1
+- Updated Elpida Timing
 
 ### v1.7.0
 - Added New timing for Hynix.
