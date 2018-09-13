@@ -2,18 +2,6 @@
 
 ### PolarisBiosEditor tweaked by vaske version 3.4 and 3.4.1 with pro timings can buy on miningbios.com
 
-### Important: You need to disable SecureBoot / Activate CSM in your
-### Motherboard UEFI because the modification will make
-### the cryptographic signature invalid.
-
-If you don't trust the EXE just build on Linux with ```sh build.sh```. Quick and easy.
-
-VirusTotal Report: https://www.virustotal.com/de/file/da96cd604093c686e8b1488726ae10a43a550aea5aaba0c0f308183b86f340f3/analysis/1505395469/
-
-0/58. If your AV warns you about a virus/trojan, consider it as false positive.
-
-Fork from lojkinKot
-
 works on linux with mono, executable is build against .net 3.5
 
 one click timing feature should be used with care, it maybe not stable for you
