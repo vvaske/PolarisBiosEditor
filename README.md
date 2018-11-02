@@ -1,4 +1,4 @@
-# PolarisBiosEditor v1.7.0
+# PolarisBiosEditor v1.7.1
 
 ### PolarisBiosEditor tweaked by vaske version 3.4 and 3.4.1 with pro timings can buy on miningbios.com
 
