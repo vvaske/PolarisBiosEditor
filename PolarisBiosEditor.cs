@@ -17,7 +17,7 @@ namespace PolarisBiosEditor
 
         /* DATA */
 
-        string version = "1.7.1";
+        string version = "1.7.2";
         string programTitle = "PolarisBiosEditor";
 
 
@@ -60,7 +60,10 @@ namespace PolarisBiosEditor
         //"777000000000000022AA1C00AC615B3CA0550F142C8C1506006004007C041420CA8980A9020004C01712262B612B3715" // new, please test
 
         // Universal Hynix
-         "777000000000000022AA1C00B56A6D46C0551017BE8E060C006006000C081420EA8900AB030000001B162C31C0313F17"
+         "777000000000000022AA1C00B56A6D46C0551017BE8E060C006006000C081420EA8900AB030000001B162C31C0313F17",
+         
+         //Hynix 4 by vaske
+         "999000000000000022559D0031626C46905F1015BC0D060C004004007D0714204A8900A0020071241B12312CC02D3C17" //new, please test
         };
 
         Dictionary<string, string> rc = new Dictionary<string, string>();
@@ -521,6 +524,7 @@ namespace PolarisBiosEditor
             rc.Add("H5GQ4H24AJ", "HYNIX_2");
             rc.Add("H5GQ8H24MJ", "HYNIX_2");
             rc.Add("H5GC8H24MJ", "HYNIX_3");
+            rc.Add("H5GC8H24AJ", "HYNIX_4");
             rc.Add("K4G80325FB", "SAMSUNG");
             rc.Add("K4G41325FE", "SAMSUNG");
             rc.Add("K4G41325FC", "SAMSUNG");
@@ -1502,6 +1506,7 @@ namespace PolarisBiosEditor
             int hynix_1_index = -1;
             int hynix_2_index = -1;
             int hynix_3_index = -1;
+            int hynix_4_index = -1;
             for (int index = 0; index < (int)this.atom_vram_info.ucNumOfVRAMModule; ++index)
             {
                 if ((int)this.atom_vram_entries[index].strMemPNString[0] != 0)
@@ -1518,7 +1523,12 @@ namespace PolarisBiosEditor
                                 {
                                     if (!(str == "HYNIX_2"))
                                     {
-                                        if (str == "HYNIX_3")
+                                        if (!(str == "HYNIX_3"))
+                                        {
+                                            if (str == "HYNIX_4")
+                                                hynix_4_index = index;
+                                        }
+                                        else
                                             hynix_3_index = index;
                                     }
                                     else
@@ -1575,8 +1585,22 @@ namespace PolarisBiosEditor
                 }
                 else
                 {
-                   int num = (int)MessageBox.Show("Hynix (2) Memory found at index #" + (object)micron_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
+                   int num = (int)MessageBox.Show("Hynix (2) Memory found at index #" + (object)hynix_2_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
                    this.apply_timings(hynix_2_index, 3);
+                }
+            }
+
+            if (hynix_4_index != -1)
+            {
+                if (MessageBox.Show("Do you want Universal Hynix Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    MessageBox.Show("Hynix (2) Memory found at index #" + hynix_4_index + ", now applying Universal HYNIX MINING timings to 1500+ strap(s)");
+                    apply_timings(hynix_4_index, 8);
+                }
+                else
+                {
+                    int num = (int)MessageBox.Show("Hynix (4) Memory found at index #" + (object)hynix_4_index + ", now applying Hynix timings to 1500+ strap(s)");
+                    this.apply_timings(hynix_4_index, 9);
                 }
             }
 
