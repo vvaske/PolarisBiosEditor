@@ -1,4 +1,4 @@
-# PolarisBiosEditor v1.7.1
+# PolarisBiosEditor v1.7.2
 
 ### PolarisBiosEditor tweaked by vaske version 3.4 and 3.4.1 with pro timings can buy on miningbios.com
 
@@ -7,6 +7,13 @@ works on linux with mono, executable is build against .net 3.5
 one click timing feature should be used with care, it maybe not stable for you
 
 please build the executable yourself or decompile the existing one if you don't trust
+
+### v1.7.2
+- Fixed apply timings for Hynix memory
+- Added support for RX590
+- Added support for New Hynix memory H5GC8H24AJ
+- Added timing for New Hynix H5GC8H24AJ
+
 ### v1.7.1
 - Updated Elpida Timing
 
