@@ -2,6 +2,8 @@
 
 ### PolarisBiosEditor tweaked by vaske version 3.4 and 3.4.1 with pro timings can buy on miningbios.com
 
+BTC donation address: 181dtEjhFWWxvHDmx2R3N41rnRPedSEUf5
+
 works on linux with mono, executable is build against .net 3.5
 
 one click timing feature should be used with care, it maybe not stable for you
