@@ -21,17 +21,17 @@ namespace PolarisBiosEditor
         string programTitle = "PolarisBiosEditor";
 
 
-        string[] manufacturers = new string[] 
+        /*string[] manufacturers = new string[]
         {
             "SAMSUNG",
             "ELPIDA",
             "HYNIX",
             "MICRON"
-        };
+        };*/
 
-        string[] supportedDeviceID = new string[] { "67DF", "67EF", "1002", "67FF", "699F" };
+        string[] supportedDeviceID = new string[] { "1002", "67DF", "67EF", "67FF", "699F", "6FDF"/* For RX580 2048sp */ };
 
-        string[] timings = new string[] 
+        string[] timings = new string[]
         {
     	
         // UberMix 3.1
@@ -489,7 +489,8 @@ namespace PolarisBiosEditor
                 Stream myStream = myWebClient.OpenRead("https://raw.githubusercontent.com/vvaske/PolarisBiosEditor/master/version");
                 StreamReader sr = new StreamReader(myStream);
                 string newVersion = sr.ReadToEnd().Trim();
-                if (!newVersion.Equals(version)) {
+                if (!newVersion.Equals(version))
+                {
                     MessageBox.Show("There is a new version available! " + version + " -> " + newVersion);
                 }
                 myStream.Close();
@@ -514,7 +515,9 @@ namespace PolarisBiosEditor
 
                 hasInternetAccess = true;
 
-            } catch (System.Net.WebException) {
+            }
+            catch (System.Net.WebException)
+            {
                 this.Text += " (offline mode)";
             }
 
@@ -620,15 +623,20 @@ namespace PolarisBiosEditor
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset+2;
+                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset + 2;
                         while (ptr != -1)
                         {
                             Char c = (Char)buffer[ptr];
-                            if (c == '\0') {
+                            if (c == '\0')
+                            {
                                 ptr = -1;
-                            } else if(c == '\n' || c == '\r') {
+                            }
+                            else if (c == '\n' || c == '\r')
+                            {
                                 ptr++;
-                            } else {
+                            }
+                            else
+                            {
                                 sb.Append(c);
                                 ptr++;
                             }
@@ -783,7 +791,7 @@ namespace PolarisBiosEditor
                             Convert.ToString (atom_powertune_table.usClockStretchAmount)
                         }
                         ));
-                        
+
                         tableFAN.Items.Clear();
                         tableFAN.Items.Add(new ListViewItem(new string[] {
                             "Temp. Hysteresis",
@@ -1268,7 +1276,7 @@ namespace PolarisBiosEditor
 
                 BIOS_BootupMessage = txtBIOSBootupMessage.Text.Substring(0, BIOS_BootupMessage.Length);
 
-                setBytesAtPosition(buffer, atom_rom_header.usBIOS_BootupMessageOffset+2, Encoding.ASCII.GetBytes(BIOS_BootupMessage));
+                setBytesAtPosition(buffer, atom_rom_header.usBIOS_BootupMessageOffset + 2, Encoding.ASCII.GetBytes(BIOS_BootupMessage));
                 fixChecksum(true);
                 bw.Write(buffer);
 
@@ -1552,12 +1560,12 @@ namespace PolarisBiosEditor
             {
                 if (MessageBox.Show("Do you want faster Uber-mix 3.1?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.1 timings to 1750+ strap(s)");
+                    MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.1 timings to 1750+ strap(s)");
                     this.apply_timings1(samsung_index, 0);
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.2 timings to 1750+ strap(s)");
+                    MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.2 timings to 1750+ strap(s)");
                     this.apply_timings1(samsung_index, 1);
                 }
             }
@@ -1585,8 +1593,8 @@ namespace PolarisBiosEditor
                 }
                 else
                 {
-                   int num = (int)MessageBox.Show("Hynix (2) Memory found at index #" + (object)hynix_2_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
-                   this.apply_timings(hynix_2_index, 3);
+                    MessageBox.Show("Hynix (2) Memory found at index #" + (object)hynix_2_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
+                    this.apply_timings(hynix_2_index, 3);
                 }
             }
 
@@ -1599,7 +1607,7 @@ namespace PolarisBiosEditor
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Hynix (4) Memory found at index #" + (object)hynix_4_index + ", now applying Hynix timings to 1500+ strap(s)");
+                    MessageBox.Show("Hynix (4) Memory found at index #" + (object)hynix_4_index + ", now applying Hynix timings to 1500+ strap(s)");
                     this.apply_timings(hynix_4_index, 9);
                 }
             }
@@ -1608,12 +1616,12 @@ namespace PolarisBiosEditor
             {
                 if (MessageBox.Show("Do you want Good Micron Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    int num = (int)MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying Good Micron timings to 1500+ strap(s)");
+                    MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying Good Micron timings to 1500+ strap(s)");
                     this.apply_timings(micron_index, 4);
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying S Micron timings to 1500+ strap(s)");
+                    MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying S Micron timings to 1500+ strap(s)");
                     this.apply_timings(micron_index, 5);
                 }
             }
