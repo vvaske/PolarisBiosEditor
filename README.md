@@ -1,6 +1,8 @@
 # PolarisBiosEditor v1.7.2
 
 ### PolarisBiosEditor tweaked by vaske version 3.4 and 3.4.1 with pro timings can buy on miningbios.com
+pro version (tree in one) check link
+## https://www.miningbios.com/product/amd-tweak-tool-polarisbioseditor/
 
 BTC donation address: 181dtEjhFWWxvHDmx2R3N41rnRPedSEUf5
 
