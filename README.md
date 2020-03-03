@@ -15,6 +15,7 @@ please build the executable yourself or decompile the existing one if you don't 
 - Fixed apply timings for Samsung memory
 - Added support for New Samsung memory K4G80325FC
 - Added timing for New Samsung K4G80325FC
+- Applying from 1750 to upper
 
 ### v1.7.2
 - Fixed apply timings for Hynix memory
