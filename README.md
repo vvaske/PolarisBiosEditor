@@ -1,4 +1,4 @@
-# PolarisBiosEditor v1.7.2
+# PolarisBiosEditor v1.7.3
 
 ### PolarisBiosEditor tweaked by vaske version 3.8 with pro timings can buy on miningbios.com
 ## https://www.miningbios.com
@@ -10,6 +10,11 @@ works on linux with mono, executable is build against .net 3.5
 one click timing feature should be used with care, it maybe not stable for you
 
 please build the executable yourself or decompile the existing one if you don't trust
+
+### v1.7.3
+- Fixed apply timings for Samsung memory
+- Added support for New Samsung memory K4G80325FC
+- Added timing for New Samsung K4G80325FC
 
 ### v1.7.2
 - Fixed apply timings for Hynix memory
