@@ -17,7 +17,7 @@ namespace PolarisBiosEditor
 
         /* DATA */
 
-        string version = "1.7.2";
+        string version = "1.7.3";
         string programTitle = "PolarisBiosEditor";
 
 
@@ -63,7 +63,13 @@ namespace PolarisBiosEditor
          "777000000000000022AA1C00B56A6D46C0551017BE8E060C006006000C081420EA8900AB030000001B162C31C0313F17",
          
          //Hynix 4 by vaske
-         "999000000000000022559D0031626C46905F1015BC0D060C004004007D0714204A8900A0020071241B12312CC02D3C17" //new, please test
+         "999000000000000022559D0031626C46905F1015BC0D060C004004007D0714204A8900A0020071241B12312CC02D3C17", //new, please test
+
+         //Samsung K4G80325FC // let's call it samsung4 pro timing
+         "777000000000000022CC1C00106A5D4DD0571016B90D060C0060070014051420FA8900A0030000001011333DC0303A17", //new, please test
+
+         //Samsung K4G80325FC // let's call it samsung4 basic timing
+         "777000000000000022CC1C00106A6D4DD0571016B90D060C0060070014051420FA8900A0030000001B11333DC0303A17" //new, please test
         };
 
         Dictionary<string, string> rc = new Dictionary<string, string>();
@@ -529,6 +535,7 @@ namespace PolarisBiosEditor
             rc.Add("K4G41325FE", "SAMSUNG");
             rc.Add("K4G41325FC", "SAMSUNG");
             rc.Add("K4G41325FS", "SAMSUNG");
+            rc.Add("K4G80325FC", "SAMSUNG4");
 
             save.Enabled = false;
             boxROM.Enabled = false;
@@ -1501,6 +1508,7 @@ namespace PolarisBiosEditor
             }
             */
             int samsung_index = -1;
+            int samsung4_index = -1;
             int micron_index = -1;
             int elpida_index = -1;
             int hynix_1_index = -1;
@@ -1525,7 +1533,12 @@ namespace PolarisBiosEditor
                                     {
                                         if (!(str == "HYNIX_3"))
                                         {
-                                            if (str == "HYNIX_4")
+                                            if (!(str == "HYNIX_4"))
+                                            {
+                                                if (str == "SAMSUNG4")
+                                                    samsung4_index = index;
+                                            }
+                                            else
                                                 hynix_4_index = index;
                                         }
                                         else
@@ -1559,6 +1572,21 @@ namespace PolarisBiosEditor
                 {
                     int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.2 timings to 1750+ strap(s)");
                     this.apply_timings1(samsung_index, 1);
+                }
+            }
+
+            if (samsung4_index != -1)
+            {
+                if (MessageBox.Show("Do you want pro Samsung timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    MessageBox.Show("Samsung4 Memory found at index #" + (object)samsung4_index + ", now applying pro Samsung 30Mh/s timings to 1750+ strap(s)");
+                    this.apply_timings1(samsung4_index, 10);
+                    MessageBox.Show("Little help for testing timing, set Core clock to 1150mhz and Memory clock to 2100mhz", "Hint!");
+                }
+                else
+                {
+                    MessageBox.Show("Samsung4 Memory found at index #" + (object)samsung4_index + ", now applying Samsung4 basic 29Mh/s timings to 1750+ strap(s)");
+                    this.apply_timings1(samsung4_index, 11);
                 }
             }
 
@@ -1629,7 +1657,7 @@ namespace PolarisBiosEditor
                 MessageBox.Show("Elpida Memory found at index #" + elpida_index + ", now applying GOOD ELPIDA MINING timings to 1500+ strap(s)");
                 apply_timings(elpida_index, 7);
             }
-            if (samsung_index == -1 && hynix_2_index == -1 && hynix_3_index == -1 && hynix_1_index == -1 && elpida_index == -1 && micron_index == -1)
+            if (samsung4_index == -1 && samsung_index == -1 && hynix_2_index == -1 && hynix_3_index == -1 && hynix_1_index == -1 && elpida_index == -1 && micron_index == -1)
             {
                 MessageBox.Show("Sorry, no supported memory found. If you think this is an error, please file a bugreport @ github.com/vvaske/PolarisBiosEditor");
             }
