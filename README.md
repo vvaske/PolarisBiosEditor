@@ -11,6 +11,9 @@ one click timing feature should be used with care, it maybe not stable for you
 
 please build the executable yourself or decompile the existing one if you don't trust
 
+If you want to use PolarisBiosEditor on Ubuntu need to install module: sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
+
+
 ### v1.7.3
 - Fixed apply timings for Samsung memory
 - Added support for New Samsung memory K4G80325FC
