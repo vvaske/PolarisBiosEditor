@@ -488,6 +488,7 @@ namespace PolarisBiosEditor
             InitializeComponent();
             this.Text = this.programTitle + " " + this.version + " " + "Tweaked By VASKE";
 
+#if !DEBUG
             try
             {
 
@@ -523,6 +524,7 @@ namespace PolarisBiosEditor
             } catch (System.Net.WebException) {
                 this.Text += " (offline mode)";
             }
+#endif
 
             rc.Add("MT51J256M3", "MICRON");
             rc.Add("EDW4032BAB", "ELPIDA");

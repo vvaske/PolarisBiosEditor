@@ -1,4 +1,7 @@
-# PolarisBiosEditor v1.7.3
+# PolarisBiosEditor - fork with additional data views
+
+# Below is readme for upstream version.
+
 
 ### PolarisBiosEditor tweaked by vaske version 3.8 with pro timings can buy on miningbios.com
 ## https://www.miningbios.com
