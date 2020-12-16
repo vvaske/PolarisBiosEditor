@@ -9,6 +9,7 @@ using System.Windows;
 using System.Linq;
 using System.ComponentModel;
 using System.Net;
+using System.Diagnostics;
 
 namespace PolarisBiosEditor
 {
@@ -97,7 +98,7 @@ namespace PolarisBiosEditor
         ATOM_POWERPLAY_TABLE atom_powerplay_table;
 
         int atom_powertune_offset;
-        ATOM_POWERTUNE_TABLE atom_powertune_table;
+        ATOM_Polaris_PowerTune_Table atom_powertune_table;
 
         int atom_fan_offset;
         ATOM_FAN_TABLE atom_fan_table;
@@ -320,7 +321,7 @@ namespace PolarisBiosEditor
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct ATOM_POWERTUNE_TABLE
+        public struct ATOM_Polaris_PowerTune_Table
         {
             public Byte ucRevId;
             public UInt16 usTDP;
@@ -349,7 +350,11 @@ namespace PolarisBiosEditor
             public Byte ucVr_I2C_Line;
             public Byte ucPlx_I2C_address;
             public Byte ucPlx_I2C_Line;
-            public UInt16 usReserved;
+            public UInt16 usBoostPowerLimit;
+            public Byte ucCKS_LDO_REFSEL;
+            public Byte ucHotSpotOnly;
+            public Byte ucReserve;
+            public UInt16 usReserve;
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -447,6 +452,28 @@ namespace PolarisBiosEditor
             for (var i = 0; i < src.Length; i++)
             {
                 dest[ptr + i] = src[i];
+            }
+        }
+
+        private void Print(object output)
+        {
+            //Create our own namespaces for the output
+            var xs = new System.Xml.Serialization.XmlSerializer(output.GetType());
+            using (var sw = new System.IO.StringWriter())
+            {
+                try
+                {
+                    var ns = new System.Xml.Serialization.XmlSerializerNamespaces();
+
+                    //Add an empty namespace and empty value
+                    ns.Add("", "");
+                    xs.Serialize(sw, output, ns);
+                    Console.WriteLine(sw.ToString());
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
         }
 
@@ -579,7 +606,6 @@ namespace PolarisBiosEditor
 
         private void OpenFileDialog_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("OpenFileDialog");
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "BIOS (.rom)|*.rom|All Files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
@@ -653,7 +679,10 @@ namespace PolarisBiosEditor
                         atom_powerplay_table = fromBytes<ATOM_POWERPLAY_TABLE>(buffer.Skip(atom_powerplay_offset).ToArray());
 
                         atom_powertune_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usPowerTuneTableOffset;
-                        atom_powertune_table = fromBytes<ATOM_POWERTUNE_TABLE>(buffer.Skip(atom_powertune_offset).ToArray());
+                        atom_powertune_table = fromBytes<ATOM_Polaris_PowerTune_Table>(buffer.Skip(atom_powertune_offset).ToArray());
+                        Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
+
+                        Print(atom_powertune_table);
 
                         atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
                         atom_fan_table = fromBytes<ATOM_FAN_TABLE>(buffer.Skip(atom_fan_offset).ToArray());
