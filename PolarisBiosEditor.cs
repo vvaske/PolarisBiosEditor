@@ -32,7 +32,7 @@ namespace PolarisBiosEditor
             "MICRON"
         };
 
-        string[] supportedDeviceID = new string[] { "67DF", "67EF", "1002", "67FF", "699F" };
+        string[] supportedID = new string[] { "67DF", "67EF", "1002", "67FF", "699F" };
 
         string[] timings = new string[] 
         {
@@ -86,8 +86,6 @@ namespace PolarisBiosEditor
         Byte[] buffer;
         Int32Converter int32 = new Int32Converter();
         UInt32Converter uint32 = new UInt32Converter();
-
-        string deviceID = "";
 
         int atom_rom_checksum_offset = 0x21;
         int atom_rom_header_ptr = 0x48;
@@ -155,8 +153,8 @@ namespace PolarisBiosEditor
             public Byte ucExtendedFunctionCode;
             public Byte ucReserved;
             public UInt32 ulPSPDirTableOffset;
-            public UInt16 usVendorID;
             public UInt16 usDeviceID;
+            public UInt16 usVendorID;
         }
 
         String BIOS_BootupMessage;
@@ -232,7 +230,7 @@ namespace PolarisBiosEditor
             public UInt16 usHardLimitTableOffset;
             public UInt16 usPCIETableOffset;
             public UInt16 usGPIOTableOffset;
-            public fixed UInt16 usReserved[6];
+            [XmlIgnore] public fixed UInt16 usReserved[6];
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -481,7 +479,19 @@ namespace PolarisBiosEditor
         {
             public UInt32 ulClkRange;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x30)]
-            public Byte[] ucLatency;
+            [XmlIgnore]public Byte[] ucLatency;
+            public string LatencyString
+            {
+                get
+                {
+                    return ByteArrayToString(ucLatency);
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -515,7 +525,17 @@ namespace PolarisBiosEditor
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
             [XmlIgnore]
             public Byte[] strMemPNString;
-            public string FullName => Encoding.UTF8.GetString(strMemPNString.TakeWhile(c => c != 0).ToArray());
+            public string FullName
+            {
+                get
+                {
+                    return Encoding.UTF8.GetString(strMemPNString.TakeWhile(c => c != 0).ToArray());
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -537,9 +557,10 @@ namespace PolarisBiosEditor
 
         class ConsecutiveReader<T>
         {
-            public ConsecutiveReader(Byte[] entire_buffer, int offset)
+            public ConsecutiveReader(Byte[] entire_buffer, int offset, PolarisBiosEditor a_editor)
             {
                 buffer = new ArraySegment<byte>(entire_buffer);
+                editor = a_editor;
                 Jump(offset);
             }
             public T Read()
@@ -554,12 +575,20 @@ namespace PolarisBiosEditor
 
                 return obj;
             }
+            public T ReadPrint()
+            {
+                T result = Read();
+                int size = Marshal.SizeOf(typeof(T));
+                editor.Print(result, "of", string.Format("0x{0:X}-0x{1:X}  len=0x{2:X}={2}", buffer.Offset, buffer.Offset + size, size));
+                return result;
+            }
             public void Jump(int relative_offset)
             {
                 int offset = buffer.Offset + relative_offset;
                 buffer = new ArraySegment<byte>(buffer.Array, offset, buffer.Array.Length - offset);
             }
             ArraySegment<Byte> buffer;
+            PolarisBiosEditor editor;
         }
         [STAThread]
         static void Main(string[] args)
@@ -581,9 +610,9 @@ namespace PolarisBiosEditor
             return arr;
         }
 
-        static T fromBytes<T>(byte[] arr)
+        T fromBytes<T>(byte[] arr)
         {
-            return new ConsecutiveReader<T>(arr, 0).Read();
+            return new ConsecutiveReader<T>(arr, 0, this).Read();
         }
 
         public void setBytesAtPosition(byte[] dest, int ptr, byte[] src)
@@ -594,13 +623,18 @@ namespace PolarisBiosEditor
             }
         }
 
-        private void Print(object output)
+        public void Print(object output, string desc_name = "", string desc = "")
         {
             try
             {
                 if (output.GetType().IsPrimitive || output.GetType() == typeof(string))
                 {
-                    Console.WriteLine(output);
+                    var s = output.ToString();
+                    if (!string.IsNullOrWhiteSpace(desc_name))
+                    {
+                        s = desc_name + "=" + desc +" "+ s;
+                    }
+                    Console.WriteLine(s);
                 }
                 else
                 {
@@ -623,6 +657,10 @@ namespace PolarisBiosEditor
                         {
                             e.Value = string.Format("{0} = 0x{0:X} = 0b{1}", parsed, Convert.ToString(parsed, 2));
                         }
+                    }
+                    if (!string.IsNullOrWhiteSpace(desc))
+                    {
+                        doc.Root.Add(new XAttribute(desc_name, desc));
                     }
                     Console.WriteLine(doc);
                 }
@@ -791,8 +829,8 @@ namespace PolarisBiosEditor
                     buffer = br.ReadBytes((int)fileStream.Length);
 
                     atom_rom_header_offset = getValueAtPosition(16, atom_rom_header_ptr);
-                    atom_rom_header = fromBytes<ATOM_ROM_HEADER>(buffer.Skip(atom_rom_header_offset).ToArray());
-                    deviceID = atom_rom_header.usDeviceID.ToString("X");
+                    atom_rom_header = Reader<ATOM_ROM_HEADER>(atom_rom_header_offset).ReadPrint();
+                    string vendorId = atom_rom_header.usVendorID.ToString("X");
                     fixChecksum(false);
 
                     String firmwareSignature = new string(atom_rom_header.uaFirmWareSignature);
@@ -802,9 +840,9 @@ namespace PolarisBiosEditor
                     }
 
                     DialogResult msgSuported = DialogResult.Yes;
-                    if (!supportedDeviceID.Contains(deviceID))
+                    if (!supportedID.Contains(vendorId))
                     {
-                        msgSuported = MessageBox.Show("Unsupported DeviceID 0x" + deviceID + " - Continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        msgSuported = MessageBox.Show("Unsupported DeviceID 0x" + vendorId + " - Continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     }
                     if (msgSuported == DialogResult.Yes)
                     {
@@ -829,52 +867,48 @@ namespace PolarisBiosEditor
                         txtBIOSBootupMessage.Text = BIOS_BootupMessage;
                         txtBIOSBootupMessage.MaxLength = BIOS_BootupMessage.Length;
 
-                        atom_data_table = fromBytes<ATOM_DATA_TABLES>(buffer.Skip(atom_rom_header.usMasterDataTableOffset).ToArray());
+                        atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
                         atom_powerplay_offset = atom_data_table.PowerPlayInfo;
-                        atom_powerplay_table = fromBytes<ATOM_POWERPLAY_TABLE>(buffer.Skip(atom_powerplay_offset).ToArray());
+                        atom_powerplay_table = Reader<ATOM_POWERPLAY_TABLE>(atom_powerplay_offset).ReadPrint();
 
                         atom_powertune_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usPowerTuneTableOffset;
-                        atom_powertune_table = fromBytes<ATOM_Polaris_PowerTune_Table>(buffer.Skip(atom_powertune_offset).ToArray());
+                        atom_powertune_table = Reader<ATOM_Polaris_PowerTune_Table>(atom_powertune_offset).ReadPrint();
                         Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
 
-                        Print(atom_powertune_table);
-
                         atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
-                        atom_fan_table = fromBytes<ATOM_FAN_TABLE>(buffer.Skip(atom_fan_offset).ToArray());
+                        atom_fan_table = Reader<ATOM_FAN_TABLE>(atom_fan_offset).ReadPrint();
 
                         atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
-                        atom_mclk_table = fromBytes<ATOM_MCLK_TABLE>(buffer.Skip(atom_mclk_table_offset).ToArray());
+                        atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint();
                         atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
                         for (var i = 0; i < atom_mclk_entries.Length; i++)
                         {
-                            atom_mclk_entries[i] = fromBytes<ATOM_MCLK_ENTRY>(buffer.Skip(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ToArray());
+                            atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
                         }
 
                         atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
-                        atom_sclk_table = fromBytes<ATOM_SCLK_TABLE>(buffer.Skip(atom_sclk_table_offset).ToArray());
+                        atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint();
                         atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
                         for (var i = 0; i < atom_sclk_entries.Length; i++)
                         {
-                            atom_sclk_entries[i] = fromBytes<ATOM_SCLK_ENTRY>(buffer.Skip(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ToArray());
+                            atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
                         }
 
                         atom_vddc_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddcLookupTableOffset;
-                        atom_vddc_table = fromBytes<ATOM_VOLTAGE_TABLE>(buffer.Skip(atom_vddc_table_offset).ToArray());
+                        atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint();
                         atom_vddc_entries = new ATOM_VOLTAGE_ENTRY[atom_vddc_table.ucNumEntries];
                         for (var i = 0; i < atom_vddc_table.ucNumEntries; i++)
                         {
-                            atom_vddc_entries[i] = fromBytes<ATOM_VOLTAGE_ENTRY>(buffer.Skip(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ToArray());
+                            atom_vddc_entries[i] = Reader<ATOM_VOLTAGE_ENTRY>(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
                         }
 
                         atom_vram_info_offset = atom_data_table.VRAM_Info;
-                        atom_vram_info = fromBytes<ATOM_VRAM_INFO>(buffer.Skip(atom_vram_info_offset).ToArray());
+                        atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
                         atom_vram_entries = new ATOM_VRAM_ENTRY[atom_vram_info.ucNumOfVRAMModule];
                         var atom_vram_entry_reader = Reader<ATOM_VRAM_ENTRY>(atom_vram_info_offset + Marshal.SizeOf(typeof(ATOM_VRAM_INFO)));
                         for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
                         {
-                            atom_vram_entries[i] = atom_vram_entry_reader.Read();
-                            Print(atom_vram_entries[i].FullName + ":");
-                            Print(atom_vram_entries[i]);
+                            atom_vram_entries[i] = atom_vram_entry_reader.ReadPrint();
                             atom_vram_entry_reader.Jump(atom_vram_entries[i].usModuleSize);
                         }
                         Print("End of mem\n");
@@ -883,7 +917,7 @@ namespace PolarisBiosEditor
                         atom_vram_timing_entries = new ATOM_VRAM_TIMING_ENTRY[MAX_VRAM_ENTRIES];
                         for (var i = 0; i < MAX_VRAM_ENTRIES; i++)
                         {
-                            atom_vram_timing_entries[i] = fromBytes<ATOM_VRAM_TIMING_ENTRY>(buffer.Skip(atom_vram_timing_offset + Marshal.SizeOf(typeof(ATOM_VRAM_TIMING_ENTRY)) * i).ToArray());
+                            atom_vram_timing_entries[i] = Reader<ATOM_VRAM_TIMING_ENTRY>(atom_vram_timing_offset + Marshal.SizeOf(typeof(ATOM_VRAM_TIMING_ENTRY)) * i).ReadPrint();
 
                             // atom_vram_timing_entries have an undetermined length
                             // attempt to determine the last entry in the array
@@ -1101,7 +1135,7 @@ namespace PolarisBiosEditor
                             uint tbl = atom_vram_timing_entries[i].ulClkRange >> 24;
                             tableVRAM_TIMING.Items.Add(new ListViewItem(new string[] {
                                 tbl.ToString () + ":" + (atom_vram_timing_entries [i].ulClkRange & 0x00FFFFFF) / 100,
-                                ByteArrayToString (atom_vram_timing_entries [i].ucLatency)
+                                atom_vram_timing_entries [i].LatencyString
                             }
                             ));
                         }
@@ -1145,7 +1179,7 @@ namespace PolarisBiosEditor
 
         ConsecutiveReader<T> Reader<T>(int offset)
         {
-            return new ConsecutiveReader<T>(buffer, offset);
+            return new ConsecutiveReader<T>(buffer, offset, this);
         }
 
         public Int32 getValueAtPosition(int bits, int position, bool isFrequency = false)
