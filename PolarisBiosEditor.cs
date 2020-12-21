@@ -15,6 +15,86 @@ using System.Xml.Serialization;
 
 namespace PolarisBiosEditor
 {
+    public enum KIND_CONNECTOR
+    {
+        CONNECTOR_OBJECT_ID_NONE = 0x00,
+        CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I = 0x01,
+        CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I = 0x02,
+        CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D = 0x03,
+        CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D = 0x04,
+        CONNECTOR_OBJECT_ID_VGA = 0x05,
+        CONNECTOR_OBJECT_ID_COMPOSITE = 0x06,
+        CONNECTOR_OBJECT_ID_SVIDEO = 0x07,
+        CONNECTOR_OBJECT_ID_YPbPr = 0x08,
+        CONNECTOR_OBJECT_ID_D_CONNECTOR = 0x09,
+        CONNECTOR_OBJECT_ID_9PIN_DIN = 0x0A, /* Supports both CV & TV */
+        CONNECTOR_OBJECT_ID_SCART = 0x0B,
+        CONNECTOR_OBJECT_ID_HDMI_TYPE_A = 0x0C,
+        CONNECTOR_OBJECT_ID_HDMI_TYPE_B = 0x0D,
+        CONNECTOR_OBJECT_ID_LVDS = 0x0E,
+        CONNECTOR_OBJECT_ID_7PIN_DIN = 0x0F,
+        CONNECTOR_OBJECT_ID_PCIE_CONNECTOR = 0x10,
+        CONNECTOR_OBJECT_ID_CROSSFIRE = 0x11,
+        CONNECTOR_OBJECT_ID_HARDCODE_DVI = 0x12,
+        CONNECTOR_OBJECT_ID_DISPLAYPORT = 0x13,
+        CONNECTOR_OBJECT_ID_eDP = 0x14,
+        CONNECTOR_OBJECT_ID_MXM = 0x15,
+        CONNECTOR_OBJECT_ID_LVDS_eDP = 0x16
+    }
+
+    public enum KIND_ENCODER
+    {
+        ENCODER_OBJECT_ID_NONE                    =0x00, 
+        
+        /* Radeon Class Display Hardware */
+        ENCODER_OBJECT_ID_INTERNAL_LVDS           =0x01,
+        ENCODER_OBJECT_ID_INTERNAL_TMDS1          =0x02,
+        ENCODER_OBJECT_ID_INTERNAL_TMDS2          =0x03,
+        ENCODER_OBJECT_ID_INTERNAL_DAC1           =0x04,
+        ENCODER_OBJECT_ID_INTERNAL_DAC2           =0x05,     /* TV/CV DAC */
+        ENCODER_OBJECT_ID_INTERNAL_SDVOA          =0x06,
+        ENCODER_OBJECT_ID_INTERNAL_SDVOB          =0x07,
+        
+        /* External Third Party Encoders */
+        ENCODER_OBJECT_ID_SI170B                  =0x08,
+        ENCODER_OBJECT_ID_CH7303                  =0x09,
+        ENCODER_OBJECT_ID_CH7301                  =0x0A,
+        ENCODER_OBJECT_ID_INTERNAL_DVO1           =0x0B,    /* This belongs to Radeon Class Display Hardware */
+        ENCODER_OBJECT_ID_EXTERNAL_SDVOA          =0x0C,
+        ENCODER_OBJECT_ID_EXTERNAL_SDVOB          =0x0D,
+        ENCODER_OBJECT_ID_TITFP513                =0x0E,
+        ENCODER_OBJECT_ID_INTERNAL_LVTM1          =0x0F,   /* not used for Radeon */
+        ENCODER_OBJECT_ID_VT1623                  =0x10,
+        ENCODER_OBJECT_ID_HDMI_SI1930             =0x11,
+        ENCODER_OBJECT_ID_HDMI_INTERNAL           =0x12,
+        ENCODER_OBJECT_ID_ALMOND                  =0x22,
+        ENCODER_OBJECT_ID_TRAVIS                  =0x23,
+        ENCODER_OBJECT_ID_NUTMEG                  =0x22,
+        ENCODER_OBJECT_ID_HDMI_ANX9805            =0x26,
+        
+        /* Kaleidoscope (KLDSCP) Class Display Hardware (internal) */
+        ENCODER_OBJECT_ID_INTERNAL_KLDSCP_TMDS1   =0x13,
+        ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DVO1    =0x14,
+        ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DAC1    =0x15,
+        ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DAC2    =0x16,  /* Shared with CV/TV and CRT */
+        ENCODER_OBJECT_ID_SI178                   =0X17,  /* External TMDS (dual link, no HDCP.) */
+        ENCODER_OBJECT_ID_MVPU_FPGA               =0x18,  /* MVPU FPGA chip */
+        ENCODER_OBJECT_ID_INTERNAL_DDI            =0x19,
+        ENCODER_OBJECT_ID_VT1625                  =0x1A,
+        ENCODER_OBJECT_ID_HDMI_SI1932             =0x1B,
+        ENCODER_OBJECT_ID_DP_AN9801               =0x1C,
+        ENCODER_OBJECT_ID_DP_DP501                =0x1D,
+        ENCODER_OBJECT_ID_INTERNAL_UNIPHY         =0x1E,
+        ENCODER_OBJECT_ID_INTERNAL_KLDSCP_LVTMA   =0x1F,
+        ENCODER_OBJECT_ID_INTERNAL_UNIPHY1        =0x20,
+        ENCODER_OBJECT_ID_INTERNAL_UNIPHY2        =0x21,
+        ENCODER_OBJECT_ID_INTERNAL_VCE            =0x24,
+        ENCODER_OBJECT_ID_INTERNAL_UNIPHY3        =0x25,
+        ENCODER_OBJECT_ID_INTERNAL_AMCLK          =0x27,
+        
+        ENCODER_OBJECT_ID_GENERAL_EXTERNAL_DVO    =0xFF,
+    }
+
     public partial class PolarisBiosEditor : Form
     {
 
@@ -357,20 +437,78 @@ namespace PolarisBiosEditor
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_OBJECT_HEADER_V3
+        {
+            public ATOM_COMMON_TABLE_HEADER sHeader;
+            public UInt16 usDeviceSupport;
+            public UInt16 usConnectorObjectTableOffset;
+            public UInt16 usRouterObjectTableOffset;
+            public UInt16 usEncoderObjectTableOffset;
+            public UInt16 usProtectionObjectTableOffset; //only available when Protection block is independent.
+            public UInt16 usDisplayPathTableOffset;
+            public UInt16 usMiscObjectTableOffset;
+        }
+
+
+        public enum GRAPH_OBJECT_TYPE
+        {
+            GRAPH_OBJECT_TYPE_NONE = 0x0,
+            GRAPH_OBJECT_TYPE_GPU = 0x1,
+            GRAPH_OBJECT_TYPE_ENCODER = 0x2,
+            GRAPH_OBJECT_TYPE_CONNECTOR = 0x3,
+            GRAPH_OBJECT_TYPE_ROUTER = 0x4,
+            /* deleted */
+            GRAPH_OBJECT_TYPE_DISPLAY_PATH = 0x6,
+            GRAPH_OBJECT_TYPE_GENERIC = 0x7,
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_OBJECT_ID
+        {
+            [XmlIgnore]public Byte KindInNamespaceRaw;
+            [XmlIgnore]public Byte NamespaceAndIndex;
+            public GRAPH_OBJECT_TYPE Namespace
+            {
+                get { return (GRAPH_OBJECT_TYPE)(NamespaceAndIndex >> 4); }
+                set { throw new NotImplementedException(); }
+            }
+            public string KindInNamespace
+            {
+                get {
+                    var type_name = Namespace.ToString().Split('_').Last();
+                    var type = Type.GetType("PolarisBiosEditor.KIND_" + type_name);
+                    if (type != null)
+                    {
+                        return Enum.ToObject(type, KindInNamespaceRaw).ToString();
+                    }
+                    return KindInNamespaceRaw.ToString();
+                }
+                set { throw new NotImplementedException(); }
+            }
+            public int Index
+            {
+                get { return NamespaceAndIndex & 7; }
+                set { throw new NotImplementedException(); }
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_DISPLAY_OBJECT_PATH
         {
-            UInt16 usDeviceTag;                                   //supported device
-            UInt16 usSize;                                        //the size of ATOM_DISPLAY_OBJECT_PATH
-            UInt16 usConnObjectId;                                //Connector Object ID
-            UInt16 usGPUObjectId;                                 //GPU ID
-            //UInt16 usGraphicObjIds[1];                            //1st Encoder Obj source from GPU to last Graphic Obj destinate to connector.
+            public UInt16 usDeviceTag;                                   //supported device
+            public UInt16 usSize;                                        //the size of ATOM_DISPLAY_OBJECT_PATH
+            public ATOM_OBJECT_ID usConnObjectId;                                //Connector Object ID
+            public ATOM_OBJECT_ID usGPUObjectId;                                 //GPU ID
+            public ATOM_OBJECT_ID usGraphicObjIdsFirst;                          //1st Encoder Obj source from GPU to last Graphic Obj destinate to connector.
+            //usGraphicObjIdsOthers
         }
+
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_DISPLAY_OBJECT_PATH_TABLE
         {
-            Byte ucNumOfDispPath;
-            Byte ucVersion;
-            UInt16 ucPadding2;
+            public Byte ucNumOfDispPath;
+            public Byte ucVersion;
+            public UInt16 ucPadding2;
             //ATOM_DISPLAY_OBJECT_PATH asDispPath[1];
         }
 
@@ -557,6 +695,11 @@ namespace PolarisBiosEditor
 
         class ConsecutiveReader<T>
         {
+            public static ConsecutiveReader<T> From<TOther>(ConsecutiveReader<TOther> other)
+            {
+                return new ConsecutiveReader<T>(other.buffer.Array, other.buffer.Offset, other.editor);
+            }
+            
             public ConsecutiveReader(Byte[] entire_buffer, int offset, PolarisBiosEditor a_editor)
             {
                 buffer = new ArraySegment<byte>(entire_buffer);
@@ -582,13 +725,18 @@ namespace PolarisBiosEditor
                 editor.Print(result, "of", string.Format("0x{0:X}-0x{1:X}  len=0x{2:X}={2}", buffer.Offset, buffer.Offset + size, size));
                 return result;
             }
+            public void Jump1Structure()
+            {
+                Jump(Marshal.SizeOf<T>());
+            }
+
             public void Jump(int relative_offset)
             {
                 int offset = buffer.Offset + relative_offset;
                 buffer = new ArraySegment<byte>(buffer.Array, offset, buffer.Array.Length - offset);
             }
-            ArraySegment<Byte> buffer;
-            PolarisBiosEditor editor;
+            public ArraySegment<Byte> buffer;
+            public PolarisBiosEditor editor;
         }
         [STAThread]
         static void Main(string[] args)
@@ -926,6 +1074,18 @@ namespace PolarisBiosEditor
                                 Array.Resize(ref atom_vram_timing_entries, i);
                                 break;
                             }
+                        }
+
+                        var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
+
+                        var display_object_path_table_reader = Reader<ATOM_DISPLAY_OBJECT_PATH_TABLE>(atom_data_table.Object_Header + atom_object_header.usDisplayPathTableOffset);
+                        var display_object_path_table = display_object_path_table_reader.ReadPrint();
+                        display_object_path_table_reader.Jump1Structure();
+                        var display_object_path_reader = ConsecutiveReader<ATOM_DISPLAY_OBJECT_PATH>.From(display_object_path_table_reader);
+                        for (var i = 0; i < display_object_path_table.ucNumOfDispPath; i++)
+                        {
+                            var display_object_path = display_object_path_reader.ReadPrint();
+                            display_object_path_reader.Jump(display_object_path.usSize);
                         }
 
                         tableROM.Items.Add(new ListViewItem(new string[] {
