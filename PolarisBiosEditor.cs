@@ -467,22 +467,23 @@ namespace PolarisBiosEditor
         {
             [XmlIgnore]public Byte KindInNamespaceRaw;
             [XmlIgnore]public Byte NamespaceAndIndex;
-            public GRAPH_OBJECT_TYPE Namespace
-            {
-                get { return (GRAPH_OBJECT_TYPE)(NamespaceAndIndex >> 4); }
-                set { throw new NotImplementedException(); }
-            }
             public string KindInNamespace
             {
-                get {
+                get
+                {
                     var type_name = Namespace.ToString().Split('_').Last();
                     var type = Type.GetType("PolarisBiosEditor.KIND_" + type_name);
                     if (type != null)
                     {
-                        return Enum.ToObject(type, KindInNamespaceRaw).ToString();
+                        return Enum.ToObject(type, KindInNamespaceRaw).ToString() + " = 0x" + KindInNamespaceRaw.ToString("X");
                     }
                     return KindInNamespaceRaw.ToString();
                 }
+                set { throw new NotImplementedException(); }
+            }
+            public GRAPH_OBJECT_TYPE Namespace
+            {
+                get { return (GRAPH_OBJECT_TYPE)(NamespaceAndIndex >> 4); }
                 set { throw new NotImplementedException(); }
             }
             public int Index
@@ -515,33 +516,71 @@ namespace PolarisBiosEditor
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_OBJECT                                //each object has this structure
         {
-            UInt16 usObjectID;
-            UInt16 usSrcDstTableOffset;
-            UInt16 usRecordOffset;                     //this pointing to a bunch of records defined below
-            UInt16 usReserved;
+            public ATOM_OBJECT_ID usObjectID;
+            public UInt16 usSrcDstTableOffset;
+            public UInt16 usRecordOffset;                     //this pointing to a bunch of records defined below
+            public UInt16 usReserved;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_OBJECT_TABLE
         {
-            Byte ucNumberOfObjects;
-            Byte ucPadding0;
-            Byte ucPadding1;
-            Byte ucPadding2;
+            public Byte ucNumberOfObjects;
+            public Byte ucPadding0;
+            public Byte ucPadding1;
+            public Byte ucPadding2;
             //ATOM_OBJECT asObjects[1];
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_COMMON_RECORD_HEADER
+        {
+            [XmlIgnore]public Byte ucRecordType;                      //An emun to indicate the record type
+            public string RecordType
+            {
+                get { return ((AtomRecordType)ucRecordType).ToString() + " = 0x" + ucRecordType.ToString("X"); }
+                set { throw new NotImplementedException(); }
+            }
+            public Byte ucRecordSize;                      //The size of the whole record in byte
+        }
+
+
+        public enum AtomRecordType {
+            ATOM_I2C_RECORD_TYPE                           =1,
+            ATOM_HPD_INT_RECORD_TYPE                       =2,
+            ATOM_OUTPUT_PROTECTION_RECORD_TYPE             =3,
+            ATOM_CONNECTOR_DEVICE_TAG_RECORD_TYPE          =4,
+            ATOM_CONNECTOR_DVI_EXT_INPUT_RECORD_TYPE       =5, //Obsolete, switch to use GPIO_CNTL_RECORD_TYPE
+            ATOM_ENCODER_FPGA_CONTROL_RECORD_TYPE          =6, //Obsolete, switch to use GPIO_CNTL_RECORD_TYPE
+            ATOM_CONNECTOR_CVTV_SHARE_DIN_RECORD_TYPE      =7,
+            ATOM_JTAG_RECORD_TYPE                          =8, //Obsolete, switch to use GPIO_CNTL_RECORD_TYPE
+            ATOM_OBJECT_GPIO_CNTL_RECORD_TYPE              =9,
+            ATOM_ENCODER_DVO_CF_RECORD_TYPE                =10,
+            ATOM_CONNECTOR_CF_RECORD_TYPE                  =11,
+            ATOM_CONNECTOR_HARDCODE_DTD_RECORD_TYPE        =12,
+            ATOM_CONNECTOR_PCIE_SUBCONNECTOR_RECORD_TYPE   =13,
+            ATOM_ROUTER_DDC_PATH_SELECT_RECORD_TYPE        =14,
+            ATOM_ROUTER_DATA_CLOCK_PATH_SELECT_RECORD_TYPE =15,
+            ATOM_CONNECTOR_HPDPIN_LUT_RECORD_TYPE          =16, //This is for the case when connectors are not known to object table
+            ATOM_CONNECTOR_AUXDDC_LUT_RECORD_TYPE          =17, //This is for the case when connectors are not known to object table
+            ATOM_OBJECT_LINK_RECORD_TYPE                   =18, //Once this record is present under one object, it indicats the oobject is linked to another obj described by the record
+            ATOM_CONNECTOR_REMOTE_CAP_RECORD_TYPE          =19,
+            ATOM_ENCODER_CAP_RECORD_TYPE                   =20,
+            ATOM_BRACKET_LAYOUT_RECORD_TYPE                =21,
+            ATOM_CONNECTOR_FORCED_TMDS_CAP_RECORD_TYPE     =22,
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_VOLTAGE_CONTROL
         {
-            Byte ucVoltageControlId;                     //Indicate it is controlled by I2C or GPIO or HW state machine
-            Byte ucVoltageControlI2cLine;
-            Byte ucVoltageControlAddress;
-            Byte ucVoltageControlOffset;
-            UInt16 usGpioPin_AIndex;                       //GPIO_PAD register index
-            UInt64 ucGpioPinBitShiftN8;                   //at most 8 pin support 255 VIDs, termintate with 0xff
-            Byte ucGpioPinBitShiftTermination;
-            Byte ucReserved;
+            public Byte ucVoltageControlId;                     //Indicate it is controlled by I2C or GPIO or HW state machine
+            public Byte ucVoltageControlI2cLine;
+            public Byte ucVoltageControlAddress;
+            public Byte ucVoltageControlOffset;
+            public UInt16 usGpioPin_AIndex;                       //GPIO_PAD register index
+            public UInt64 ucGpioPinBitShiftN8;                   //at most 8 pin support 255 VIDs, termintate with 0xff
+            public Byte ucGpioPinBitShiftTermination;
+            public Byte ucReserved;
         };
 /*
 // Define ucVoltageControlId
@@ -734,6 +773,15 @@ namespace PolarisBiosEditor
             {
                 int offset = buffer.Offset + relative_offset;
                 buffer = new ArraySegment<byte>(buffer.Array, offset, buffer.Array.Length - offset);
+            }
+            public void JumpPrintExtra(int relative_offset)
+            {
+                int done_size = Marshal.SizeOf<T>();
+                if (done_size < relative_offset)
+                {
+                    editor.Print(string.Format("Extra at 0x{0:x}:", buffer.Offset + done_size) + ByteArrayToString(buffer.Skip(done_size).Take(relative_offset - done_size).ToArray()));
+                }
+                Jump(relative_offset);
             }
             public ArraySegment<Byte> buffer;
             public PolarisBiosEditor editor;
@@ -996,15 +1044,20 @@ namespace PolarisBiosEditor
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset+2;
+                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset + 2;
                         while (ptr != -1)
                         {
                             Char c = (Char)buffer[ptr];
-                            if (c == '\0') {
+                            if (c == '\0')
+                            {
                                 ptr = -1;
-                            } else if(c == '\n' || c == '\r') {
+                            }
+                            else if (c == '\n' || c == '\r')
+                            {
                                 ptr++;
-                            } else {
+                            }
+                            else
+                            {
                                 sb.Append(c);
                                 ptr++;
                             }
@@ -1078,15 +1131,13 @@ namespace PolarisBiosEditor
 
                         var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
 
-                        var display_object_path_table_reader = Reader<ATOM_DISPLAY_OBJECT_PATH_TABLE>(atom_data_table.Object_Header + atom_object_header.usDisplayPathTableOffset);
-                        var display_object_path_table = display_object_path_table_reader.ReadPrint();
-                        display_object_path_table_reader.Jump1Structure();
-                        var display_object_path_reader = ConsecutiveReader<ATOM_DISPLAY_OBJECT_PATH>.From(display_object_path_table_reader);
-                        for (var i = 0; i < display_object_path_table.ucNumOfDispPath; i++)
-                        {
-                            var display_object_path = display_object_path_reader.ReadPrint();
-                            display_object_path_reader.Jump(display_object_path.usSize);
-                        }
+                        ReadPrintTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
+                        Print("Encoders:");
+                        ReadPrintTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        Print("Connectors:");
+                        ReadPrintTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        Print("Routers:");
+                        ReadPrintTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
 
                         tableROM.Items.Add(new ListViewItem(new string[] {
                             "BootupMessageOffset",
@@ -1173,7 +1224,7 @@ namespace PolarisBiosEditor
                             Convert.ToString (atom_powertune_table.usClockStretchAmount)
                         }
                         ));
-                        
+
                         tableFAN.Items.Clear();
                         tableFAN.Items.Add(new ListViewItem(new string[] {
                             "Temp. Hysteresis",
@@ -1335,6 +1386,46 @@ namespace PolarisBiosEditor
 
             tableVRAM_TIMING.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             tableVRAM_TIMING.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+
+        private int PrintAndReturnLen(ATOM_OBJECT o)
+        {
+            if (o.usRecordOffset != 0)
+            {
+                var reader = Reader<ATOM_COMMON_RECORD_HEADER>(atom_data_table.Object_Header + o.usRecordOffset);
+                while(true)
+                {
+                    var first = reader.buffer.First();
+                    if (first == 0 || first == 255)
+                    {
+                        break;
+                    }
+                    if (reader.buffer.Skip(1).First() < 2)
+                    {
+                        break;
+                    }
+                    var rec = reader.ReadPrint();
+                    reader.JumpPrintExtra(rec.ucRecordSize);
+                }
+            }
+            return Marshal.SizeOf(o);
+        }
+        private void ReadPrintTable<TTable, TObject>(UInt16 offset, Func<TTable, int> entry_count, Func<TObject, int> entry_size)
+        {
+            if (offset == 0)
+            {
+                Print("Table not present:" + typeof(TTable).Name);
+                return;
+            }
+            var table_reader = Reader<TTable>(atom_data_table.Object_Header + offset);
+            var table = table_reader.ReadPrint();
+            table_reader.Jump1Structure();
+            var object_reader = ConsecutiveReader<TObject>.From(table_reader);
+            for (var i = 0; i < entry_count(table); i++)
+            {
+                var atom_object = object_reader.ReadPrint();
+                object_reader.Jump(entry_size(atom_object));
+            }
         }
 
         ConsecutiveReader<T> Reader<T>(int offset)
