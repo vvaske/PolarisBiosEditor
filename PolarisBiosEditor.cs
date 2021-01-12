@@ -570,63 +570,63 @@ namespace PolarisBiosEditor
 
         public enum atom_voltage_type: Byte
         {
-            VOLTAGE_TYPE_VDDC = 1,
-            VOLTAGE_TYPE_MVDDC = 2,
-            VOLTAGE_TYPE_MVDDQ = 3,
-            VOLTAGE_TYPE_VDDCI = 4,
-            VOLTAGE_TYPE_VDDGFX = 5,
-            VOLTAGE_TYPE_PCC = 6,
-            VOLTAGE_TYPE_MVPP = 7,
-            VOLTAGE_TYPE_LEDDPM = 8,
-            VOLTAGE_TYPE_PCC_MVDD = 9,
-            VOLTAGE_TYPE_PCIE_VDDC = 10,
-            VOLTAGE_TYPE_PCIE_VDDR = 11,
-            VOLTAGE_TYPE_GENERIC_I2C_1 = 0x11,
-            VOLTAGE_TYPE_GENERIC_I2C_2 = 0x12,
-            VOLTAGE_TYPE_GENERIC_I2C_3 = 0x13,
-            VOLTAGE_TYPE_GENERIC_I2C_4 = 0x14,
-            VOLTAGE_TYPE_GENERIC_I2C_5 = 0x15,
-            VOLTAGE_TYPE_GENERIC_I2C_6 = 0x16,
-            VOLTAGE_TYPE_GENERIC_I2C_7 = 0x17,
-            VOLTAGE_TYPE_GENERIC_I2C_8 = 0x18,
-            VOLTAGE_TYPE_GENERIC_I2C_9 = 0x19,
-            VOLTAGE_TYPE_GENERIC_I2C_10 = 0x1A,
+            VOLTAGE_TYPE_VDDC_0x1 = 1,
+            VOLTAGE_TYPE_MVDDC_0x2 = 2,
+            VOLTAGE_TYPE_MVDDQ_0x3 = 3,
+            VOLTAGE_TYPE_VDDCI_0x4 = 4,
+            VOLTAGE_TYPE_VDDGFX_0x5 = 5,
+            VOLTAGE_TYPE_PCC_0x6 = 6,
+            VOLTAGE_TYPE_MVPP_0x7 = 7,
+            VOLTAGE_TYPE_LEDDPM_0x8 = 8,
+            VOLTAGE_TYPE_PCC_MVDD_0x9 = 9,
+            VOLTAGE_TYPE_PCIE_VDDC_0xA = 10,
+            VOLTAGE_TYPE_PCIE_VDDR_0xB = 11,
+            VOLTAGE_TYPE_GENERIC_I2C_1_0x11 = 0x11,
+            VOLTAGE_TYPE_GENERIC_I2C_2_0x12 = 0x12,
+            VOLTAGE_TYPE_GENERIC_I2C_3_0x13 = 0x13,
+            VOLTAGE_TYPE_GENERIC_I2C_4_0x14 = 0x14,
+            VOLTAGE_TYPE_GENERIC_I2C_5_0x15 = 0x15,
+            VOLTAGE_TYPE_GENERIC_I2C_6_0x16 = 0x16,
+            VOLTAGE_TYPE_GENERIC_I2C_7_0x17 = 0x17,
+            VOLTAGE_TYPE_GENERIC_I2C_8_0x18 = 0x18,
+            VOLTAGE_TYPE_GENERIC_I2C_9_0x19 = 0x19,
+            VOLTAGE_TYPE_GENERIC_I2C_10_0x1A = 0x1A,
         };
 
         public enum atom_voltage_object_mode: Byte
         { 
-            VOLTAGE_OBJ_GPIO_LUT                 = 0,        //VOLTAGE and GPIO Lookup table ->ATOM_GPIO_VOLTAGE_OBJECT_V3
-            VOLTAGE_OBJ_VR_I2C_INIT_SEQ          = 3,        //VOLTAGE REGULATOR INIT sequece through I2C -> ATOM_I2C_VOLTAGE_OBJECT_V3
-            VOLTAGE_OBJ_PHASE_LUT                = 4,        //Set Vregulator Phase lookup table ->ATOM_GPIO_VOLTAGE_OBJECT_V3
-            VOLTAGE_OBJ_SVID2                    = 7,        //Indicate voltage control by SVID2 ->ATOM_SVID2_VOLTAGE_OBJECT_V3
-            VOLTAGE_OBJ_EVV                      = 8,
-            VOLTAGE_OBJ_MERGED_POWER             = 9,
-            VOLTAGE_OBJ_PWRBOOST_LEAKAGE_LUT     = 0x10,     //Powerboost Voltage and LeakageId lookup table->ATOM_LEAKAGE_VOLTAGE_OBJECT_V3
-            VOLTAGE_OBJ_HIGH_STATE_LEAKAGE_LUT   = 0x11,     //High voltage state Voltage and LeakageId lookup table->ATOM_LEAKAGE_VOLTAGE_OBJECT_V3
-            VOLTAGE_OBJ_HIGH1_STATE_LEAKAGE_LUT  = 0x12,     //High1 voltage state Voltage and LeakageId lookup table->ATOM_LEAKAGE_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_GPIO_LUT_0x0                 = 0,        //VOLTAGE and GPIO Lookup table ->ATOM_GPIO_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3          = 3,        //VOLTAGE REGULATOR INIT sequece through I2C -> ATOM_I2C_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_PHASE_LUT_0x4                = 4,        //Set Vregulator Phase lookup table ->ATOM_GPIO_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_SVID2_0x7                    = 7,        //Indicate voltage control by SVID2 ->ATOM_SVID2_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_EVV_0x8                      = 8,
+            VOLTAGE_OBJ_MERGED_POWER_0x9             = 9,
+            VOLTAGE_OBJ_PWRBOOST_LEAKAGE_LUT_0x10    = 0x10,     //Powerboost Voltage and LeakageId lookup table->ATOM_LEAKAGE_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_HIGH_STATE_LEAKAGE_LUT_0x11  = 0x11,     //High voltage state Voltage and LeakageId lookup table->ATOM_LEAKAGE_VOLTAGE_OBJECT_V3
+            VOLTAGE_OBJ_HIGH1_STATE_LEAKAGE_LUT_0x12 = 0x12,     //High1 voltage state Voltage and LeakageId lookup table->ATOM_LEAKAGE_VOLTAGE_OBJECT_V3
         }
 
         enum atom_gpio_pin_assignment_gpio_id
         {
-            I2C_HW_LANE_MUX = 0x0f, /* only valid when bit7=1 */
-            I2C_HW_ENGINE_ID_MASK = 0x70, /* only valid when bit7=1 */
-            I2C_HW_CAP = 0x80, /*only when the I2C_HW_CAP is set, the pin ID is assigned to an I2C pin pair, otherwise, it's an generic GPIO pin */
+            I2C_HW_LANE_MUX_0x0F = 0x0f, /* only valid when bit7=1 */
+            I2C_HW_ENGINE_ID_MASK_0x70 = 0x70, /* only valid when bit7=1 */
+            I2C_HW_CAP_0x80 = 0x80, /*only when the I2C_HW_CAP is set, the pin ID is assigned to an I2C pin pair, otherwise, it's an generic GPIO pin */
 
             /* gpio_id pre-define id for multiple usage */
             /* GPIO use to control PCIE_VDDC in certain SLT board */
-            PCIE_VDDC_CONTROL_GPIO_PINID = 56,
+            PCIE_VDDC_CONTROL_GPIO_PINID_0x38 = 56,
             /* if PP_AC_DC_SWITCH_GPIO_PINID in Gpio_Pin_LutTable, AC/DC swithing feature is enable */
-            PP_AC_DC_SWITCH_GPIO_PINID = 60,
+            PP_AC_DC_SWITCH_GPIO_PINID_0x3C = 60,
             /* VDDC_REGULATOR_VRHOT_GPIO_PINID in Gpio_Pin_LutTable, VRHot feature is enable */
-            VDDC_VRHOT_GPIO_PINID = 61,
+            VDDC_VRHOT_GPIO_PINID_0x3D = 61,
             /*if VDDC_PCC_GPIO_PINID in GPIO_LUTable, Peak Current Control feature is enabled */
-            VDDC_PCC_GPIO_PINID = 62,
+            VDDC_PCC_GPIO_PINID_0x3E = 62,
             /* Only used on certain SLT/PA board to allow utility to cut Efuse. */
-            EFUSE_CUT_ENABLE_GPIO_PINID = 63,
+            EFUSE_CUT_ENABLE_GPIO_PINID_0x3F = 63,
             /* ucGPIO=DRAM_SELF_REFRESH_GPIO_PIND uses  for memory self refresh (ucGPIO=0, DRAM self-refresh; ucGPIO= */
-            DRAM_SELF_REFRESH_GPIO_PINID = 64,
+            DRAM_SELF_REFRESH_GPIO_PINID_0x40 = 64,
             /* Thermal interrupt output->system thermal chip GPIO pin */
-            THERMAL_INT_OUTPUT_GPIO_PINID = 65,
+            THERMAL_INT_OUTPUT_GPIO_PINID_0x41 = 65,
             is_mm_i2c = 0xA0,
         };
 
@@ -637,17 +637,17 @@ namespace PolarisBiosEditor
 
             public bool bfHW_Capable
             {
-                get { return (gpio_id & (Byte)atom_gpio_pin_assignment_gpio_id.I2C_HW_CAP) != 0; }
+                get { return (gpio_id & (Byte)atom_gpio_pin_assignment_gpio_id.I2C_HW_CAP_0x80) != 0; }
                 set { throw new NotImplementedException(); }
             }
             public int bfHW_EngineID
             {
-                get { return (gpio_id & (Byte)atom_gpio_pin_assignment_gpio_id.I2C_HW_ENGINE_ID_MASK) >> 4; }
+                get { return (gpio_id & (Byte)atom_gpio_pin_assignment_gpio_id.I2C_HW_ENGINE_ID_MASK_0x70) >> 4; }
                 set { throw new NotImplementedException(); }
             }
             public int bfI2C_LineMux
             {
-                get { return gpio_id & (Byte)atom_gpio_pin_assignment_gpio_id.I2C_HW_LANE_MUX; }
+                get { return gpio_id & (Byte)atom_gpio_pin_assignment_gpio_id.I2C_HW_LANE_MUX_0x0F; }
                 set { throw new NotImplementedException(); }
             }
             public string Description
@@ -681,8 +681,21 @@ namespace PolarisBiosEditor
             public Byte i2c_speed;                           // =0, use default i2c speed, otherwise use it in unit of kHz. 
             public Byte reserved_0xA;
             public Byte reserved_0xB;
-            public UInt16 i2cdatalut_reg_index_ff_to_mark_end;
         }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct FINAL_atom_i2c_data_entry
+        {
+            public UInt16 final_entry_index;
+            public static UInt16 ENDING_INDEX_VALUE => 0xff;
+        };
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct atom_i2c_data_entry
+        {
+            public UInt16 i2c_reg_index;               // i2c register address, can be up to 16bit
+            public UInt16 i2c_reg_data;                // i2c register data, can be up to 16bit
+        };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct atom_voltage_object_header_v4
@@ -693,7 +706,7 @@ namespace PolarisBiosEditor
 
             public atom_i2c_voltage_object_v4_fields AsI2c;
             [XmlIgnore]
-            public bool AsI2cSpecified => ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_VR_I2C_INIT_SEQ;
+            public bool AsI2cSpecified => ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3;
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -1224,12 +1237,23 @@ namespace PolarisBiosEditor
 
                         var used_volt_obffset = 0;
 
-                        ReadPrintTable<ATOM_VOLTAGE_OBJECT_INFO_V3_1, atom_voltage_object_header_v4>(atom_data_table.VoltageObjectInfo,
+                        ReadPrintTableDetailed<ATOM_VOLTAGE_OBJECT_INFO_V3_1, atom_voltage_object_header_v4>(atom_data_table.VoltageObjectInfo,
                             (volt_table, i) => used_volt_obffset < (volt_table.sHeader.usStructureSize - Marshal.SizeOf(volt_table.sHeader)),
-                            volt_object =>
+                            (volt_object, reader) =>
                             {
                                 used_volt_obffset += volt_object.usSize;
-                                return volt_object.usSize;
+                                if (volt_object.AsI2cSpecified)
+                                {
+                                    var detailed_reader = ConsecutiveReader<atom_i2c_data_entry>.From(reader);
+                                    detailed_reader.Jump(Marshal.SizeOf(volt_object));
+                                    while(detailed_reader.Read().i2c_reg_index != FINAL_atom_i2c_data_entry.ENDING_INDEX_VALUE)
+                                    {
+                                        detailed_reader.ReadPrint();
+                                        detailed_reader.Jump1Structure();
+                                    }
+                                    ConsecutiveReader<FINAL_atom_i2c_data_entry>.From(detailed_reader).ReadPrint();
+                                }
+                                reader.Jump(volt_object.usSize);
                             }
                             );
 
@@ -1509,7 +1533,7 @@ namespace PolarisBiosEditor
             }
             return Marshal.SizeOf(o);
         }
-        private void ReadPrintTable<TTable, TObject>(int offset, Func<TTable, int, bool> continue_parse, Func<TObject, int> entry_size)
+        private void ReadPrintTableDetailed<TTable, TObject>(int offset, Func<TTable, int, bool> continue_parse, Action<TObject, ConsecutiveReader<TObject>> next_jumper)
         {
             var table_reader = Reader<TTable>(offset);
             var table = table_reader.ReadPrint();
@@ -1518,8 +1542,13 @@ namespace PolarisBiosEditor
             for (var i = 0; continue_parse(table, i); i++)
             {
                 var atom_object = object_reader.ReadPrint();
-                object_reader.Jump(entry_size(atom_object));
+                next_jumper(atom_object, object_reader);
             }
+        }
+
+        private void ReadPrintTable<TTable, TObject>(int offset, Func<TTable, int, bool> continue_parse, Func<TObject, int> entry_size)
+        {
+            ReadPrintTableDetailed<TTable, TObject>(offset, continue_parse, (atom_object, object_reader) => object_reader.Jump(entry_size(atom_object)));
         }
 
         private void ReadPrintObjectTable<TTable, TObject>(UInt16 offset, Func<TTable, int> entry_count, Func<TObject, int> entry_size)
