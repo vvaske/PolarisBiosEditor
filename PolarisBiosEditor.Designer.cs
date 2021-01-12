@@ -28,7 +28,6 @@ namespace PolarisBiosEditor
     /// </summary>
     private void InitializeComponent()
     {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PolarisBiosEditor));
             this.open = new System.Windows.Forms.Button();
             this.save = new System.Windows.Forms.Button();
             this.txtChecksum = new System.Windows.Forms.TextBox();
@@ -135,6 +134,7 @@ namespace PolarisBiosEditor
             this.columnHeader2});
             this.tableROM.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableROM.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableROM.HideSelection = false;
             this.tableROM.Location = new System.Drawing.Point(3, 16);
             this.tableROM.Name = "tableROM";
             this.tableROM.Size = new System.Drawing.Size(259, 121);
@@ -168,6 +168,7 @@ namespace PolarisBiosEditor
             this.columnHeader4});
             this.tablePOWERPLAY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablePOWERPLAY.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tablePOWERPLAY.HideSelection = false;
             this.tablePOWERPLAY.Location = new System.Drawing.Point(3, 16);
             this.tablePOWERPLAY.Name = "tablePOWERPLAY";
             this.tablePOWERPLAY.Size = new System.Drawing.Size(259, 138);
@@ -203,6 +204,7 @@ namespace PolarisBiosEditor
             this.columnHeader5,
             this.columnHeader6});
             this.tablePOWERTUNE.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tablePOWERTUNE.HideSelection = false;
             this.tablePOWERTUNE.Location = new System.Drawing.Point(3, 16);
             this.tablePOWERTUNE.Name = "tablePOWERTUNE";
             this.tablePOWERTUNE.Size = new System.Drawing.Size(254, 233);
@@ -238,6 +240,7 @@ namespace PolarisBiosEditor
             this.columnHeader9,
             this.columnHeader10});
             this.tableFAN.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableFAN.HideSelection = false;
             this.tableFAN.Location = new System.Drawing.Point(3, 16);
             this.tableFAN.Name = "tableFAN";
             this.tableFAN.Size = new System.Drawing.Size(259, 263);
@@ -270,6 +273,7 @@ namespace PolarisBiosEditor
             this.columnHeader12});
             this.tableGPU.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableGPU.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableGPU.HideSelection = false;
             this.tableGPU.Location = new System.Drawing.Point(3, 16);
             this.tableGPU.Name = "tableGPU";
             this.tableGPU.Size = new System.Drawing.Size(254, 184);
@@ -302,6 +306,7 @@ namespace PolarisBiosEditor
             this.columnHeader14});
             this.tableMEMORY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableMEMORY.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableMEMORY.HideSelection = false;
             this.tableMEMORY.Location = new System.Drawing.Point(3, 16);
             this.tableMEMORY.Name = "tableMEMORY";
             this.tableMEMORY.Size = new System.Drawing.Size(254, 105);
@@ -341,6 +346,7 @@ namespace PolarisBiosEditor
             this.columnHeader15,
             this.columnHeader16});
             this.tableVRAM_TIMING.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableVRAM_TIMING.HideSelection = false;
             this.tableVRAM_TIMING.Location = new System.Drawing.Point(3, 209);
             this.tableVRAM_TIMING.Name = "tableVRAM_TIMING";
             this.tableVRAM_TIMING.Size = new System.Drawing.Size(262, 373);
@@ -377,6 +383,7 @@ namespace PolarisBiosEditor
             this.columnHeader7,
             this.columnHeader8});
             this.tableVRAM.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableVRAM.HideSelection = false;
             this.tableVRAM.Location = new System.Drawing.Point(3, 43);
             this.tableVRAM.Name = "tableVRAM";
             this.tableVRAM.Size = new System.Drawing.Size(262, 160);
@@ -442,10 +449,10 @@ namespace PolarisBiosEditor
             this.linkLabel1.LinkColor = System.Drawing.Color.Red;
             this.linkLabel1.Location = new System.Drawing.Point(12, 669);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(275, 16);
+            this.linkLabel1.Size = new System.Drawing.Size(516, 16);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "BUY PolariBiosEditor Pro performance";
+            this.linkLabel1.Text = "(Link kept from upstream vesrsion) BUY PolariBiosEditor Pro performance";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // PolarisBiosEditor
@@ -467,7 +474,6 @@ namespace PolarisBiosEditor
             this.Controls.Add(this.editSubItem1);
             this.Controls.Add(this.editSubItem2);
             this.Controls.Add(this.apply);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PolarisBiosEditor";
             this.Text = "PBE";
             this.Load += new System.EventHandler(this.PolarisBiosEditor_Load);

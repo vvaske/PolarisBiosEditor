@@ -98,7 +98,7 @@ namespace PolarisBiosEditor
 
         /* DATA */
 
-        string version = "1.7.3";
+        string version = "1.7xml";
         string programTitle = "PolarisBiosEditor";
 
 
@@ -999,7 +999,7 @@ namespace PolarisBiosEditor
         public PolarisBiosEditor()
         {
             InitializeComponent();
-            this.Text = this.programTitle + " " + this.version + " " + "Tweaked By VASKE";
+            this.Text = this.programTitle + " " + this.version;
 
 #if !DEBUG
             try
@@ -1109,7 +1109,7 @@ namespace PolarisBiosEditor
                 tableVRAM.Items.Clear();
                 tableVRAM_TIMING.Items.Clear();
 
-                this.Text = this.programTitle + " " + this.version + " tweaked by VASKE" + " - " + "[" + openFileDialog.SafeFileName + "]";
+                this.Text = this.programTitle + " " + this.version + " - " + "[" + openFileDialog.SafeFileName + "]";
 
                 System.IO.Stream fileStream = openFileDialog.OpenFile();
                 if ((fileStream.Length != 524288) && (fileStream.Length != 524288 / 2))
@@ -2271,7 +2271,7 @@ namespace PolarisBiosEditor
             }
             if (samsung4_index == -1 && samsung_index == -1 && hynix_2_index == -1 && hynix_3_index == -1 && hynix_1_index == -1 && elpida_index == -1 && micron_index == -1)
             {
-                MessageBox.Show("Sorry, no supported memory found. If you think this is an error, please file a bugreport @ github.com/vvaske/PolarisBiosEditor");
+                MessageBox.Show("Sorry, no supported memory found");
             }
 
             this.tablePOWERPLAY.Items[1].SubItems[1].Text = "2300";
