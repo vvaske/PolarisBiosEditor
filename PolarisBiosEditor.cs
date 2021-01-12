@@ -1036,7 +1036,10 @@ namespace PolarisBiosEditor
             } catch (System.Net.WebException) {
                 this.Text += " (offline mode)";
             }
+#else
+            Console.WriteLine("This is a debug build, skipping update check.");
 #endif
+            Console.WriteLine("Open a AMD Polaris VBIOS file to see it's some detalied info as XML in this console");
 
             rc.Add("MT51J256M3", "MICRON");
             rc.Add("EDW4032BAB", "ELPIDA");

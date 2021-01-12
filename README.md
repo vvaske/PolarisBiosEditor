@@ -1,20 +1,23 @@
-# PolarisBiosEditor - fork with additional data views
+# PolarisBiosEditor 1.7xml: fork with dumping additional data as XML in console.
 
-# Below is readme for upstream version.
+Just open vbios file and look in console/stdout for extended xml output.
+Editing functionality is identical to the upstream, no new features.
 
 
-### PolarisBiosEditor tweaked by vaske version 3.8 with pro timings can buy on miningbios.com
-## https://www.miningbios.com
+Please build the executable yourself if you don't trust
+
+Prebuilt version works on linux with mono, just type `./run.sh`, also see that file fore dependncies
+
+
+# Below is readme kept for upstream version.
+
+#### PolarisBiosEditor tweaked by vaske version 3.8 with pro timings can buy on miningbios.com
+#### https://www.miningbios.com
 
 BTC donation address: 181dtEjhFWWxvHDmx2R3N41rnRPedSEUf5
 
-works on linux with mono, executable is build against .net 3.5
-
 one click timing feature should be used with care, it maybe not stable for you
 
-please build the executable yourself or decompile the existing one if you don't trust
-
-If you want to use PolarisBiosEditor on Ubuntu need to install module: sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
 
 
 ### v1.7.3
