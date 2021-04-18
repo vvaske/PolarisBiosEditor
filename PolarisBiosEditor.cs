@@ -469,7 +469,7 @@ namespace PolarisBiosEditor
             {
                 get
                 {
-                    var type_name = Namespace.ToString().Split('_').Last();
+                    var type_name = Namespace.ToString().Split(new []{'_'}).Last();
                     var type = Type.GetType("PolarisBiosEditor.KIND_" + type_name);
                     if (type != null)
                     {
