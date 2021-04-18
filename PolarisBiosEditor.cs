@@ -369,6 +369,26 @@ namespace PolarisBiosEditor
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_MM_DEPENDENCY_RECORD
+        {
+            public Byte   ucVddcInd;											 /* VDDC voltage */
+            public UInt16 usVddgfxOffset;									  /* Offset relative to VDDC voltage */
+            public UInt32 ulDClk;												/* UVD D-clock */
+            public UInt32 ulVClk;												/* UVD V-clock */
+            public UInt32 ulEClk;												/* VCE clock */
+            public UInt32 ulAClk;												/* ACP clock */
+            public UInt32 ulSAMUClk;											/* SAMU clock */
+        };
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_MM_DEPENDENCY_TABLE
+        {
+            public Byte ucRevId;
+            public Byte ucNumEntries;
+            // public unsafe fixed byte ATOM_VOLTAGE_ENTRY entries[ucNumEntries]; [8]
+        };
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_FAN_TABLE
         {
             public Byte ucRevId;
@@ -698,15 +718,29 @@ namespace PolarisBiosEditor
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct atom_voltage_gpio_map_lut
+        {
+            public UInt32 voltage_gpio_reg_val;              // The Voltage ID which is used to program GPIO register
+            public UInt16 voltage_level_mv;                  // The corresponding Voltage Value, in mV
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct atom_gpio_voltage_object_v4_fields
+        {
+            public Byte  gpio_control_id;                     // default is 0 which indicate control through CG VID mode 
+            public Byte  gpio_entry_num;                      // indiate the entry numbers of Votlage/Gpio value Look up table
+            public Byte  phase_delay_us;                      // phase delay in unit of micro second
+            public Byte  reserved;   
+            public UInt32 gpio_mask_val;                         // GPIO Mask value
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct atom_voltage_object_header_v4
         {
             public atom_voltage_type ucVoltageType;                            //Indicate Voltage Source: VDDC, MVDDC, MVDDQ or MVDDCI
             public atom_voltage_object_mode ucVoltageMode;                            //Indicate voltage control mode: Init/Set/Leakage/Set phase
             public UInt16 usSize;                                   //Size of Object
-
-            public atom_i2c_voltage_object_v4_fields AsI2c;
-            [XmlIgnore]
-            public bool AsI2cSpecified => ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3;
+            //actual fields depens on ucVoltageMode
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -1202,6 +1236,20 @@ namespace PolarisBiosEditor
                             atom_vddc_entries[i] = Reader<ATOM_VOLTAGE_ENTRY>(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
                         }
 
+                        var atom_vddgfx_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddgfxLookupTableOffset;
+                        var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint();
+                        for (var i = 0; i < atom_vddgfx_table.ucNumEntries; i++)
+                        {
+                            Reader<ATOM_VOLTAGE_ENTRY>(atom_vddgfx_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                        }
+
+                        var atom_mm_dependency_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMMDependencyTableOffset;
+                        var atom_mm_dependency_table = Reader<ATOM_MM_DEPENDENCY_TABLE>(atom_mm_dependency_table_offset).ReadPrint();
+                        for (var i = 0; i < atom_mm_dependency_table.ucNumEntries; i++)
+                        {
+                            Reader<ATOM_MM_DEPENDENCY_RECORD>(atom_mm_dependency_table_offset + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_TABLE)) + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_RECORD)) * i).ReadPrint();
+                        }
+
                         atom_vram_info_offset = atom_data_table.VRAM_Info;
                         atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
                         atom_vram_entries = new ATOM_VRAM_ENTRY[atom_vram_info.ucNumOfVRAMModule];
@@ -1242,13 +1290,16 @@ namespace PolarisBiosEditor
 
                         ReadPrintTableDetailed<ATOM_VOLTAGE_OBJECT_INFO_V3_1, atom_voltage_object_header_v4>(atom_data_table.VoltageObjectInfo,
                             (volt_table, i) => used_volt_obffset < (volt_table.sHeader.usStructureSize - Marshal.SizeOf(volt_table.sHeader)),
-                            (volt_object, reader) =>
+                            (volt_object_header, reader) =>
                             {
-                                used_volt_obffset += volt_object.usSize;
-                                if (volt_object.AsI2cSpecified)
+                                used_volt_obffset += volt_object_header.usSize;
+                                if (volt_object_header.ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3)
                                 {
-                                    var detailed_reader = ConsecutiveReader<atom_i2c_data_entry>.From(reader);
-                                    detailed_reader.Jump(Marshal.SizeOf(volt_object));
+                                    var specialized_reader = ConsecutiveReader<atom_i2c_voltage_object_v4_fields>.From(reader);
+                                    specialized_reader.Jump(Marshal.SizeOf(volt_object_header));
+                                    specialized_reader.ReadPrint();
+                                    specialized_reader.Jump1Structure();
+                                    var detailed_reader = ConsecutiveReader<atom_i2c_data_entry>.From(specialized_reader);
                                     while(detailed_reader.Read().i2c_reg_index != FINAL_atom_i2c_data_entry.ENDING_INDEX_VALUE)
                                     {
                                         detailed_reader.ReadPrint();
@@ -1256,7 +1307,20 @@ namespace PolarisBiosEditor
                                     }
                                     ConsecutiveReader<FINAL_atom_i2c_data_entry>.From(detailed_reader).ReadPrint();
                                 }
-                                reader.Jump(volt_object.usSize);
+                                else if (volt_object_header.ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_GPIO_LUT_0x0)
+                                {
+                                    var specialized_reader = ConsecutiveReader<atom_gpio_voltage_object_v4_fields>.From(reader);
+                                    specialized_reader.Jump(Marshal.SizeOf(volt_object_header));
+                                    var gpio_voltage_fields = specialized_reader.ReadPrint();
+                                    specialized_reader.Jump1Structure();
+                                    var detailed_reader = ConsecutiveReader<atom_voltage_gpio_map_lut>.From(specialized_reader);
+                                    for (var i = 0; i < gpio_voltage_fields.gpio_entry_num; i++)
+                                    {
+                                        detailed_reader.ReadPrint();
+                                        detailed_reader.Jump1Structure();
+                                    }
+                                }
+                                reader.Jump(volt_object_header.usSize);
                             }
                             );
 
@@ -1438,7 +1502,7 @@ namespace PolarisBiosEditor
                         {
                             tableMEMORY.Items.Add(new ListViewItem(new string[] {
                                 Convert.ToString (atom_mclk_entries [i].ulMclk / 100),
-                                Convert.ToString (atom_mclk_entries [i].usMvdd)
+                                Convert.ToString (atom_mclk_entries [i].usVddci)
                             }
                             ));
                         }
@@ -1831,7 +1895,7 @@ namespace PolarisBiosEditor
                     var mv = (int)int32.ConvertFromString(value);
 
                     atom_mclk_entries[i].ulMclk = (UInt32)mhz;
-                    atom_mclk_entries[i].usMvdd = (UInt16)mv;
+                    //atom_mclk_entries[i].usVddci = (UInt16)mv;//usVddci assignment requires edits in several places
                 }
 
                 updateVRAM_entries();

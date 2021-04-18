@@ -297,7 +297,7 @@ namespace PolarisBiosEditor
             this.boxMEM.Size = new System.Drawing.Size(260, 124);
             this.boxMEM.TabIndex = 0;
             this.boxMEM.TabStop = false;
-            this.boxMEM.Text = "MEMORY";
+            this.boxMEM.Text = "MEMORY(Vddci)";
             // 
             // tableMEMORY
             // 
@@ -320,7 +320,7 @@ namespace PolarisBiosEditor
             // 
             // columnHeader14
             // 
-            this.columnHeader14.Text = "mV";
+            this.columnHeader14.Text = "mV(Edits will be ignored, use hexedit to edit in two places)";
             // 
             // boxVRAM
             // 
