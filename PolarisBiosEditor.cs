@@ -98,7 +98,7 @@ namespace PolarisBiosEditor
 
         /* DATA */
 
-        string version = "1.7xml";
+        string version = "1.7xml-2021.05";
         string programTitle = "PolarisBiosEditor";
 
 
@@ -1075,18 +1075,18 @@ namespace PolarisBiosEditor
 #endif
             Console.WriteLine("Open a AMD Polaris VBIOS file to see it's some detalied info as XML in this console");
 
-            rc.Add("MT51J256M3", "MICRON");
-            rc.Add("EDW4032BAB", "ELPIDA");
-            rc.Add("H5GC4H24AJ", "HYNIX_1");
-            rc.Add("H5GQ4H24AJ", "HYNIX_2");
-            rc.Add("H5GQ8H24MJ", "HYNIX_2");
-            rc.Add("H5GC8H24MJ", "HYNIX_3");
-            rc.Add("H5GC8H24AJ", "HYNIX_4");
-            rc.Add("K4G80325FB", "SAMSUNG");
-            rc.Add("K4G41325FE", "SAMSUNG");
-            rc.Add("K4G41325FC", "SAMSUNG");
-            rc.Add("K4G41325FS", "SAMSUNG");
-            rc.Add("K4G80325FC", "SAMSUNG4");
+            rc.Add("MT51J256M3", "MICRON-8G");
+            rc.Add("EDW4032BAB", "ELPIDA-4G");
+            rc.Add("H5GC4H24AJ", "HYNIX_1-4G");
+            rc.Add("H5GQ4H24AJ", "HYNIX_2-4G");
+            rc.Add("H5GQ8H24MJ", "HYNIX_2-8G");
+            rc.Add("H5GC8H24MJ", "HYNIX_3-8G");
+            rc.Add("H5GC8H24AJ", "HYNIX_4-8G");
+            rc.Add("K4G80325FB", "SAMSUNG-B-8G");
+            rc.Add("K4G41325FE", "SAMSUNG-E-4G");
+            rc.Add("K4G41325FC", "SAMSUNG-C-4G");
+            rc.Add("K4G41325FS", "SAMSUNG-S-4G");
+            rc.Add("K4G80325FC", "SAMSUNG4-C-8G");
 
             save.Enabled = false;
             boxROM.Enabled = false;
