@@ -1,3 +1,5 @@
+## If you want to buy PolarisBiosEditor pro performance contact me on mail shomi199870@gmail.com, all infos on mail..
+
 # PolarisBiosEditor v1.7.3
 
 BTC donation address: 181dtEjhFWWxvHDmx2R3N41rnRPedSEUf5
