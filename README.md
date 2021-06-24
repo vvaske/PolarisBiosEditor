@@ -1,4 +1,4 @@
-## If you want to buy PolarisBiosEditor pro performance contact me on mail shomi199870@gmail.com, all infos on mail..
+## If you want to buy PolarisBiosEditor pro performance go to https://shop.st0rm.pro/
 
 # PolarisBiosEditor v1.7.3
 
