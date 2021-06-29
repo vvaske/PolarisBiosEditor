@@ -1668,7 +1668,7 @@ namespace PolarisBiosEditor
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.miningbios.com/product/polaris-bios-editor-3-4-1-srbpolaris-style/");
+            System.Diagnostics.Process.Start("https://shop.st0rm.pro/product/polarisbioseditor-pro-performance-legacy-style/");
         }
     }
 }
