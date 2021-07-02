@@ -1,6 +1,6 @@
 ## If you want to buy PolarisBiosEditor pro performance go to https://shop.st0rm.pro/
 
-# PolarisBiosEditor v1.7.3
+# PolarisBiosEditor v2.0 New UI
 
 BTC donation address: 181dtEjhFWWxvHDmx2R3N41rnRPedSEUf5
 
