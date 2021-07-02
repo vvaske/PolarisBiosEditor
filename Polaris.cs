@@ -1,18 +1,19 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Linq;
 using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PolarisBiosEditor
 {
-    public partial class PolarisBiosEditor : Form
+    public partial class Polaris : Form
     {
 
         /* DATA */
@@ -21,7 +22,7 @@ namespace PolarisBiosEditor
         string programTitle = "PolarisBiosEditor";
 
 
-        string[] manufacturers = new string[] 
+        string[] manufacturers = new string[]
         {
             "SAMSUNG",
             "ELPIDA",
@@ -31,7 +32,7 @@ namespace PolarisBiosEditor
 
         string[] supportedDeviceID = new string[] { "67DF", "67EF", "1002", "67FF", "699F" };
 
-        string[] timings = new string[] 
+        string[] timings = new string[]
         {
     	
         // UberMix 3.1
@@ -476,7 +477,7 @@ namespace PolarisBiosEditor
             }
         }
 
-        public PolarisBiosEditor()
+        public Polaris()
         {
             InitializeComponent();
             this.Text = this.programTitle + " " + this.version + " " + "Tweaked By VASKE";
@@ -488,7 +489,8 @@ namespace PolarisBiosEditor
                 Stream myStream = myWebClient.OpenRead("https://raw.githubusercontent.com/vvaske/PolarisBiosEditor/master/version");
                 StreamReader sr = new StreamReader(myStream);
                 string newVersion = sr.ReadToEnd().Trim();
-                if (!newVersion.Equals(version)) {
+                if (!newVersion.Equals(version))
+                {
                     MessageBox.Show("There is a new version available! " + version + " -> " + newVersion);
                 }
                 myStream.Close();
@@ -513,7 +515,9 @@ namespace PolarisBiosEditor
 
                 hasInternetAccess = true;
 
-            } catch (System.Net.WebException) {
+            }
+            catch (System.Net.WebException)
+            {
                 this.Text += " (offline mode)";
             }
 
@@ -620,15 +624,20 @@ namespace PolarisBiosEditor
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset+2;
+                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset + 2;
                         while (ptr != -1)
                         {
                             Char c = (Char)buffer[ptr];
-                            if (c == '\0') {
+                            if (c == '\0')
+                            {
                                 ptr = -1;
-                            } else if(c == '\n' || c == '\r') {
+                            }
+                            else if (c == '\n' || c == '\r')
+                            {
                                 ptr++;
-                            } else {
+                            }
+                            else
+                            {
                                 sb.Append(c);
                                 ptr++;
                             }
@@ -783,7 +792,7 @@ namespace PolarisBiosEditor
                             Convert.ToString (atom_powertune_table.usClockStretchAmount)
                         }
                         ));
-                        
+
                         tableFAN.Items.Clear();
                         tableFAN.Items.Add(new ListViewItem(new string[] {
                             "Temp. Hysteresis",
@@ -1268,7 +1277,7 @@ namespace PolarisBiosEditor
 
                 BIOS_BootupMessage = txtBIOSBootupMessage.Text.Substring(0, BIOS_BootupMessage.Length);
 
-                setBytesAtPosition(buffer, atom_rom_header.usBIOS_BootupMessageOffset+2, Encoding.ASCII.GetBytes(BIOS_BootupMessage));
+                setBytesAtPosition(buffer, atom_rom_header.usBIOS_BootupMessageOffset + 2, Encoding.ASCII.GetBytes(BIOS_BootupMessage));
                 fixChecksum(true);
                 bw.Write(buffer);
 
@@ -1453,209 +1462,6 @@ namespace PolarisBiosEditor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /*
-            int samsung_index = -1;
-            int micron_index = -1;
-            int elpida_index = -1;
-            int hynix_1_index = -1;
-            int hynix_2_index = -1;
-            int hynix_3_index = -1;
-            for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
-            {
-                string mem_vendor;
-                if (atom_vram_entries[i].strMemPNString[0] != 0)
-                {
-                    var mem_id = Encoding.UTF8.GetString(atom_vram_entries[i].strMemPNString).Substring(0, 10);
-
-                    if (rc.ContainsKey(mem_id))
-                    {
-                        mem_vendor = rc[mem_id];
-                    }
-                    else
-                    {
-                        mem_vendor = "UNKNOWN";
-                    }
-
-                    switch (mem_vendor)
-                    {
-                        case "SAMSUNG":
-                            samsung_index = i;
-                            break;
-                        case "MICRON":
-                            micron_index = i;
-                            break;
-                        case "ELPIDA":
-                            elpida_index = i;
-                            break;
-                        case "HYNIX_1":
-                            hynix_1_index = i;
-                            break;
-                        case "HYNIX_2":
-                            hynix_2_index = i;
-                            break;
-                        case "HYNIX_3":
-                            hynix_3_index = i;
-                            break;
-                    }
-                }
-            }
-            */
-            int samsung_index = -1;
-            int samsung4_index = -1;
-            int micron_index = -1;
-            int elpida_index = -1;
-            int hynix_1_index = -1;
-            int hynix_2_index = -1;
-            int hynix_3_index = -1;
-            int hynix_4_index = -1;
-            for (int index = 0; index < (int)this.atom_vram_info.ucNumOfVRAMModule; ++index)
-            {
-                if ((int)this.atom_vram_entries[index].strMemPNString[0] != 0)
-                {
-                    string key = Encoding.UTF8.GetString(this.atom_vram_entries[index].strMemPNString).Substring(0, 10);
-                    string str = !this.rc.ContainsKey(key) ? "[ UNKNOWN ]" : this.rc[key];
-                    if (!(str == "SAMSUNG"))
-                    {
-                        if (!(str == "MICRON"))
-                        {
-                            if (!(str == "ELPIDA"))
-                            {
-                                if (!(str == "HYNIX_1"))
-                                {
-                                    if (!(str == "HYNIX_2"))
-                                    {
-                                        if (!(str == "HYNIX_3"))
-                                        {
-                                            if (!(str == "HYNIX_4"))
-                                            {
-                                                if (str == "SAMSUNG4")
-                                                    samsung4_index = index;
-                                            }
-                                            else
-                                                hynix_4_index = index;
-                                        }
-                                        else
-                                            hynix_3_index = index;
-                                    }
-                                    else
-                                        hynix_2_index = index;
-                                }
-                                else
-                                    hynix_1_index = index;
-                            }
-                            else
-                                elpida_index = index;
-                        }
-                        else
-                            micron_index = index;
-                    }
-                    else
-                        samsung_index = index;
-                }
-            }
-
-            if (samsung_index != -1)
-            {
-                if (MessageBox.Show("Do you want faster Uber-mix 3.1?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.1 timings to 1750+ strap(s)");
-                    this.apply_timings1(samsung_index, 0);
-                }
-                else
-                {
-                    int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.2 timings to 1750+ strap(s)");
-                    this.apply_timings1(samsung_index, 1);
-                }
-            }
-
-            if (samsung4_index != -1)
-            {
-                if (MessageBox.Show("Do you want pro Samsung timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    MessageBox.Show("Samsung4 Memory found at index #" + (object)samsung4_index + ", now applying pro Samsung 30Mh/s timings to 1750+ strap(s)");
-                    this.apply_timings1(samsung4_index, 10);
-                    MessageBox.Show("Little help for testing timing, set Core clock to 1150mhz and Memory clock to 2100mhz", "Hint!");
-                }
-                else
-                {
-                    MessageBox.Show("Samsung4 Memory found at index #" + (object)samsung4_index + ", now applying Samsung4 basic 29Mh/s timings to 1750+ strap(s)");
-                    this.apply_timings1(samsung4_index, 11);
-                }
-            }
-
-            if (hynix_3_index != -1)
-            {
-                if (MessageBox.Show("Do you want Universal Hynix Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    MessageBox.Show("Hynix (3) Memory found at index #" + hynix_3_index + ", now applying Universal HYNIX MINING timings to 1500+ strap(s)");
-                    apply_timings(hynix_3_index, 8);
-                }
-                else
-                {
-                    MessageBox.Show("Hynix (3) Memory found at index #" + hynix_3_index + ", now applying GOOD HYNIX MINING timings to 1500+ strap(s)");
-                    apply_timings(hynix_3_index, 2);
-                }
-            }
-
-            if (hynix_2_index != -1)
-            {
-                if (MessageBox.Show("Do you want Universal Hynix Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    MessageBox.Show("Hynix (2) Memory found at index #" + hynix_2_index + ", now applying Universal HYNIX MINING timings to 1500+ strap(s)");
-                    apply_timings(hynix_2_index, 8);
-                }
-                else
-                {
-                   int num = (int)MessageBox.Show("Hynix (2) Memory found at index #" + (object)hynix_2_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
-                   this.apply_timings(hynix_2_index, 3);
-                }
-            }
-
-            if (hynix_4_index != -1)
-            {
-                if (MessageBox.Show("Do you want Universal Hynix Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    MessageBox.Show("Hynix (2) Memory found at index #" + hynix_4_index + ", now applying Universal HYNIX MINING timings to 1500+ strap(s)");
-                    apply_timings(hynix_4_index, 8);
-                }
-                else
-                {
-                    int num = (int)MessageBox.Show("Hynix (4) Memory found at index #" + (object)hynix_4_index + ", now applying Hynix timings to 1500+ strap(s)");
-                    this.apply_timings(hynix_4_index, 9);
-                }
-            }
-
-            if (micron_index != -1)
-            {
-                if (MessageBox.Show("Do you want Good Micron Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    int num = (int)MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying Good Micron timings to 1500+ strap(s)");
-                    this.apply_timings(micron_index, 4);
-                }
-                else
-                {
-                    int num = (int)MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying S Micron timings to 1500+ strap(s)");
-                    this.apply_timings(micron_index, 5);
-                }
-            }
-
-            if (hynix_1_index != -1)
-            {
-                MessageBox.Show("Hynix (1) Memory found at index #" + hynix_1_index + ", now applying GOOD HYNIX MINING timings to 1500+ strap(s)");
-                apply_timings(hynix_1_index, 6);
-            }
-
-            if (elpida_index != -1)
-            {
-                MessageBox.Show("Elpida Memory found at index #" + elpida_index + ", now applying GOOD ELPIDA MINING timings to 1500+ strap(s)");
-                apply_timings(elpida_index, 7);
-            }
-            if (samsung4_index == -1 && samsung_index == -1 && hynix_2_index == -1 && hynix_3_index == -1 && hynix_1_index == -1 && elpida_index == -1 && micron_index == -1)
-            {
-                MessageBox.Show("Sorry, no supported memory found. If you think this is an error, please file a bugreport @ github.com/vvaske/PolarisBiosEditor");
-            }
-
-            this.tablePOWERPLAY.Items[1].SubItems[1].Text = "2300";
 
         }
 

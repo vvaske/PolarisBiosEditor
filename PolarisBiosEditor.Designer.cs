@@ -135,6 +135,7 @@ namespace PolarisBiosEditor
             this.columnHeader2});
             this.tableROM.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableROM.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableROM.HideSelection = false;
             this.tableROM.Location = new System.Drawing.Point(3, 16);
             this.tableROM.Name = "tableROM";
             this.tableROM.Size = new System.Drawing.Size(259, 121);
@@ -168,6 +169,7 @@ namespace PolarisBiosEditor
             this.columnHeader4});
             this.tablePOWERPLAY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablePOWERPLAY.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tablePOWERPLAY.HideSelection = false;
             this.tablePOWERPLAY.Location = new System.Drawing.Point(3, 16);
             this.tablePOWERPLAY.Name = "tablePOWERPLAY";
             this.tablePOWERPLAY.Size = new System.Drawing.Size(259, 138);
@@ -203,6 +205,7 @@ namespace PolarisBiosEditor
             this.columnHeader5,
             this.columnHeader6});
             this.tablePOWERTUNE.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tablePOWERTUNE.HideSelection = false;
             this.tablePOWERTUNE.Location = new System.Drawing.Point(3, 16);
             this.tablePOWERTUNE.Name = "tablePOWERTUNE";
             this.tablePOWERTUNE.Size = new System.Drawing.Size(254, 233);
@@ -238,6 +241,7 @@ namespace PolarisBiosEditor
             this.columnHeader9,
             this.columnHeader10});
             this.tableFAN.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableFAN.HideSelection = false;
             this.tableFAN.Location = new System.Drawing.Point(3, 16);
             this.tableFAN.Name = "tableFAN";
             this.tableFAN.Size = new System.Drawing.Size(259, 263);
@@ -270,6 +274,7 @@ namespace PolarisBiosEditor
             this.columnHeader12});
             this.tableGPU.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableGPU.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableGPU.HideSelection = false;
             this.tableGPU.Location = new System.Drawing.Point(3, 16);
             this.tableGPU.Name = "tableGPU";
             this.tableGPU.Size = new System.Drawing.Size(254, 184);
@@ -302,6 +307,7 @@ namespace PolarisBiosEditor
             this.columnHeader14});
             this.tableMEMORY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableMEMORY.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableMEMORY.HideSelection = false;
             this.tableMEMORY.Location = new System.Drawing.Point(3, 16);
             this.tableMEMORY.Name = "tableMEMORY";
             this.tableMEMORY.Size = new System.Drawing.Size(254, 105);
@@ -341,6 +347,7 @@ namespace PolarisBiosEditor
             this.columnHeader15,
             this.columnHeader16});
             this.tableVRAM_TIMING.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableVRAM_TIMING.HideSelection = false;
             this.tableVRAM_TIMING.Location = new System.Drawing.Point(3, 209);
             this.tableVRAM_TIMING.Name = "tableVRAM_TIMING";
             this.tableVRAM_TIMING.Size = new System.Drawing.Size(262, 373);
@@ -377,6 +384,7 @@ namespace PolarisBiosEditor
             this.columnHeader7,
             this.columnHeader8});
             this.tableVRAM.Font = new System.Drawing.Font("Courier New", 8.25F);
+            this.tableVRAM.HideSelection = false;
             this.tableVRAM.Location = new System.Drawing.Point(3, 43);
             this.tableVRAM.Name = "tableVRAM";
             this.tableVRAM.Size = new System.Drawing.Size(262, 160);
@@ -427,9 +435,9 @@ namespace PolarisBiosEditor
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(558, 642);
+            this.button1.Location = new System.Drawing.Point(566, 629);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(241, 23);
+            this.button1.Size = new System.Drawing.Size(242, 53);
             this.button1.TabIndex = 4;
             this.button1.Text = "ONE CLICK TIMING PATCH";
             this.button1.UseVisualStyleBackColor = true;
@@ -437,6 +445,7 @@ namespace PolarisBiosEditor
             // 
             // linkLabel1
             // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.LinkColor = System.Drawing.Color.Red;
