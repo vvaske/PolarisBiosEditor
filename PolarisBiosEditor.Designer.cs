@@ -300,7 +300,7 @@ namespace PolarisBiosEditor
          this.boxMEM.Size = new System.Drawing.Size(260, 124);
          this.boxMEM.TabIndex = 0;
          this.boxMEM.TabStop = false;
-         this.boxMEM.Text = "VDDCI Edit by hex editor: adjust mV AND index";
+         this.boxMEM.Text = "vddci:edit by hex editor-adjust mV AND index";
          // 
          // tableMEMORY
          // 

@@ -102,14 +102,6 @@ namespace PolarisBiosEditor
         string programTitle = "PolarisBiosEditor";
 
 
-        string[] manufacturers = new string[]
-        {
-            "SAMSUNG",
-            "ELPIDA",
-            "HYNIX",
-            "MICRON"
-        };
-
         string[] supportedID = new string[] { "67DF", "67EF", "1002", "67FF", "699F" };
 
         string[] timings = new string[]
@@ -236,8 +228,8 @@ namespace PolarisBiosEditor
             public Byte ucExtendedFunctionCode;
             public Byte ucReserved;
             public UInt32 ulPSPDirTableOffset;
-            public UInt16 usDeviceID;
             public UInt16 usVendorID;
+            public UInt16 usDeviceID;
         }
 
         String BIOS_BootupMessage;
@@ -1185,7 +1177,7 @@ namespace PolarisBiosEditor
 
                 atom_rom_header_offset = getValueAtPosition(16, ATOM_ROM_HEADER_PTR);
                 atom_rom_header = Reader<ATOM_ROM_HEADER>(atom_rom_header_offset).ReadPrint();
-                string vendorId = atom_rom_header.usVendorID.ToString("X");
+                string deviceId = atom_rom_header.usDeviceID.ToString("X");
                 fixChecksum(false);
 
                 String firmwareSignature = new string(atom_rom_header.uaFirmWareSignature);
@@ -1194,9 +1186,9 @@ namespace PolarisBiosEditor
                     MessageBox.Show("WARNING! BIOS Signature is not valid. Only continue if you are 100% sure what you are doing!");
                 }
 
-                if (!supportedID.Contains(vendorId))
+                if (!supportedID.Contains(deviceId))
                 {
-                    MessageBox.Show("Unsupported DeviceID 0x" + vendorId + " - Continue?", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Unsupported DeviceID 0x" + deviceId + " - Continue?", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
@@ -2283,12 +2275,12 @@ namespace PolarisBiosEditor
             {
                 if (MessageBox.Show("Do you want faster Uber-mix 3.1?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.1 timings to 1750+ strap(s)");
+                    MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.1 timings to 1750+ strap(s)");
                     this.apply_timings1(samsung_index, 0);
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.2 timings to 1750+ strap(s)");
+                    MessageBox.Show("Samsung Memory found at index #" + (object)samsung_index + ", now applying UBERMIX 3.2 timings to 1750+ strap(s)");
                     this.apply_timings1(samsung_index, 1);
                 }
             }
@@ -2331,7 +2323,7 @@ namespace PolarisBiosEditor
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Hynix (2) Memory found at index #" + (object)hynix_2_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
+                    MessageBox.Show("Hynix (2) Memory found at index #" + (object)hynix_2_index + ", now applying GOOD Hynix timings to 1500+ strap(s)");
                     this.apply_timings(hynix_2_index, 3);
                 }
             }
@@ -2345,7 +2337,7 @@ namespace PolarisBiosEditor
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Hynix (4) Memory found at index #" + (object)hynix_4_index + ", now applying Hynix timings to 1500+ strap(s)");
+                    MessageBox.Show("Hynix (4) Memory found at index #" + (object)hynix_4_index + ", now applying Hynix timings to 1500+ strap(s)");
                     this.apply_timings(hynix_4_index, 9);
                 }
             }
@@ -2354,12 +2346,12 @@ namespace PolarisBiosEditor
             {
                 if (MessageBox.Show("Do you want Good Micron Timing?", "Important Question", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    int num = (int)MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying Good Micron timings to 1500+ strap(s)");
+                    MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying Good Micron timings to 1500+ strap(s)");
                     this.apply_timings(micron_index, 4);
                 }
                 else
                 {
-                    int num = (int)MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying S Micron timings to 1500+ strap(s)");
+                    MessageBox.Show("Micron Memory found at index #" + (object)micron_index + ", now applying S Micron timings to 1500+ strap(s)");
                     this.apply_timings(micron_index, 5);
                 }
             }
