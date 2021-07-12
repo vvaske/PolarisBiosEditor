@@ -98,7 +98,7 @@ namespace PolarisBiosEditor
 
         /* DATA */
 
-        string version = "1.7xml-2021.05";
+        string version = "1.7xml-2021.07";
         string programTitle = "PolarisBiosEditor";
 
 
@@ -1545,7 +1545,9 @@ namespace PolarisBiosEditor
             {
                 tableMEMORY.Items.Add(new ListViewItem(new string[] {
                              Convert.ToString (atom_mclk_entries [i].ulMclk / 100),
-                             Convert.ToString (atom_mclk_entries [i].usVddci)
+                             "",
+                             Convert.ToString (atom_mclk_entries [i].usVddci),
+                             Convert.ToString (atom_mclk_entries [i].ucVddcInd)
                           }
                 ));
             }
@@ -1930,12 +1932,9 @@ namespace PolarisBiosEditor
                 {
                     ListViewItem container = tableMEMORY.Items[i];
                     var name = container.Text;
-                    var value = container.SubItems[1].Text;
                     var mhz = (int)int32.ConvertFromString(name) * 100;
-                    var mv = (int)int32.ConvertFromString(value);
 
                     atom_mclk_entries[i].ulMclk = (UInt32)mhz;
-                    //atom_mclk_entries[i].usVddci = (UInt16)mv;//usVddci assignment requires edits in several places
                 }
 
                 updateVRAM_entries();
