@@ -887,11 +887,15 @@ namespace PolarisBiosEditor
 
                 return obj;
             }
-            public T ReadPrint()
+            public T ReadPrint(string name="")
             {
                 T result = Read();
                 int size = Marshal.SizeOf(typeof(T));
-                editor.Print(result, "of", string.Format("0x{0:X}-0x{1:X}  len=0x{2:X}={2}", buffer.Offset, buffer.Offset + size, size));
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    name = " Name=" + name;
+                }
+                editor.Print(result, "of", string.Format("0x{0:X}-0x{1:X}  len=0x{2:X}={2}{3}", buffer.Offset, buffer.Offset + size, size, name));
                 return result;
             }
             public void Jump1Structure()
@@ -1202,34 +1206,17 @@ namespace PolarisBiosEditor
                         txtBIOSBootupMessage.MaxLength = BIOS_BootupMessage.Length;
 
                         atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
+
+                        ReadPrintTable<ATOM_GPIO_I2C_INFO, ATOM_GPIO_I2C_ASSIGMENT>(atom_data_table.GPIO_I2C_Info,
+                            (i2c_info_table, i) => i < (i2c_info_table.sHeader.usStructureSize - Marshal.SizeOf(i2c_info_table.sHeader)) / Marshal.SizeOf<ATOM_GPIO_I2C_ASSIGMENT>(),
+                            i2c_assigment => Marshal.SizeOf(i2c_assigment)
+                            );
+
                         atom_powerplay_offset = atom_data_table.PowerPlayInfo;
                         atom_powerplay_table = Reader<ATOM_POWERPLAY_TABLE>(atom_powerplay_offset).ReadPrint();
 
-                        atom_powertune_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usPowerTuneTableOffset;
-                        atom_powertune_table = Reader<ATOM_Polaris_PowerTune_Table>(atom_powertune_offset).ReadPrint();
-                        Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
-
-                        atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
-                        atom_fan_table = Reader<ATOM_FAN_TABLE>(atom_fan_offset).ReadPrint();
-
-                        atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
-                        atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint();
-                        atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
-                        for (var i = 0; i < atom_mclk_entries.Length; i++)
-                        {
-                            atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
-                        }
-
-                        atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
-                        atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint();
-                        atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
-                        for (var i = 0; i < atom_sclk_entries.Length; i++)
-                        {
-                            atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
-                        }
-
                         atom_vddc_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddcLookupTableOffset;
-                        atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint();
+                        atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint("VddcLookupTable");
                         atom_vddc_entries = new ATOM_VOLTAGE_ENTRY[atom_vddc_table.ucNumEntries];
                         for (var i = 0; i < atom_vddc_table.ucNumEntries; i++)
                         {
@@ -1237,10 +1224,26 @@ namespace PolarisBiosEditor
                         }
 
                         var atom_vddgfx_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddgfxLookupTableOffset;
-                        var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint();
+                        var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint("VddgfxLookupTable");
                         for (var i = 0; i < atom_vddgfx_table.ucNumEntries; i++)
                         {
                             Reader<ATOM_VOLTAGE_ENTRY>(atom_vddgfx_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                        }
+
+                        atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
+                        atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint("SclkDependencyTable");
+                        atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
+                        for (var i = 0; i < atom_sclk_entries.Length; i++)
+                        {
+                            atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
+                        }
+
+                        atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
+                        atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint("MclkDependencyTable");
+                        atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
+                        for (var i = 0; i < atom_mclk_entries.Length; i++)
+                        {
+                            atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
                         }
 
                         var atom_mm_dependency_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMMDependencyTableOffset;
@@ -1249,6 +1252,23 @@ namespace PolarisBiosEditor
                         {
                             Reader<ATOM_MM_DEPENDENCY_RECORD>(atom_mm_dependency_table_offset + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_TABLE)) + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_RECORD)) * i).ReadPrint();
                         }
+
+                        atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
+                        atom_fan_table = Reader<ATOM_FAN_TABLE>(atom_fan_offset).ReadPrint();
+
+                        atom_powertune_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usPowerTuneTableOffset;
+                        atom_powertune_table = Reader<ATOM_Polaris_PowerTune_Table>(atom_powertune_offset).ReadPrint();
+                        Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
+
+                        var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
+
+                        ReadPrintObjectTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
+                        Print("Connectors:");
+                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        Print("Encoders:");
+                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        Print("Routers:");
+                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
 
                         atom_vram_info_offset = atom_data_table.VRAM_Info;
                         atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
@@ -1259,7 +1279,6 @@ namespace PolarisBiosEditor
                             atom_vram_entries[i] = atom_vram_entry_reader.ReadPrint();
                             atom_vram_entry_reader.Jump(atom_vram_entries[i].usModuleSize);
                         }
-                        Print("End of mem\n");
 
                         atom_vram_timing_offset = atom_vram_info_offset + atom_vram_info.usMemClkPatchTblOffset + 0x2E;
                         atom_vram_timing_entries = new ATOM_VRAM_TIMING_ENTRY[MAX_VRAM_ENTRIES];
@@ -1275,16 +1294,6 @@ namespace PolarisBiosEditor
                                 break;
                             }
                         }
-
-                        var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
-
-                        ReadPrintObjectTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
-                        Print("Encoders:");
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                        Print("Connectors:");
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                        Print("Routers:");
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
 
                         var used_volt_obffset = 0;
 
@@ -1322,11 +1331,6 @@ namespace PolarisBiosEditor
                                 }
                                 reader.Jump(volt_object_header.usSize);
                             }
-                            );
-
-                        ReadPrintTable<ATOM_GPIO_I2C_INFO, ATOM_GPIO_I2C_ASSIGMENT>(atom_data_table.GPIO_I2C_Info,
-                            (i2c_info_table, i) => i < (i2c_info_table.sHeader.usStructureSize - Marshal.SizeOf(i2c_info_table.sHeader)) / Marshal.SizeOf<ATOM_GPIO_I2C_ASSIGMENT>(),
-                            i2c_assigment => Marshal.SizeOf(i2c_assigment)
                             );
 
                         tableROM.Items.Add(new ListViewItem(new string[] {
