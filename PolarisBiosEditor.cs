@@ -165,8 +165,11 @@ namespace PolarisBiosEditor
         Int32Converter int32 = new Int32Converter();
         UInt32Converter uint32 = new UInt32Converter();
 
-        int atom_rom_checksum_offset = 0x21;
-        int atom_rom_header_ptr = 0x48;
+        const int ATOM_ROM_CHECKSUM_OFFSET = 0x21;
+        const int ATOM_ROM_HEADER_PTR = 0x48;
+
+        #region VBIOS-fields-kept-for-later-saving
+
         int atom_rom_header_offset;
         ATOM_ROM_HEADER atom_rom_header;
         ATOM_DATA_TABLES atom_data_table;
@@ -196,7 +199,9 @@ namespace PolarisBiosEditor
         ATOM_VRAM_INFO atom_vram_info;
         ATOM_VRAM_ENTRY[] atom_vram_entries;
         ATOM_VRAM_TIMING_ENTRY[] atom_vram_timing_entries;
-        int atom_vram_index = 0;
+        #endregion VBIOS-fields-kept-for-later-saving
+
+        int atom_vram_index = 0; // index selected in supported memory list
         const int MAX_VRAM_ENTRIES = 48; // e.g. MSI-Armor-RX-580-4GB has 36 entries
         int atom_vram_timing_offset;
 
@@ -1161,7 +1166,7 @@ namespace PolarisBiosEditor
                 {
                     buffer = br.ReadBytes((int)fileStream.Length);
 
-                    atom_rom_header_offset = getValueAtPosition(16, atom_rom_header_ptr);
+                    atom_rom_header_offset = getValueAtPosition(16, ATOM_ROM_HEADER_PTR);
                     atom_rom_header = Reader<ATOM_ROM_HEADER>(atom_rom_header_offset).ReadPrint();
                     string vendorId = atom_rom_header.usVendorID.ToString("X");
                     fixChecksum(false);
@@ -1172,390 +1177,388 @@ namespace PolarisBiosEditor
                         MessageBox.Show("WARNING! BIOS Signature is not valid. Only continue if you are 100% sure what you are doing!");
                     }
 
-                    DialogResult msgSuported = DialogResult.Yes;
                     if (!supportedID.Contains(vendorId))
                     {
-                        msgSuported = MessageBox.Show("Unsupported DeviceID 0x" + vendorId + " - Continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        MessageBox.Show("Unsupported DeviceID 0x" + vendorId + " - Continue?", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    if (msgSuported == DialogResult.Yes)
+
+                    atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
+
+                    ReadPrintTable<ATOM_GPIO_I2C_INFO, ATOM_GPIO_I2C_ASSIGMENT>(atom_data_table.GPIO_I2C_Info,
+                          (i2c_info_table, i) => i < (i2c_info_table.sHeader.usStructureSize - Marshal.SizeOf(i2c_info_table.sHeader)) / Marshal.SizeOf<ATOM_GPIO_I2C_ASSIGMENT>(),
+                          i2c_assigment => Marshal.SizeOf(i2c_assigment)
+                          );
+
+                    atom_powerplay_offset = atom_data_table.PowerPlayInfo;
+                    atom_powerplay_table = Reader<ATOM_POWERPLAY_TABLE>(atom_powerplay_offset).ReadPrint();
+
+                    atom_vddc_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddcLookupTableOffset;
+                    atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint("VddcLookupTable");
+                    atom_vddc_entries = new ATOM_VOLTAGE_ENTRY[atom_vddc_table.ucNumEntries];
+                    for (var i = 0; i < atom_vddc_table.ucNumEntries; i++)
                     {
-                        StringBuilder sb = new StringBuilder();
-
-                        Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset + 2;
-                        while (ptr != -1)
-                        {
-                            Char c = (Char)buffer[ptr];
-                            if (c == '\0')
-                            {
-                                ptr = -1;
-                            }
-                            else if (c == '\n' || c == '\r')
-                            {
-                                ptr++;
-                            }
-                            else
-                            {
-                                sb.Append(c);
-                                ptr++;
-                            }
-                        }
-
-                        BIOS_BootupMessage = sb.ToString();
-
-                        txtBIOSBootupMessage.Text = BIOS_BootupMessage;
-                        txtBIOSBootupMessage.MaxLength = BIOS_BootupMessage.Length;
-
-                        atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
-
-                        ReadPrintTable<ATOM_GPIO_I2C_INFO, ATOM_GPIO_I2C_ASSIGMENT>(atom_data_table.GPIO_I2C_Info,
-                            (i2c_info_table, i) => i < (i2c_info_table.sHeader.usStructureSize - Marshal.SizeOf(i2c_info_table.sHeader)) / Marshal.SizeOf<ATOM_GPIO_I2C_ASSIGMENT>(),
-                            i2c_assigment => Marshal.SizeOf(i2c_assigment)
-                            );
-
-                        atom_powerplay_offset = atom_data_table.PowerPlayInfo;
-                        atom_powerplay_table = Reader<ATOM_POWERPLAY_TABLE>(atom_powerplay_offset).ReadPrint();
-
-                        atom_vddc_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddcLookupTableOffset;
-                        atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint("VddcLookupTable");
-                        atom_vddc_entries = new ATOM_VOLTAGE_ENTRY[atom_vddc_table.ucNumEntries];
-                        for (var i = 0; i < atom_vddc_table.ucNumEntries; i++)
-                        {
-                            atom_vddc_entries[i] = Reader<ATOM_VOLTAGE_ENTRY>(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
-                        }
-
-                        var atom_vddgfx_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddgfxLookupTableOffset;
-                        var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint("VddgfxLookupTable");
-                        for (var i = 0; i < atom_vddgfx_table.ucNumEntries; i++)
-                        {
-                            Reader<ATOM_VOLTAGE_ENTRY>(atom_vddgfx_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
-                        }
-
-                        atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
-                        atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint("SclkDependencyTable");
-                        atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
-                        for (var i = 0; i < atom_sclk_entries.Length; i++)
-                        {
-                            atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
-                        }
-
-                        atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
-                        atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint("MclkDependencyTable");
-                        atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
-                        for (var i = 0; i < atom_mclk_entries.Length; i++)
-                        {
-                            atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
-                        }
-
-                        var atom_mm_dependency_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMMDependencyTableOffset;
-                        var atom_mm_dependency_table = Reader<ATOM_MM_DEPENDENCY_TABLE>(atom_mm_dependency_table_offset).ReadPrint();
-                        for (var i = 0; i < atom_mm_dependency_table.ucNumEntries; i++)
-                        {
-                            Reader<ATOM_MM_DEPENDENCY_RECORD>(atom_mm_dependency_table_offset + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_TABLE)) + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_RECORD)) * i).ReadPrint();
-                        }
-
-                        atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
-                        atom_fan_table = Reader<ATOM_FAN_TABLE>(atom_fan_offset).ReadPrint();
-
-                        atom_powertune_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usPowerTuneTableOffset;
-                        atom_powertune_table = Reader<ATOM_Polaris_PowerTune_Table>(atom_powertune_offset).ReadPrint();
-                        Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
-
-                        var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
-
-                        ReadPrintObjectTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
-                        Print("Connectors:");
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                        Print("Encoders:");
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                        Print("Routers:");
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-
-                        atom_vram_info_offset = atom_data_table.VRAM_Info;
-                        atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
-                        atom_vram_entries = new ATOM_VRAM_ENTRY[atom_vram_info.ucNumOfVRAMModule];
-                        var atom_vram_entry_reader = Reader<ATOM_VRAM_ENTRY>(atom_vram_info_offset + Marshal.SizeOf(typeof(ATOM_VRAM_INFO)));
-                        for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
-                        {
-                            atom_vram_entries[i] = atom_vram_entry_reader.ReadPrint();
-                            atom_vram_entry_reader.Jump(atom_vram_entries[i].usModuleSize);
-                        }
-
-                        atom_vram_timing_offset = atom_vram_info_offset + atom_vram_info.usMemClkPatchTblOffset + 0x2E;
-                        atom_vram_timing_entries = new ATOM_VRAM_TIMING_ENTRY[MAX_VRAM_ENTRIES];
-                        for (var i = 0; i < MAX_VRAM_ENTRIES; i++)
-                        {
-                            atom_vram_timing_entries[i] = Reader<ATOM_VRAM_TIMING_ENTRY>(atom_vram_timing_offset + Marshal.SizeOf(typeof(ATOM_VRAM_TIMING_ENTRY)) * i).ReadPrint();
-
-                            // atom_vram_timing_entries have an undetermined length
-                            // attempt to determine the last entry in the array
-                            if (atom_vram_timing_entries[i].ulClkRange == 0)
-                            {
-                                Array.Resize(ref atom_vram_timing_entries, i);
-                                break;
-                            }
-                        }
-
-                        var used_volt_obffset = 0;
-
-                        ReadPrintTableDetailed<ATOM_VOLTAGE_OBJECT_INFO_V3_1, atom_voltage_object_header_v4>(atom_data_table.VoltageObjectInfo,
-                            (volt_table, i) => used_volt_obffset < (volt_table.sHeader.usStructureSize - Marshal.SizeOf(volt_table.sHeader)),
-                            (volt_object_header, reader) =>
-                            {
-                                used_volt_obffset += volt_object_header.usSize;
-                                if (volt_object_header.ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3)
-                                {
-                                    var specialized_reader = ConsecutiveReader<atom_i2c_voltage_object_v4_fields>.From(reader);
-                                    specialized_reader.Jump(Marshal.SizeOf(volt_object_header));
-                                    specialized_reader.ReadPrint();
-                                    specialized_reader.Jump1Structure();
-                                    var detailed_reader = ConsecutiveReader<atom_i2c_data_entry>.From(specialized_reader);
-                                    while(detailed_reader.Read().i2c_reg_index != FINAL_atom_i2c_data_entry.ENDING_INDEX_VALUE)
-                                    {
-                                        detailed_reader.ReadPrint();
-                                        detailed_reader.Jump1Structure();
-                                    }
-                                    ConsecutiveReader<FINAL_atom_i2c_data_entry>.From(detailed_reader).ReadPrint();
-                                }
-                                else if (volt_object_header.ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_GPIO_LUT_0x0)
-                                {
-                                    var specialized_reader = ConsecutiveReader<atom_gpio_voltage_object_v4_fields>.From(reader);
-                                    specialized_reader.Jump(Marshal.SizeOf(volt_object_header));
-                                    var gpio_voltage_fields = specialized_reader.ReadPrint();
-                                    specialized_reader.Jump1Structure();
-                                    var detailed_reader = ConsecutiveReader<atom_voltage_gpio_map_lut>.From(specialized_reader);
-                                    for (var i = 0; i < gpio_voltage_fields.gpio_entry_num; i++)
-                                    {
-                                        detailed_reader.ReadPrint();
-                                        detailed_reader.Jump1Structure();
-                                    }
-                                }
-                                reader.Jump(volt_object_header.usSize);
-                            }
-                            );
-
-                        tableROM.Items.Add(new ListViewItem(new string[] {
-                            "BootupMessageOffset",
-                            "0x" + atom_rom_header.usBIOS_BootupMessageOffset.ToString ("X")
-                        }
-                        ));
-                        tableROM.Items.Add(new ListViewItem(new string[] {
-                            "VendorID",
-                            "0x" + atom_rom_header.usVendorID.ToString ("X")
-                        }
-                        ));
-                        tableROM.Items.Add(new ListViewItem(new string[] {
-                            "DeviceID",
-                            "0x" + atom_rom_header.usDeviceID.ToString ("X")
-                        }
-                        ));
-                        tableROM.Items.Add(new ListViewItem(new string[] {
-                            "Sub ID",
-                            "0x" + atom_rom_header.usSubsystemID.ToString ("X")
-                        }
-                        ));
-                        tableROM.Items.Add(new ListViewItem(new string[] {
-                            "Sub VendorID",
-                            "0x" + atom_rom_header.usSubsystemVendorID.ToString ("X")
-                        }
-                        ));
-                        tableROM.Items.Add(new ListViewItem(new string[] {
-                            "Firmware Signature",
-                            //"0x" + atom_rom_header.uaFirmWareSignature.ToString ("X")
-                            new string(atom_rom_header.uaFirmWareSignature)
-                        }
-                        ));
-
-                        tablePOWERPLAY.Items.Clear();
-                        tablePOWERPLAY.Items.Add(new ListViewItem(new string[] {
-                            "Max GPU Freq. (MHz)",
-                            Convert.ToString (atom_powerplay_table.ulMaxODEngineClock / 100)
-                        }
-                        ));
-                        tablePOWERPLAY.Items.Add(new ListViewItem(new string[] {
-                            "Max Memory Freq. (MHz)",
-                            Convert.ToString (atom_powerplay_table.ulMaxODMemoryClock / 100)
-                        }
-                        ));
-                        tablePOWERPLAY.Items.Add(new ListViewItem(new string[] {
-                            "Power Control Limit (%)",
-                            Convert.ToString (atom_powerplay_table.usPowerControlLimit)
-                        }
-                        ));
-
-                        tablePOWERTUNE.Items.Clear();
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "TDP (W)",
-                            Convert.ToString (atom_powertune_table.usTDP)
-                        }
-                        ));
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "TDC (A)",
-                            Convert.ToString (atom_powertune_table.usTDC)
-                        }
-                        ));
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "Max Power Limit (W)",
-                            Convert.ToString (atom_powertune_table.usMaximumPowerDeliveryLimit)
-                        }
-                        ));
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "Max Temp. (C)",
-                            Convert.ToString (atom_powertune_table.usTjMax)
-                        }
-                        ));
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "Shutdown Temp. (C)",
-                            Convert.ToString (atom_powertune_table.usSoftwareShutdownTemp)
-                        }
-                        ));
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "Hotspot Temp. (C)",
-                            Convert.ToString (atom_powertune_table.usTemperatureLimitHotspot)
-                        }
-                        ));
-                        tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
-                            "Clock Stretch Amount",
-                            Convert.ToString (atom_powertune_table.usClockStretchAmount)
-                        }
-                        ));
-
-                        tableFAN.Items.Clear();
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Temp. Hysteresis",
-                            Convert.ToString (atom_fan_table.ucTHyst)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Min Temp. (C)",
-                            Convert.ToString (atom_fan_table.usTMin / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Med Temp. (C)",
-                            Convert.ToString (atom_fan_table.usTMed / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "High Temp. (C)",
-                            Convert.ToString (atom_fan_table.usTHigh / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Max Temp. (C)",
-                            Convert.ToString (atom_fan_table.usTMax / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Target Temp. (C)",
-                            Convert.ToString (atom_fan_table.ucTargetTemperature)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Legacy or Fuzzy Fan Mode",
-                            Convert.ToString (atom_fan_table.ucFanControlMode)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Min PWM (%)",
-                            Convert.ToString (atom_fan_table.usPWMMin / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Med PWM (%)",
-                            Convert.ToString (atom_fan_table.usPWMMed / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "High PWM (%)",
-                            Convert.ToString (atom_fan_table.usPWMHigh / 100)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Max PWM (%)",
-                            Convert.ToString (atom_fan_table.usFanPWMMax)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Max RPM",
-                            Convert.ToString (atom_fan_table.usFanRPMMax)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Sensitivity",
-                            Convert.ToString (atom_fan_table.usFanOutputSensitivity)
-                        }
-                        ));
-                        tableFAN.Items.Add(new ListViewItem(new string[] {
-                            "Acoustic Limit (MHz)",
-                            Convert.ToString (atom_fan_table.ulMinFanSCLKAcousticLimit / 100)
-                        }
-                        ));
-
-                        tableGPU.Items.Clear();
-                        for (var i = 0; i < atom_sclk_table.ucNumEntries; i++)
-                        {
-                            tableGPU.Items.Add(new ListViewItem(new string[] {
-                                Convert.ToString (atom_sclk_entries [i].ulSclk / 100),
-                                Convert.ToString (atom_vddc_entries [atom_sclk_entries [i].ucVddInd].usVdd)
-                            }
-                            ));
-                        }
-
-                        tableMEMORY.Items.Clear();
-                        for (var i = 0; i < atom_mclk_table.ucNumEntries; i++)
-                        {
-                            tableMEMORY.Items.Add(new ListViewItem(new string[] {
-                                Convert.ToString (atom_mclk_entries [i].ulMclk / 100),
-                                Convert.ToString (atom_mclk_entries [i].usVddci)
-                            }
-                            ));
-                        }
-
-                        listVRAM.Items.Clear();
-                        for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
-                        {
-                            if (atom_vram_entries[i].strMemPNString[0] != 0)
-                            {
-                                var mem_id_full = atom_vram_entries[i].FullName;
-                                var mem_id = mem_id_full.Substring(0, 10);
-                                string mem_vendor;
-                                if (rc.ContainsKey(mem_id))
-                                {
-                                    mem_vendor = rc[mem_id];
-                                }
-                                else
-                                {
-                                    mem_vendor = "UNKNOWN";
-                                }
-
-                                listVRAM.Items.Add(mem_id_full + "-" + mem_vendor);
-                            }
-                        }
-                        listVRAM.SelectedIndex = 0;
-                        atom_vram_index = listVRAM.SelectedIndex;
-
-                        tableVRAM_TIMING.Items.Clear();
-                        for (var i = 0; i < atom_vram_timing_entries.Length; i++)
-                        {
-                            uint tbl = atom_vram_timing_entries[i].ulClkRange >> 24;
-                            tableVRAM_TIMING.Items.Add(new ListViewItem(new string[] {
-                                tbl.ToString () + ":" + (atom_vram_timing_entries [i].ulClkRange & 0x00FFFFFF) / 100,
-                                atom_vram_timing_entries [i].LatencyString
-                            }
-                            ));
-                        }
-
-                        save.Enabled = true;
-                        boxROM.Enabled = true;
-                        boxPOWERPLAY.Enabled = true;
-                        boxPOWERTUNE.Enabled = true;
-                        boxFAN.Enabled = true;
-                        boxGPU.Enabled = true;
-                        boxMEM.Enabled = true;
-                        boxVRAM.Enabled = true;
+                          atom_vddc_entries[i] = Reader<ATOM_VOLTAGE_ENTRY>(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
                     }
-                    fileStream.Close();
+
+                    var atom_vddgfx_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddgfxLookupTableOffset;
+                    var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint("VddgfxLookupTable");
+                    for (var i = 0; i < atom_vddgfx_table.ucNumEntries; i++)
+                    {
+                          Reader<ATOM_VOLTAGE_ENTRY>(atom_vddgfx_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                    }
+
+                    atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
+                    atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint("SclkDependencyTable");
+                    atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
+                    for (var i = 0; i < atom_sclk_entries.Length; i++)
+                    {
+                          atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
+                    }
+
+                    atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
+                    atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint("MclkDependencyTable");
+                    atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
+                    for (var i = 0; i < atom_mclk_entries.Length; i++)
+                    {
+                          atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
+                    }
+
+                    var atom_mm_dependency_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMMDependencyTableOffset;
+                    var atom_mm_dependency_table = Reader<ATOM_MM_DEPENDENCY_TABLE>(atom_mm_dependency_table_offset).ReadPrint();
+                    for (var i = 0; i < atom_mm_dependency_table.ucNumEntries; i++)
+                    {
+                          Reader<ATOM_MM_DEPENDENCY_RECORD>(atom_mm_dependency_table_offset + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_TABLE)) + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_RECORD)) * i).ReadPrint();
+                    }
+
+                    atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
+                    atom_fan_table = Reader<ATOM_FAN_TABLE>(atom_fan_offset).ReadPrint();
+
+                    atom_powertune_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usPowerTuneTableOffset;
+                    atom_powertune_table = Reader<ATOM_Polaris_PowerTune_Table>(atom_powertune_offset).ReadPrint();
+                    Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
+
+                    var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
+
+                    ReadPrintObjectTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
+                    Print("Connectors:");
+                    ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                    Print("Encoders:");
+                    ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                    Print("Routers:");
+                    ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+
+                    atom_vram_info_offset = atom_data_table.VRAM_Info;
+                    atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
+                    atom_vram_entries = new ATOM_VRAM_ENTRY[atom_vram_info.ucNumOfVRAMModule];
+                    var atom_vram_entry_reader = Reader<ATOM_VRAM_ENTRY>(atom_vram_info_offset + Marshal.SizeOf(typeof(ATOM_VRAM_INFO)));
+                    for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
+                    {
+                          atom_vram_entries[i] = atom_vram_entry_reader.ReadPrint();
+                          atom_vram_entry_reader.Jump(atom_vram_entries[i].usModuleSize);
+                    }
+
+                    atom_vram_timing_offset = atom_vram_info_offset + atom_vram_info.usMemClkPatchTblOffset + 0x2E;
+                    atom_vram_timing_entries = new ATOM_VRAM_TIMING_ENTRY[MAX_VRAM_ENTRIES];
+                    for (var i = 0; i < MAX_VRAM_ENTRIES; i++)
+                    {
+                          atom_vram_timing_entries[i] = Reader<ATOM_VRAM_TIMING_ENTRY>(atom_vram_timing_offset + Marshal.SizeOf(typeof(ATOM_VRAM_TIMING_ENTRY)) * i).ReadPrint();
+
+                          // atom_vram_timing_entries have an undetermined length
+                          // attempt to determine the last entry in the array
+                          if (atom_vram_timing_entries[i].ulClkRange == 0)
+                          {
+                             Array.Resize(ref atom_vram_timing_entries, i);
+                             break;
+                          }
+                    }
+
+                    var used_volt_obffset = 0;
+
+                    ReadPrintTableDetailed<ATOM_VOLTAGE_OBJECT_INFO_V3_1, atom_voltage_object_header_v4>(atom_data_table.VoltageObjectInfo,
+                          (volt_table, i) => used_volt_obffset < (volt_table.sHeader.usStructureSize - Marshal.SizeOf(volt_table.sHeader)),
+                          (volt_object_header, reader) =>
+                          {
+                             used_volt_obffset += volt_object_header.usSize;
+                             if (volt_object_header.ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3)
+                             {
+                                var specialized_reader = ConsecutiveReader<atom_i2c_voltage_object_v4_fields>.From(reader);
+                                specialized_reader.Jump(Marshal.SizeOf(volt_object_header));
+                                specialized_reader.ReadPrint();
+                                specialized_reader.Jump1Structure();
+                                var detailed_reader = ConsecutiveReader<atom_i2c_data_entry>.From(specialized_reader);
+                                while(detailed_reader.Read().i2c_reg_index != FINAL_atom_i2c_data_entry.ENDING_INDEX_VALUE)
+                                {
+                                      detailed_reader.ReadPrint();
+                                      detailed_reader.Jump1Structure();
+                                }
+                                ConsecutiveReader<FINAL_atom_i2c_data_entry>.From(detailed_reader).ReadPrint();
+                             }
+                             else if (volt_object_header.ucVoltageMode == atom_voltage_object_mode.VOLTAGE_OBJ_GPIO_LUT_0x0)
+                             {
+                                var specialized_reader = ConsecutiveReader<atom_gpio_voltage_object_v4_fields>.From(reader);
+                                specialized_reader.Jump(Marshal.SizeOf(volt_object_header));
+                                var gpio_voltage_fields = specialized_reader.ReadPrint();
+                                specialized_reader.Jump1Structure();
+                                var detailed_reader = ConsecutiveReader<atom_voltage_gpio_map_lut>.From(specialized_reader);
+                                for (var i = 0; i < gpio_voltage_fields.gpio_entry_num; i++)
+                                {
+                                      detailed_reader.ReadPrint();
+                                      detailed_reader.Jump1Structure();
+                                }
+                             }
+                             reader.Jump(volt_object_header.usSize);
+                          }
+                          );
+
+                    StringBuilder bios_bootup_builder = new StringBuilder();
+
+                    Int32 ptr = atom_rom_header.usBIOS_BootupMessageOffset + 2;
+                    while (ptr != -1)
+                    {
+                          Char c = (Char)buffer[ptr];
+                          if (c == '\0')
+                          {
+                             ptr = -1;
+                          }
+                          else if (c == '\n' || c == '\r')
+                          {
+                             ptr++;
+                          }
+                          else
+                          {
+                             bios_bootup_builder.Append(c);
+                             ptr++;
+                          }
+                    }
+
+                    BIOS_BootupMessage = bios_bootup_builder.ToString();
+
+                    txtBIOSBootupMessage.Text = BIOS_BootupMessage;
+                    txtBIOSBootupMessage.MaxLength = BIOS_BootupMessage.Length;
+
+                    tableROM.Items.Add(new ListViewItem(new string[] {
+                          "BootupMessageOffset",
+                          "0x" + atom_rom_header.usBIOS_BootupMessageOffset.ToString ("X")
+                    }
+                    ));
+                    tableROM.Items.Add(new ListViewItem(new string[] {
+                          "VendorID",
+                          "0x" + atom_rom_header.usVendorID.ToString ("X")
+                    }
+                    ));
+                    tableROM.Items.Add(new ListViewItem(new string[] {
+                          "DeviceID",
+                          "0x" + atom_rom_header.usDeviceID.ToString ("X")
+                    }
+                    ));
+                    tableROM.Items.Add(new ListViewItem(new string[] {
+                          "Sub ID",
+                          "0x" + atom_rom_header.usSubsystemID.ToString ("X")
+                    }
+                    ));
+                    tableROM.Items.Add(new ListViewItem(new string[] {
+                          "Sub VendorID",
+                          "0x" + atom_rom_header.usSubsystemVendorID.ToString ("X")
+                    }
+                    ));
+                    tableROM.Items.Add(new ListViewItem(new string[] {
+                          "Firmware Signature",
+                          //"0x" + atom_rom_header.uaFirmWareSignature.ToString ("X")
+                          new string(atom_rom_header.uaFirmWareSignature)
+                    }
+                    ));
+
+                    tablePOWERPLAY.Items.Clear();
+                    tablePOWERPLAY.Items.Add(new ListViewItem(new string[] {
+                          "Max GPU Freq. (MHz)",
+                          Convert.ToString (atom_powerplay_table.ulMaxODEngineClock / 100)
+                    }
+                    ));
+                    tablePOWERPLAY.Items.Add(new ListViewItem(new string[] {
+                          "Max Memory Freq. (MHz)",
+                          Convert.ToString (atom_powerplay_table.ulMaxODMemoryClock / 100)
+                    }
+                    ));
+                    tablePOWERPLAY.Items.Add(new ListViewItem(new string[] {
+                          "Power Control Limit (%)",
+                          Convert.ToString (atom_powerplay_table.usPowerControlLimit)
+                    }
+                    ));
+
+                    tablePOWERTUNE.Items.Clear();
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "TDP (W)",
+                          Convert.ToString (atom_powertune_table.usTDP)
+                    }
+                    ));
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "TDC (A)",
+                          Convert.ToString (atom_powertune_table.usTDC)
+                    }
+                    ));
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "Max Power Limit (W)",
+                          Convert.ToString (atom_powertune_table.usMaximumPowerDeliveryLimit)
+                    }
+                    ));
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "Max Temp. (C)",
+                          Convert.ToString (atom_powertune_table.usTjMax)
+                    }
+                    ));
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "Shutdown Temp. (C)",
+                          Convert.ToString (atom_powertune_table.usSoftwareShutdownTemp)
+                    }
+                    ));
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "Hotspot Temp. (C)",
+                          Convert.ToString (atom_powertune_table.usTemperatureLimitHotspot)
+                    }
+                    ));
+                    tablePOWERTUNE.Items.Add(new ListViewItem(new string[] {
+                          "Clock Stretch Amount",
+                          Convert.ToString (atom_powertune_table.usClockStretchAmount)
+                    }
+                    ));
+
+                    tableFAN.Items.Clear();
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Temp. Hysteresis",
+                          Convert.ToString (atom_fan_table.ucTHyst)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Min Temp. (C)",
+                          Convert.ToString (atom_fan_table.usTMin / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Med Temp. (C)",
+                          Convert.ToString (atom_fan_table.usTMed / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "High Temp. (C)",
+                          Convert.ToString (atom_fan_table.usTHigh / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Max Temp. (C)",
+                          Convert.ToString (atom_fan_table.usTMax / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Target Temp. (C)",
+                          Convert.ToString (atom_fan_table.ucTargetTemperature)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Legacy or Fuzzy Fan Mode",
+                          Convert.ToString (atom_fan_table.ucFanControlMode)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Min PWM (%)",
+                          Convert.ToString (atom_fan_table.usPWMMin / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Med PWM (%)",
+                          Convert.ToString (atom_fan_table.usPWMMed / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "High PWM (%)",
+                          Convert.ToString (atom_fan_table.usPWMHigh / 100)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Max PWM (%)",
+                          Convert.ToString (atom_fan_table.usFanPWMMax)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Max RPM",
+                          Convert.ToString (atom_fan_table.usFanRPMMax)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Sensitivity",
+                          Convert.ToString (atom_fan_table.usFanOutputSensitivity)
+                    }
+                    ));
+                    tableFAN.Items.Add(new ListViewItem(new string[] {
+                          "Acoustic Limit (MHz)",
+                          Convert.ToString (atom_fan_table.ulMinFanSCLKAcousticLimit / 100)
+                    }
+                    ));
+
+                    tableGPU.Items.Clear();
+                    for (var i = 0; i < atom_sclk_table.ucNumEntries; i++)
+                    {
+                          tableGPU.Items.Add(new ListViewItem(new string[] {
+                             Convert.ToString (atom_sclk_entries [i].ulSclk / 100),
+                             Convert.ToString (atom_vddc_entries [atom_sclk_entries [i].ucVddInd].usVdd)
+                          }
+                          ));
+                    }
+
+                    tableMEMORY.Items.Clear();
+                    for (var i = 0; i < atom_mclk_table.ucNumEntries; i++)
+                    {
+                          tableMEMORY.Items.Add(new ListViewItem(new string[] {
+                             Convert.ToString (atom_mclk_entries [i].ulMclk / 100),
+                             Convert.ToString (atom_mclk_entries [i].usVddci)
+                          }
+                          ));
+                    }
+
+                    listVRAM.Items.Clear();
+                    for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
+                    {
+                          if (atom_vram_entries[i].strMemPNString[0] != 0)
+                          {
+                             var mem_id_full = atom_vram_entries[i].FullName;
+                             var mem_id = mem_id_full.Substring(0, 10);
+                             string mem_vendor;
+                             if (rc.ContainsKey(mem_id))
+                             {
+                                mem_vendor = rc[mem_id];
+                             }
+                             else
+                             {
+                                mem_vendor = "UNKNOWN";
+                             }
+
+                             listVRAM.Items.Add(mem_id_full + "-" + mem_vendor);
+                          }
+                    }
+                    listVRAM.SelectedIndex = 0;
+                    atom_vram_index = listVRAM.SelectedIndex;
+
+                    tableVRAM_TIMING.Items.Clear();
+                    for (var i = 0; i < atom_vram_timing_entries.Length; i++)
+                    {
+                          uint tbl = atom_vram_timing_entries[i].ulClkRange >> 24;
+                          tableVRAM_TIMING.Items.Add(new ListViewItem(new string[] {
+                             tbl.ToString () + ":" + (atom_vram_timing_entries [i].ulClkRange & 0x00FFFFFF) / 100,
+                             atom_vram_timing_entries [i].LatencyString
+                          }
+                          ));
+                    }
+
+                    save.Enabled = true;
+                    boxROM.Enabled = true;
+                    boxPOWERPLAY.Enabled = true;
+                    boxPOWERTUNE.Enabled = true;
+                    boxFAN.Enabled = true;
+                    boxGPU.Enabled = true;
+                    boxMEM.Enabled = true;
+                    boxVRAM.Enabled = true;
                 }
+                fileStream.Close();
+
             }
             tableROM.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             tableROM.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -1969,7 +1972,7 @@ namespace PolarisBiosEditor
 
         private void fixChecksum(bool save)
         {
-            Byte checksum = buffer[atom_rom_checksum_offset];
+            Byte checksum = buffer[ATOM_ROM_CHECKSUM_OFFSET];
             int size = buffer[0x02] * 512;
             Byte offset = 0;
 
@@ -1977,7 +1980,7 @@ namespace PolarisBiosEditor
             {
                 offset += buffer[i];
             }
-            if (checksum == (buffer[atom_rom_checksum_offset] - offset))
+            if (checksum == (buffer[ATOM_ROM_CHECKSUM_OFFSET] - offset))
             {
                 txtChecksum.ForeColor = Color.Green;
             }
@@ -1988,10 +1991,10 @@ namespace PolarisBiosEditor
             }
             if (save)
             {
-                buffer[atom_rom_checksum_offset] -= offset;
+                buffer[ATOM_ROM_CHECKSUM_OFFSET] -= offset;
                 txtChecksum.ForeColor = Color.Green;
             }
-            txtChecksum.Text = "0x" + buffer[atom_rom_checksum_offset].ToString("X");
+            txtChecksum.Text = "0x" + buffer[ATOM_ROM_CHECKSUM_OFFSET].ToString("X");
         }
 
         public static string ByteArrayToString(byte[] ba)
