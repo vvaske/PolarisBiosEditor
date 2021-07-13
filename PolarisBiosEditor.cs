@@ -235,6 +235,110 @@ namespace PolarisBiosEditor
         String BIOS_BootupMessage;
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_CMD_TABLES_LIST
+        {
+            public UInt16 ASIC_Init;
+            public UInt16 GetDisplaySurfaceSize;
+            public UInt16 ASIC_RegistersInit_For_ASIC_Init;
+            public UInt16 VRAM_BlockVenderDetection;
+            public UInt16 DIGxEncoderControl;
+            public UInt16 MemoryControllerInit_For_ASIC_Init;
+            public UInt16 EnableCRTCMemReq;
+            public UInt16 MemoryParamAdjust;
+            public UInt16 DVOEncoderControl;
+            public UInt16 GPIOPinControl;
+            public UInt16 SetEngineClock;
+            public UInt16 SetMemoryClock;
+            public UInt16 SetPixelClock;
+            public UInt16 EnableDispPowerGating_For_ASIC_Init;
+            public UInt16 ResetMemoryDLL;
+            public UInt16 ResetMemoryDevice;
+            public UInt16 MemoryPLLInit;
+            public UInt16 AdjustDisplayPll;
+            public UInt16 AdjustMemoryController;
+            public UInt16 EnableASIC_StaticPwrMgt;
+            public UInt16 SetUniphyInstance;
+            public UInt16 DAC_LoadDetection;
+            public UInt16 LVTMAEncoderControl;
+            public UInt16 HW_Misc_Operation;
+            public UInt16 DAC1EncoderControl;
+            public UInt16 DAC2EncoderControl;
+            public UInt16 DVOOutputControl;
+            public UInt16 CV1OutputControl;
+            public UInt16 GetConditionalGoldenSetting;
+            public UInt16 SMC_Init;
+            public UInt16 PatchMCSetting;
+            public UInt16 MC_SEQ_Control;
+            public UInt16 Gfx_Harvesting;
+            public UInt16 EnableScaler;
+            public UInt16 BlankCRTC;
+            public UInt16 EnableCRTC;
+            public UInt16 GetPixelClock;
+            public UInt16 EnableVGA_Render;
+            public UInt16 GetSCLKOverMCLKRatio;
+            public UInt16 SetCRTC_Timing;
+            public UInt16 SetCRTC_OverScan;
+            public UInt16 GetSMUClockInfo;
+            public UInt16 SelectCRTC_Source;
+            public UInt16 EnableGraphSurfaces;
+            public UInt16 UpdateCRTC_DoubleBufferRegisters;
+            public UInt16 LUT_AutoFill;
+            public UInt16 SetDCEClock;
+            public UInt16 GetMemoryClock;
+            public UInt16 GetEngineClock;
+            public UInt16 SetCRTC_UsingDTDTiming;
+            public UInt16 ExternalEncoderControl;
+            public UInt16 LVTMAOutputControl;
+            public UInt16 VRAM_BlockDetectionByStrap;
+            public UInt16 MemoryCleanUp;
+            public UInt16 ProcessI2cChannelTransaction;
+            public UInt16 WriteOneByteToHWAssistedI2C;
+            public UInt16 ReadHWAssistedI2CStatus;
+            public UInt16 SpeedFanControl_For_ASIC_Init;
+            public UInt16 PowerConnectorDetection;
+            public UInt16 MC_Synchronization;
+            public UInt16 ComputeMemoryOREnginePLLORClockParam;
+            public UInt16 Gfx_Init;
+            public UInt16 VRAM_GetCurrentInfoBlock;
+            public UInt16 DynamicMemorySettings;
+            public UInt16 MemoryTraining;
+            public UInt16 EnableSpreadSpectrumOnPPLL;
+            public UInt16 TMDSAOutputControl;
+            public UInt16 SetVoltage;
+            public UInt16 DAC1OutputControl;
+            public UInt16 ReadEfuseValue;
+            public UInt16 ComputeMemoryClockParam;
+            public UInt16 ClockSource_For_ASIC_Init;
+            public UInt16 MemoryDeviceInit;
+            public UInt16 GetDispObjectInfo;
+            public UInt16 DIG1EncoderControl;
+            public UInt16 DIG2EncoderControl;
+            public UInt16 DIG1TransmitterControl;
+            public UInt16 DIG2TransmitterControl;
+            public UInt16 ProcessAuxChannelTransaction;
+            public UInt16 DPEncoderService;
+            public UInt16 GetVoltageInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_CMD_TABLES
+        {
+            public ATOM_COMMON_TABLE_HEADER sHeader;
+            [XmlIgnore]public ATOM_CMD_TABLES_LIST cmds;
+        };
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct ATOM_CMD_HEADER
+        {
+            public Int16 usStructureSize;
+            public Byte ucTableFormatRevision;
+            public Byte ucTableContentRevision;
+            public Byte work_data_size_in_4bytes;
+            public Byte params_size_in_1bytes;
+        };
+
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_DATA_TABLES
         {
             public ATOM_COMMON_TABLE_HEADER sHeader;
@@ -273,6 +377,47 @@ namespace PolarisBiosEditor
             public UInt16 VoltageObjectInfo;
             public UInt16 PowerSourceInfo;
             public UInt16 ServiceInfo;
+        };
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        unsafe public struct ATOM_FIRMWARE_INFO
+        {
+            public ATOM_COMMON_TABLE_HEADER sHeader;
+            public UInt32                           ulFirmwareRevision;
+            public UInt32                           ulDefaultEngineClock_in10khz_asic_init_arg0;
+            public UInt32                           ulDefaultMemoryClock_in10khz_asic_init_arg1;
+            public UInt32                           ulSPLL_OutputFreq_in10khz;
+            public UInt32                           ulGPUPLL_OutputFreq_in10khz;
+            public UInt32                           ulReserved1;
+            public UInt32                           ulReserved2;
+            public UInt32                           ulMaxPixelClockPLL_Output_in10khz;
+            public UInt32                           ulBinaryAlteredInfo;
+            public UInt32                           ulDefaultDispEngineClkFreq_in10khz;
+            public Byte                             ucReserved3;
+            public Byte                             ucMinAllowedBL_Level;
+            public UInt16                           usBootUpVDDCVoltage_in_mV;
+            public UInt16                           usLcdMinPixelClockPLL_Output_inMHz;
+            public UInt16                           usLcdMaxPixelClockPLL_Output_inMHz;
+            public UInt32                           ulReserved4;
+            public UInt32                           ulMinPixelClockPLL_Output_in10khz;
+            public Byte                             ucRemoteDisplayConfig;
+            [XmlIgnore]public fixed Byte            ucReserved5[3];
+            public UInt32                           ulReserved6;
+            public UInt32                           ulReserved7;
+            public UInt16                           usReserved11_usMaxPixelClockDAC_in10khz;
+            public UInt16                           usMinPixelClockPLL_Input_in10khz;
+            public UInt16                           usMaxPixelClockPLL_Input_in10khz;
+            public UInt16                           usBootUpVDDCIVoltage_in_mV;
+            public UInt16                           usFirmwareCapability;
+            public UInt16                           usCoreReferenceClock_in10khz;
+            public UInt16                           usMemoryReferenceClock_in10khz;
+            public UInt16                           usUniphyDPModeExtClkFreq_in10khz;
+            public Byte                             ucMemoryModule_ID;
+            public Byte                             ucCoolingSolution1IsLiquid;
+            public Byte                             ucProductBranding;
+            public Byte                             ucReserved9;
+            public UInt16                           usBootUpMVDDCVoltage_in_mV; 
+            public UInt16                           usBootUpVDDGFXVoltage_in_mV;
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -967,6 +1112,65 @@ namespace PolarisBiosEditor
             }
         }
 
+        public string HexRange(int start, int len)
+        {
+            return string.Format("{0,4}bytes (0x{1:X}-{2:X})", len, start, start+ len);
+        }
+
+        private struct NamedCmd
+        {
+            public int Addr;
+            public int Index;
+            public string Name;
+            public ATOM_CMD_HEADER Header;
+        };
+
+        public void PrintCmds(ATOM_CMD_TABLES_LIST cmds)
+        {
+            Console.WriteLine("<CMDS-NOT-IMPLEMENTED>");
+            const int CODE_OFFSET = 6;
+            var addr_to_info = new List<NamedCmd>();
+            var fields = cmds.GetType().GetFields();
+            for (int index = 0; index < fields.Length; ++index)
+            {
+                var fi = fields[index];
+                int total_addr = (UInt16)fi.GetValue(cmds);
+                if (total_addr == 0)
+                {
+                    Console.WriteLine(string.Format("    <{0} tbindex=\"{1}\"/>", fi.Name, index));
+                }
+                else
+                {
+                    var header = Reader<ATOM_CMD_HEADER>(total_addr).Read();
+                    addr_to_info.Add(new NamedCmd{
+                    Addr = total_addr,
+                    Index = index,
+                    Name = fi.Name,
+                    Header = header});
+                }
+            }
+            Console.WriteLine("</CMDS-NOT-IMPLEMENTED>");
+            var ordered = addr_to_info.OrderBy(nc => nc.Addr).ToList();
+            int prev = ordered[0].Addr;
+            foreach(var s in ordered)
+            {
+                int skept = s.Addr - prev;
+                if (skept != 0 && skept != 1) //Ignore i-bte skips since they are for alignment
+                {
+                    Console.WriteLine("<SKEPT len=\""+skept+"\"/>");
+                }
+                var info =  string.Format("<{0,-36} tbindex=\"{1,2}\" total=\"{2}\" code=\"{3}\" format_content_rev=\"{4}\" work_data_size_in_4bytes=\"{5}\" params_size_in_1bytes=\"{6}\"/>",
+                        s.Name,
+                        s.Index,
+                        HexRange(s.Addr, s.Header.usStructureSize),
+                        HexRange(s.Addr + CODE_OFFSET, s.Header.usStructureSize - CODE_OFFSET),
+                        s.Header.ucTableFormatRevision + "." + s.Header.ucTableContentRevision,
+                        s.Header.work_data_size_in_4bytes, s.Header.params_size_in_1bytes
+                        );
+                prev = s.Addr + s.Header.usStructureSize;
+                Console.WriteLine(info);
+            }
+        }
         public void Print(object output, string desc_name = "", string desc = "")
         {
             try
@@ -1191,7 +1395,11 @@ namespace PolarisBiosEditor
                     MessageBox.Show("Unsupported DeviceID 0x" + deviceId + " - Continue?", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
+                var atom_code = Reader<ATOM_CMD_TABLES>(atom_rom_header.usMasterCommandTableOffset).ReadPrint();
+                PrintCmds(atom_code.cmds);
                 atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
+
+                Reader<ATOM_FIRMWARE_INFO>(atom_data_table.FirmwareInfo).ReadPrint();
 
                 ReadPrintTable<ATOM_GPIO_I2C_INFO, ATOM_GPIO_I2C_ASSIGMENT>(atom_data_table.GPIO_I2C_Info,
                       (i2c_info_table, i) => i < (i2c_info_table.sHeader.usStructureSize - Marshal.SizeOf(i2c_info_table.sHeader)) / Marshal.SizeOf<ATOM_GPIO_I2C_ASSIGMENT>(),
