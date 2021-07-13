@@ -1114,7 +1114,7 @@ namespace PolarisBiosEditor
 
         public string HexRange(int start, int len)
         {
-            return string.Format("{0,4}bytes (0x{1:X}-{2:X})", len, start, start+ len);
+            return string.Format("{0,4}bytes [0x{1:X}-{2:X})", len, start, start+ len);
         }
 
         private struct NamedCmd
@@ -1159,10 +1159,10 @@ namespace PolarisBiosEditor
                 {
                     Console.WriteLine("<SKEPT len=\""+skept+"\"/>");
                 }
-                var info =  string.Format("<{0,-36} tbindex=\"{1,2}\" total=\"{2}\" code=\"{3}\" format_content_rev=\"{4}\" work_data_size_in_4bytes=\"{5}\" params_size_in_1bytes=\"{6}\"/>",
+                var info =  string.Format("<{0,-36} tbindex=\"{1,2}\" header=\"0x{2:X}\" code=\"{3}\" format_content_rev=\"{4}\" work_data_size_in_4bytes=\"{5}\" params_size_in_1bytes=\"{6}\"/>",
                         s.Name,
                         s.Index,
-                        HexRange(s.Addr, s.Header.usStructureSize),
+                        s.Addr,
                         HexRange(s.Addr + CODE_OFFSET, s.Header.usStructureSize - CODE_OFFSET),
                         s.Header.ucTableFormatRevision + "." + s.Header.ucTableContentRevision,
                         s.Header.work_data_size_in_4bytes, s.Header.params_size_in_1bytes
