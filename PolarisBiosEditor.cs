@@ -1396,7 +1396,7 @@ namespace PolarisBiosEditor
                 }
 
                 var atom_code = Reader<ATOM_CMD_TABLES>(atom_rom_header.usMasterCommandTableOffset).ReadPrint();
-                PrintCmds(atom_code.cmds);
+                //cmds are placed after tables in VBIOS, so they are print last- see atom_code usages
                 atom_data_table = Reader<ATOM_DATA_TABLES>(atom_rom_header.usMasterDataTableOffset).ReadPrint();
 
                 Reader<ATOM_FIRMWARE_INFO>(atom_data_table.FirmwareInfo).ReadPrint();
@@ -1526,7 +1526,7 @@ namespace PolarisBiosEditor
                           reader.Jump(volt_object_header.usSize);
                       }
                       );
-
+                PrintCmds(atom_code.cmds); //cmds are placed after tables in VBIOS, so they are print last
             }
             fileStream.Close();
         }
