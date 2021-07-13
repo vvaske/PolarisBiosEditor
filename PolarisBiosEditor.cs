@@ -1114,7 +1114,20 @@ namespace PolarisBiosEditor
 
         public string HexRange(int start, int len)
         {
-            return string.Format("{0,4}bytes [0x{1:X}-{2:X})", len, start, start+ len);
+            string values = "";
+            for (int i =0; i<len; ++i)
+            {
+                if (i <14 || i > len-15)
+                {
+                    values += string.Format("{0:X2}", buffer[start + i]);
+                }
+                else if (i == 14)
+                {
+                    values += "..";
+                }
+
+            }
+            return string.Format("{0,4}bytes [0x{1:X}-{2:X}) values {3,60}", len, start, start+ len, values);
         }
 
         private struct NamedCmd
