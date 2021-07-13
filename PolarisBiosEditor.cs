@@ -2586,7 +2586,18 @@ namespace PolarisBiosEditor
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.miningbios.com/product/polaris-bios-editor-3-4-1-srbpolaris-style/");
+            var url = "https://shop.st0rm.pro/product/polarisbioseditor-pro-performance-legacy-style/";
+            try
+            {
+                if (MessageBox.Show(url, "Open url in external browser?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(url);
+                }
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Failed opening url: " + url);
+            }
         }
     }
 }

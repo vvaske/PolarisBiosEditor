@@ -411,7 +411,7 @@ namespace PolarisBiosEditor
          this.editSubItem1.Font = new System.Drawing.Font("Courier New", 8.25F);
          this.editSubItem1.Location = new System.Drawing.Point(100, 644);
          this.editSubItem1.Name = "editSubItem1";
-         this.editSubItem1.Size = new System.Drawing.Size(220, 20);
+         this.editSubItem1.Size = new System.Drawing.Size(165, 20);
          this.editSubItem1.TabIndex = 2;
          // 
          // editSubItem2
@@ -439,9 +439,9 @@ namespace PolarisBiosEditor
          // button1
          // 
          this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-         this.button1.Location = new System.Drawing.Point(558, 642);
+         this.button1.Location = new System.Drawing.Point(608, 642);
          this.button1.Name = "button1";
-         this.button1.Size = new System.Drawing.Size(241, 23);
+         this.button1.Size = new System.Drawing.Size(191, 23);
          this.button1.TabIndex = 4;
          this.button1.Text = "ONE CLICK TIMING PATCH";
          this.button1.UseVisualStyleBackColor = true;
@@ -451,14 +451,13 @@ namespace PolarisBiosEditor
          // 
          this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.linkLabel1.AutoSize = true;
-         this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this.linkLabel1.LinkColor = System.Drawing.Color.Red;
-         this.linkLabel1.Location = new System.Drawing.Point(12, 669);
+         this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.0F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.linkLabel1.Location = new System.Drawing.Point(280, 644);
          this.linkLabel1.Name = "linkLabel1";
-         this.linkLabel1.Size = new System.Drawing.Size(516, 16);
+         this.linkLabel1.Size = new System.Drawing.Size(300, 16);
          this.linkLabel1.TabIndex = 6;
          this.linkLabel1.TabStop = true;
-         this.linkLabel1.Text = "(Link kept from upstream vesrsion) BUY PolariBiosEditor Pro performance";
+         this.linkLabel1.Text = "BUY PolarisBiosEditor Pro performance    GUI for miners\n\n(link kept from upstream vesrsion)";
          this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
          // 
          // VddciFakeIgnoredColumnToForbidEdits
