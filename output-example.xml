@@ -1,0 +1,1451 @@
+<root-of-option-rom-dump name="bioses/Asus.RX580.8192.170417_1-stock.rom" dump-software-version="PolarisBiosEditor-1.7xml-2021.07">
+  <OptionRomAndAtomHeaders>
+    <EFI_LEGACY_EXPANSION_AMD_ROM_HEADER addr="0x0-0x4A  len=74=0x4A">
+      <Signature55>85 = 0x55 = 0b1010101</Signature55>
+      <SignatureAA>170 = 0xAA = 0b10101010</SignatureAA>
+      <Bit8Length_in_512bytes>116 = 0x74 = 0b1110100</Bit8Length_in_512bytes>
+      <JmpRel16_OpCode_E9>233 = 0xE9 = 0b11101001</JmpRel16_OpCode_E9>
+      <Jmp_Target_Rel_To_0x6>685 = 0x2AD = 0b1010101101</Jmp_Target_Rel_To_0x6>
+      <reserved_legacy>18-bytes text:\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0</reserved_legacy>
+      <PCIRHeaderOffset>592 = 0x250 = 0b1001010000</PCIRHeaderOffset>
+      <PnPHeaderOffset>0</PnPHeaderOffset>
+      <TextsAfterHeaderNullPadding>0</TextsAfterHeaderNullPadding>
+      <TextIBM>3-bytes text:IBM</TextIBM>
+      <SimpleChecksum8ToZeroOverRegion_BeforeNextHeader>134 = 0x86 = 0b10000110</SimpleChecksum8ToZeroOverRegion_BeforeNextHeader>
+      <Unknown2_1>37508 = 0x9284 = 0b1001001010000100</Unknown2_1>
+      <Zeroes11>11-bytes text:\0\0\0\0\0\0\0\0\0\0\0</Zeroes11>
+      <Unknown1>4 = 0x4 = 0b100</Unknown1>
+      <ATIAMDSignature_SP761295520>10-bytes text: 761295520</ATIAMDSignature_SP761295520>
+      <Zeroes6_1>6-bytes text:\0\0\0\0\0\0</Zeroes6_1>
+      <Unknown2_2>677 = 0x2A5 = 0b1010100101</Unknown2_2>
+      <Zeroes6_2>6-bytes text:\0\0\0\0\0\0</Zeroes6_2>
+      <AtomRomHeaderOffset>556 = 0x22C = 0b1000101100</AtomRomHeaderOffset>
+      <ComputedOffsetToNextHeader>0xE800</ComputedOffsetToNextHeader>
+      <ComputedJmpTarget>0x2B3</ComputedJmpTarget>
+    </EFI_LEGACY_EXPANSION_AMD_ROM_HEADER>
+    <MostlyText info=" 482bytes [0x4A-22C) values   00000000000030342F31372F3137..585C636F6E6669672E6800000090" as_text="\0\0\0\0\0\004/17/17 03:28\0\01\0\0\0\xE9\xB8\x03\0\xE9\xC7\x03\0\0\0\xF4\0\0\x13\0\0\0\xD0\x01\0B\x0A \xE1\x02\x80~\0\xE2\x10D\x02\x12\0\0\0\0\0\0&lt;@\x0E\x02\x07&lt;\x01\x1A\0\x04\0\0\0\xEE\xA0\xFF\x06\0\x080@\x0E\x01\0\0\0\0\0\0\x14\x03\0\0\0\0\0\0\xBE~\x11\0\xB9\x07\x1A\xD6P,\0\0\0\0\0\0\0\0\0\0\x14@AC\0\0\0\0\x10\0\0\0B\0\0\0\xF0}\xE6\x07 \0 \0\x12\0\x0E\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0115-D009PI2-101\0POLARIS20\0PCI_EXPRESS\0GDDR5\0\x0D\x0A67DFHB.15.50.2.1.AS14                                                       \x0D\x0A\0\x0D\x0A \x0D\x0A\0(C) 1988-2010, Advanced Micro Devices, Inc.\0ATOMBIOSBK-AMD VER015.050.002.001.000000\0AS14.BIN    \01398877 \0381643  \0        \0ASUS_POLARIS20_D009PI2_DUAL_RX580_O8G_HYNIX\config.h\0\0\0\x90"/>
+    <ATOM_ROM_HEADER addr="0x22C-0x250  len=36=0x24">
+      <sHeader>
+        <usStructureSize>36 = 0x24 = 0b100100</usStructureSize>
+        <ucTableFormatRevision>1</ucTableFormatRevision>
+        <ucTableContentRevision>1</ucTableContentRevision>
+      </sHeader>
+      <uaFirmWareSignature>4-bytes text:ATOM</uaFirmWareSignature>
+      <usBiosRuntimeSegmentAddress>49152 = 0xC000 = 0b1100000000000000</usBiosRuntimeSegmentAddress>
+      <usProtectedModeInfoOffset>977 = 0x3D1 = 0b1111010001</usProtectedModeInfoOffset>
+      <usConfigFilenameOffset>460 = 0x1CC = 0b111001100</usConfigFilenameOffset>
+      <usCRC_BlockOffset>629 = 0x275 = 0b1001110101</usCRC_BlockOffset>
+      <usBIOS_BootupMessageOffset>288 = 0x120 = 0b100100000</usBIOS_BootupMessageOffset>
+      <usInt10Offset>1014 = 0x3F6 = 0b1111110110</usInt10Offset>
+      <usPciBusDevInitCode>0</usPciBusDevInitCode>
+      <usIoBaseAddress>0</usIoBaseAddress>
+      <usSubsystemVendorID>4163 = 0x1043 = 0b1000001000011</usSubsystemVendorID>
+      <usSubsystemID>1313 = 0x521 = 0b10100100001</usSubsystemID>
+      <usPCI_InfoOffset>592 = 0x250 = 0b1001010000</usPCI_InfoOffset>
+      <usMasterCommandTableOffset>38748 = 0x975C = 0b1001011101011100</usMasterCommandTableOffset>
+      <usMasterDataTableOffset>38914 = 0x9802 = 0b1001100000000010</usMasterDataTableOffset>
+      <ucExtendedFunctionCode>160 = 0xA0 = 0b10100000</ucExtendedFunctionCode>
+      <ucReserved>0</ucReserved>
+    </ATOM_ROM_HEADER>
+    <PCIR_2_3_DATA_STRUCTURE addr="0x250-0x274  len=36=0x24">
+      <Signature_PCIR>4-bytes text:PCIR</Signature_PCIR>
+      <usVendorID>4098 = 0x1002 = 0b1000000000010</usVendorID>
+      <usDeviceID>26591 = 0x67DF = 0b110011111011111</usDeviceID>
+      <DeviceListOffset>0</DeviceListOffset>
+      <HeaderLength>24 = 0x18 = 0b11000</HeaderLength>
+      <Revision>0</Revision>
+      <ClassCode_VGA_Controller_is_003>3-bytes text:\0\0\x03</ClassCode_VGA_Controller_is_003>
+      <ImageLength_in_512bytes>116 = 0x74 = 0b1110100</ImageLength_in_512bytes>
+      <CodeRevision>3890 = 0xF32 = 0b111100110010</CodeRevision>
+      <CodeType_PC_Compatible_is_0__UEFI_is_3>0</CodeType_PC_Compatible_is_0__UEFI_is_3>
+      <Indicator_last_is_0x80>0</Indicator_last_is_0x80>
+      <MaxRuntimeImageLength>0</MaxRuntimeImageLength>
+      <SomeTextWithAMD>12-bytes text:AMD ATOMBIOS</SomeTextWithAMD>
+    </PCIR_2_3_DATA_STRUCTURE>
+    <ATOM_CMD_TABLES addr="0x975C-0x9802  len=166=0xA6">
+      <sHeader>
+        <usStructureSize>166 = 0xA6 = 0b10100110</usStructureSize>
+        <ucTableFormatRevision>1</ucTableFormatRevision>
+        <ucTableContentRevision>1</ucTableContentRevision>
+      </sHeader>
+    </ATOM_CMD_TABLES>
+  </OptionRomAndAtomHeaders>
+  <AtomMasterDataTables>
+    <ATOM_DATA_TABLES addr="0x9802-0x984C  len=74=0x4A">
+      <sHeader>
+        <usStructureSize>74 = 0x4A = 0b1001010</usStructureSize>
+        <ucTableFormatRevision>1</ucTableFormatRevision>
+        <ucTableContentRevision>1</ucTableContentRevision>
+      </sHeader>
+      <UtilityPipeLine>0</UtilityPipeLine>
+      <MultimediaCapabilityInfo>0</MultimediaCapabilityInfo>
+      <MultimediaConfigInfo>0</MultimediaConfigInfo>
+      <StandardVESA_Timing>38988 = 0x984C = 0b1001100001001100</StandardVESA_Timing>
+      <FirmwareInfo>39216 = 0x9930 = 0b1001100100110000</FirmwareInfo>
+      <PaletteData>39324 = 0x999C = 0b1001100110011100</PaletteData>
+      <LCD_Info>39376 = 0x99D0 = 0b1001100111010000</LCD_Info>
+      <DIGTransmitterInfo>0</DIGTransmitterInfo>
+      <SMU_Info>43522 = 0xAA02 = 0b1010101000000010</SMU_Info>
+      <SupportedDevicesInfo>0</SupportedDevicesInfo>
+      <GPIO_I2C_Info>39454 = 0x9A1E = 0b1001101000011110</GPIO_I2C_Info>
+      <VRAM_UsageByFirmware>39674 = 0x9AFA = 0b1001101011111010</VRAM_UsageByFirmware>
+      <GPIO_Pin_LUT>39686 = 0x9B06 = 0b1001101100000110</GPIO_Pin_LUT>
+      <VESA_ToInternalModeLUT>39718 = 0x9B26 = 0b1001101100100110</VESA_ToInternalModeLUT>
+      <GFX_Info>39834 = 0x9B9A = 0b1001101110011010</GFX_Info>
+      <PowerPlayInfo>39858 = 0x9BB2 = 0b1001101110110010</PowerPlayInfo>
+      <GPUVirtualizationInfo>0</GPUVirtualizationInfo>
+      <SaveRestoreInfo>43498 = 0xA9EA = 0b1010100111101010</SaveRestoreInfo>
+      <PPLL_SS_Info>0</PPLL_SS_Info>
+      <OemInfo>40692 = 0x9EF4 = 0b1001111011110100</OemInfo>
+      <XTMDS_Info>0</XTMDS_Info>
+      <MclkSS_Info>0</MclkSS_Info>
+      <Object_Header>40698 = 0x9EFA = 0b1001111011111010</Object_Header>
+      <IndirectIOAccess>41772 = 0xA32C = 0b1010001100101100</IndirectIOAccess>
+      <MC_InitParameter>41048 = 0xA058 = 0b1010000001011000</MC_InitParameter>
+      <ASIC_VDDC_Info>0</ASIC_VDDC_Info>
+      <ASIC_InternalSS_Info>43358 = 0xA95E = 0b1010100101011110</ASIC_InternalSS_Info>
+      <TV_VideoMode>43398 = 0xA986 = 0b1010100110000110</TV_VideoMode>
+      <VRAM_Info>41898 = 0xA3AA = 0b1010001110101010</VRAM_Info>
+      <MemoryTrainingInfo>0</MemoryTrainingInfo>
+      <IntegratedSystemInfo>0</IntegratedSystemInfo>
+      <ASIC_ProfilingInfo>43020 = 0xA80C = 0b1010100000001100</ASIC_ProfilingInfo>
+      <VoltageObjectInfo>43288 = 0xA918 = 0b1010100100011000</VoltageObjectInfo>
+      <PowerSourceInfo>0</PowerSourceInfo>
+      <ServiceInfo>43578 = 0xAA3A = 0b1010101000111010</ServiceInfo>
+    </ATOM_DATA_TABLES>
+    <ATOM_FIRMWARE_INFO addr="0x9930-0x9992  len=98=0x62">
+      <sHeader>
+        <usStructureSize>108 = 0x6C = 0b1101100</usStructureSize>
+        <ucTableFormatRevision>2 = 0x2 = 0b10</ucTableFormatRevision>
+        <ucTableContentRevision>2 = 0x2 = 0b10</ucTableContentRevision>
+      </sHeader>
+      <ulFirmwareRevision>254935553 = 0xF320201 = 0b1111001100100000001000000001</ulFirmwareRevision>
+      <ulDefaultEngineClock_in10khz_asic_init_arg0>30000 = 0x7530 = 0b111010100110000</ulDefaultEngineClock_in10khz_asic_init_arg0>
+      <ulDefaultMemoryClock_in10khz_asic_init_arg1>30000 = 0x7530 = 0b111010100110000</ulDefaultMemoryClock_in10khz_asic_init_arg1>
+      <ulSPLL_OutputFreq_in10khz>0</ulSPLL_OutputFreq_in10khz>
+      <ulGPUPLL_OutputFreq_in10khz>360000 = 0x57E40 = 0b1010111111001000000</ulGPUPLL_OutputFreq_in10khz>
+      <ulReserved1>0</ulReserved1>
+      <ulReserved2>0</ulReserved2>
+      <ulMaxPixelClockPLL_Output_in10khz>600000 = 0x927C0 = 0b10010010011111000000</ulMaxPixelClockPLL_Output_in10khz>
+      <ulBinaryAlteredInfo>0</ulBinaryAlteredInfo>
+      <ulDefaultDispEngineClkFreq_in10khz>62610 = 0xF492 = 0b1111010010010010</ulDefaultDispEngineClkFreq_in10khz>
+      <ucReserved3>0</ucReserved3>
+      <ucMinAllowedBL_Level>0</ucMinAllowedBL_Level>
+      <usBootUpVDDCVoltage_in_mV>900 = 0x384 = 0b1110000100</usBootUpVDDCVoltage_in_mV>
+      <usLcdMinPixelClockPLL_Output_inMHz>2970 = 0xB9A = 0b101110011010</usLcdMinPixelClockPLL_Output_inMHz>
+      <usLcdMaxPixelClockPLL_Output_inMHz>6000 = 0x1770 = 0b1011101110000</usLcdMaxPixelClockPLL_Output_inMHz>
+      <ulReserved4>0</ulReserved4>
+      <ulMinPixelClockPLL_Output_in10khz>297000 = 0x48828 = 0b1001000100000101000</ulMinPixelClockPLL_Output_in10khz>
+      <ucRemoteDisplayConfig>0</ucRemoteDisplayConfig>
+      <ucReserved5>5-bytes text:\0\0\0\0\0</ucReserved5>
+      <ulReserved6>0</ulReserved6>
+      <ulReserved7>2621440000 = 0x9C400000 = 0b10011100010000000000000000000000</ulReserved7>
+      <usReserved11_usMaxPixelClockDAC_in10khz>2500 = 0x9C4 = 0b100111000100</usReserved11_usMaxPixelClockDAC_in10khz>
+      <usMinPixelClockPLL_Input_in10khz>10000 = 0x2710 = 0b10011100010000</usMinPixelClockPLL_Input_in10khz>
+      <usMaxPixelClockPLL_Input_in10khz>850 = 0x352 = 0b1101010010</usMaxPixelClockPLL_Input_in10khz>
+      <usBootUpVDDCIVoltage_in_mV>16414 = 0x401E = 0b100000000011110</usBootUpVDDCIVoltage_in_mV>
+      <usFirmwareCapability>10000 = 0x2710 = 0b10011100010000</usFirmwareCapability>
+      <usCoreReferenceClock_in10khz>10000 = 0x2710 = 0b10011100010000</usCoreReferenceClock_in10khz>
+      <usMemoryReferenceClock_in10khz>10000 = 0x2710 = 0b10011100010000</usMemoryReferenceClock_in10khz>
+      <usUniphyDPModeExtClkFreq_in10khz>0</usUniphyDPModeExtClkFreq_in10khz>
+      <ucMemoryModule_ID>0</ucMemoryModule_ID>
+      <ucCoolingSolution1IsLiquid>0</ucCoolingSolution1IsLiquid>
+      <ucProductBranding>14 = 0xE = 0b1110</ucProductBranding>
+      <ucReserved9>6 = 0x6 = 0b110</ucReserved9>
+      <usBootUpMVDDCVoltage_in_mV>0</usBootUpMVDDCVoltage_in_mV>
+      <usBootUpVDDGFXVoltage_in_mV>0</usBootUpVDDGFXVoltage_in_mV>
+    </ATOM_FIRMWARE_INFO>
+    <ATOM_GPIO_I2C_INFO>
+      <ATOM_GPIO_I2C_INFO addr="0x9A1E-0x9A22  len=4=0x4">
+        <sHeader>
+          <usStructureSize>220 = 0xDC = 0b11011100</usStructureSize>
+          <ucTableFormatRevision>1</ucTableFormatRevision>
+          <ucTableContentRevision>1</ucTableContentRevision>
+        </sHeader>
+      </ATOM_GPIO_I2C_INFO>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9A22-0x9A3D  len=27=0x1B">
+        <usClkMaskRegisterIndex>18536 = 0x4868 = 0b100100001101000</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18538 = 0x486A = 0b100100001101010</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18539 = 0x486B = 0b100100001101011</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18537 = 0x4869 = 0b100100001101001</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18536 = 0x4868 = 0b100100001101000</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18538 = 0x486A = 0b100100001101010</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18539 = 0x486B = 0b100100001101011</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18537 = 0x4869 = 0b100100001101001</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>144 = 0x90 = 0b10010000</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>0</bfI2C_LineMux>
+          <Description>144 = 0x90 = 0b10010000</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9A3D-0x9A58  len=27=0x1B">
+        <usClkMaskRegisterIndex>18540 = 0x486C = 0b100100001101100</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18542 = 0x486E = 0b100100001101110</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18543 = 0x486F = 0b100100001101111</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18541 = 0x486D = 0b100100001101101</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18540 = 0x486C = 0b100100001101100</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18542 = 0x486E = 0b100100001101110</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18543 = 0x486F = 0b100100001101111</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18541 = 0x486D = 0b100100001101101</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>145 = 0x91 = 0b10010001</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>1</bfI2C_LineMux>
+          <Description>145 = 0x91 = 0b10010001</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9A58-0x9A73  len=27=0x1B">
+        <usClkMaskRegisterIndex>18544 = 0x4870 = 0b100100001110000</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18546 = 0x4872 = 0b100100001110010</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18547 = 0x4873 = 0b100100001110011</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18545 = 0x4871 = 0b100100001110001</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18544 = 0x4870 = 0b100100001110000</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18546 = 0x4872 = 0b100100001110010</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18547 = 0x4873 = 0b100100001110011</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18545 = 0x4871 = 0b100100001110001</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>146 = 0x92 = 0b10010010</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>2 = 0x2 = 0b10</bfI2C_LineMux>
+          <Description>146 = 0x92 = 0b10010010</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9A73-0x9A8E  len=27=0x1B">
+        <usClkMaskRegisterIndex>18548 = 0x4874 = 0b100100001110100</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18550 = 0x4876 = 0b100100001110110</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18551 = 0x4877 = 0b100100001110111</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18549 = 0x4875 = 0b100100001110101</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18548 = 0x4874 = 0b100100001110100</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18550 = 0x4876 = 0b100100001110110</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18551 = 0x4877 = 0b100100001110111</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18549 = 0x4875 = 0b100100001110101</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>147 = 0x93 = 0b10010011</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>3 = 0x3 = 0b11</bfI2C_LineMux>
+          <Description>147 = 0x93 = 0b10010011</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9A8E-0x9AA9  len=27=0x1B">
+        <usClkMaskRegisterIndex>18552 = 0x4878 = 0b100100001111000</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18554 = 0x487A = 0b100100001111010</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18555 = 0x487B = 0b100100001111011</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18553 = 0x4879 = 0b100100001111001</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18552 = 0x4878 = 0b100100001111000</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18554 = 0x487A = 0b100100001111010</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18555 = 0x487B = 0b100100001111011</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18553 = 0x4879 = 0b100100001111001</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>148 = 0x94 = 0b10010100</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>4 = 0x4 = 0b100</bfI2C_LineMux>
+          <Description>148 = 0x94 = 0b10010100</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9AA9-0x9AC4  len=27=0x1B">
+        <usClkMaskRegisterIndex>18556 = 0x487C = 0b100100001111100</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18558 = 0x487E = 0b100100001111110</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18559 = 0x487F = 0b100100001111111</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18557 = 0x487D = 0b100100001111101</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18556 = 0x487C = 0b100100001111100</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18558 = 0x487E = 0b100100001111110</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18559 = 0x487F = 0b100100001111111</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18557 = 0x487D = 0b100100001111101</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>149 = 0x95 = 0b10010101</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>5 = 0x5 = 0b101</bfI2C_LineMux>
+          <Description>149 = 0x95 = 0b10010101</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9AC4-0x9ADF  len=27=0x1B">
+        <usClkMaskRegisterIndex>18584 = 0x4898 = 0b100100010011000</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18586 = 0x489A = 0b100100010011010</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18587 = 0x489B = 0b100100010011011</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18585 = 0x4899 = 0b100100010011001</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18584 = 0x4898 = 0b100100010011000</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18586 = 0x489A = 0b100100010011010</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18587 = 0x489B = 0b100100010011011</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18585 = 0x4899 = 0b100100010011001</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>150 = 0x96 = 0b10010110</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>6 = 0x6 = 0b110</bfI2C_LineMux>
+          <Description>150 = 0x96 = 0b10010110</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>1</ucDataMaskShift>
+        <ucDataEnShift>1</ucDataEnShift>
+        <ucDataY_Shift>1</ucDataY_Shift>
+        <ucDataA_Shift>1</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+      <ATOM_GPIO_I2C_ASSIGMENT addr="0x9ADF-0x9AFA  len=27=0x1B">
+        <usClkMaskRegisterIndex>18560 = 0x4880 = 0b100100010000000</usClkMaskRegisterIndex>
+        <usClkEnRegisterIndex>18562 = 0x4882 = 0b100100010000010</usClkEnRegisterIndex>
+        <usClkY_RegisterIndex>18563 = 0x4883 = 0b100100010000011</usClkY_RegisterIndex>
+        <usClkA_RegisterIndex>18561 = 0x4881 = 0b100100010000001</usClkA_RegisterIndex>
+        <usDataMaskRegisterIndex>18560 = 0x4880 = 0b100100010000000</usDataMaskRegisterIndex>
+        <usDataEnRegisterIndex>18562 = 0x4882 = 0b100100010000010</usDataEnRegisterIndex>
+        <usDataY_RegisterIndex>18563 = 0x4883 = 0b100100010000011</usDataY_RegisterIndex>
+        <usDataA_RegisterIndex>18561 = 0x4881 = 0b100100010000001</usDataA_RegisterIndex>
+        <sucI2cId>
+          <gpio_id>151 = 0x97 = 0b10010111</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>7 = 0x7 = 0b111</bfI2C_LineMux>
+          <Description>151 = 0x97 = 0b10010111</Description>
+        </sucI2cId>
+        <ucClkMaskShift>0</ucClkMaskShift>
+        <ucClkEnShift>0</ucClkEnShift>
+        <ucClkY_Shift>0</ucClkY_Shift>
+        <ucClkA_Shift>0</ucClkA_Shift>
+        <ucDataMaskShift>8 = 0x8 = 0b1000</ucDataMaskShift>
+        <ucDataEnShift>8 = 0x8 = 0b1000</ucDataEnShift>
+        <ucDataY_Shift>8 = 0x8 = 0b1000</ucDataY_Shift>
+        <ucDataA_Shift>8 = 0x8 = 0b1000</ucDataA_Shift>
+        <ucReserved1>0</ucReserved1>
+        <ucReserved2>0</ucReserved2>
+      </ATOM_GPIO_I2C_ASSIGMENT>
+    </ATOM_GPIO_I2C_INFO>
+    <ATOM_POWERPLAY_TABLE addr="0x9BB2-0x9BFF  len=77=0x4D">
+      <sHeader>
+        <usStructureSize>833 = 0x341 = 0b1101000001</usStructureSize>
+        <ucTableFormatRevision>7 = 0x7 = 0b111</ucTableFormatRevision>
+        <ucTableContentRevision>1</ucTableContentRevision>
+      </sHeader>
+      <ucTableRevision>0</ucTableRevision>
+      <usTableSize>77 = 0x4D = 0b1001101</usTableSize>
+      <ulGoldenPPID>1665 = 0x681 = 0b11010000001</ulGoldenPPID>
+      <ulGoldenRevision>10394 = 0x289A = 0b10100010011010</ulGoldenRevision>
+      <usFormatID>25 = 0x19 = 0b11001</usFormatID>
+      <usVoltageTime>0</usVoltageTime>
+      <ulPlatformCaps>17203200 = 0x1068000 = 0b1000001101000000000000000</ulPlatformCaps>
+      <ulMaxODEngineClock>200000 = 0x30D40 = 0b110000110101000000</ulMaxODEngineClock>
+      <ulMaxODMemoryClock>225000 = 0x36EE8 = 0b110110111011101000</ulMaxODMemoryClock>
+      <usPowerControlLimit>50 = 0x32 = 0b110010</usPowerControlLimit>
+      <usUlvVoltageOffset>25 = 0x19 = 0b11001</usUlvVoltageOffset>
+      <usStateArrayOffset>77 = 0x4D = 0b1001101</usStateArrayOffset>
+      <usFanTableOffset>673 = 0x2A1 = 0b1010100001</usFanTableOffset>
+      <usThermalControllerOffset>664 = 0x298 = 0b1010011000</usThermalControllerOffset>
+      <usReserv>0</usReserv>
+      <usMclkDependencyTableOffset>437 = 0x1B5 = 0b110110101</usMclkDependencyTableOffset>
+      <usSclkDependencyTableOffset>315 = 0x13B = 0b100111011</usSclkDependencyTableOffset>
+      <usVddcLookupTableOffset>119 = 0x77 = 0b1110111</usVddcLookupTableOffset>
+      <usVddgfxLookupTableOffset>249 = 0xF9 = 0b11111001</usVddgfxLookupTableOffset>
+      <usMMDependencyTableOffset>478 = 0x1DE = 0b111011110</usMMDependencyTableOffset>
+      <usVCEStateTableOffset>774 = 0x306 = 0b1100000110</usVCEStateTableOffset>
+      <usPPMTableOffset>0</usPPMTableOffset>
+      <usPowerTuneTableOffset>721 = 0x2D1 = 0b1011010001</usPowerTuneTableOffset>
+      <usHardLimitTableOffset>0</usHardLimitTableOffset>
+      <usPCIETableOffset>800 = 0x320 = 0b1100100000</usPCIETableOffset>
+      <usGPIOTableOffset>826 = 0x33A = 0b1100111010</usGPIOTableOffset>
+      <usReserved>12-bytes text:L\x11\x02\0S\x07\0\0\0\0\0\0</usReserved>
+    </ATOM_POWERPLAY_TABLE>
+    <AtomVoltageTables>
+      <ATOM_VOLTAGE_TABLE addr="0x9C29-0x9C2B  len=2=0x2 Name=VddcLookupTable">
+        <ucRevId>0</ucRevId>
+        <ucNumEntries>16 = 0x10 = 0b10000</ucNumEntries>
+      </ATOM_VOLTAGE_TABLE>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C2B-0x9C33  len=8=0x8">
+        <usVdd>750 = 0x2EE = 0b1011101110</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C33-0x9C3B  len=8=0x8">
+        <usVdd>65282 = 0xFF02 = 0b1111111100000010</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C3B-0x9C43  len=8=0x8">
+        <usVdd>65283 = 0xFF03 = 0b1111111100000011</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C43-0x9C4B  len=8=0x8">
+        <usVdd>65284 = 0xFF04 = 0b1111111100000100</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C4B-0x9C53  len=8=0x8">
+        <usVdd>65285 = 0xFF05 = 0b1111111100000101</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C53-0x9C5B  len=8=0x8">
+        <usVdd>65286 = 0xFF06 = 0b1111111100000110</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C5B-0x9C63  len=8=0x8">
+        <usVdd>65287 = 0xFF07 = 0b1111111100000111</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C63-0x9C6B  len=8=0x8">
+        <usVdd>65288 = 0xFF08 = 0b1111111100001000</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C6B-0x9C73  len=8=0x8">
+        <usVdd>800 = 0x320 = 0b1100100000</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C73-0x9C7B  len=8=0x8">
+        <usVdd>850 = 0x352 = 0b1101010010</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C7B-0x9C83  len=8=0x8">
+        <usVdd>900 = 0x384 = 0b1110000100</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C83-0x9C8B  len=8=0x8">
+        <usVdd>950 = 0x3B6 = 0b1110110110</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C8B-0x9C93  len=8=0x8">
+        <usVdd>1000 = 0x3E8 = 0b1111101000</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C93-0x9C9B  len=8=0x8">
+        <usVdd>1050 = 0x41A = 0b10000011010</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9C9B-0x9CA3  len=8=0x8">
+        <usVdd>1100 = 0x44C = 0b10001001100</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CA3-0x9CAB  len=8=0x8">
+        <usVdd>1150 = 0x47E = 0b10001111110</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_TABLE addr="0x9CAB-0x9CAD  len=2=0x2 Name=VddgfxLookupTable">
+        <ucRevId>0</ucRevId>
+        <ucNumEntries>8 = 0x8 = 0b1000</ucNumEntries>
+      </ATOM_VOLTAGE_TABLE>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CAD-0x9CB5  len=8=0x8">
+        <usVdd>900 = 0x384 = 0b1110000100</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CB5-0x9CBD  len=8=0x8">
+        <usVdd>65282 = 0xFF02 = 0b1111111100000010</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CBD-0x9CC5  len=8=0x8">
+        <usVdd>65283 = 0xFF03 = 0b1111111100000011</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CC5-0x9CCD  len=8=0x8">
+        <usVdd>65284 = 0xFF04 = 0b1111111100000100</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CCD-0x9CD5  len=8=0x8">
+        <usVdd>65285 = 0xFF05 = 0b1111111100000101</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CD5-0x9CDD  len=8=0x8">
+        <usVdd>65286 = 0xFF06 = 0b1111111100000110</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CDD-0x9CE5  len=8=0x8">
+        <usVdd>65287 = 0xFF07 = 0b1111111100000111</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+      <ATOM_VOLTAGE_ENTRY addr="0x9CE5-0x9CED  len=8=0x8">
+        <usVdd>65288 = 0xFF08 = 0b1111111100001000</usVdd>
+        <usCACLow>0</usCACLow>
+        <usCACMid>0</usCACMid>
+        <usCACHigh>0</usCACHigh>
+      </ATOM_VOLTAGE_ENTRY>
+    </AtomVoltageTables>
+    <AtomClockTables>
+      <ATOM_SCLK_TABLE addr="0x9CED-0x9CEF  len=2=0x2 Name=SclkDependencyTable">
+        <ucRevId>1</ucRevId>
+        <ucNumEntries>8 = 0x8 = 0b1000</ucNumEntries>
+      </ATOM_SCLK_TABLE>
+      <ATOM_SCLK_ENTRY addr="0x9CEF-0x9CFE  len=15=0xF">
+        <ucVddInd>0</ucVddInd>
+        <usVddcOffset>0</usVddcOffset>
+        <ulSclk>30000 = 0x7530 = 0b111010100110000</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>128 = 0x80 = 0b10000000</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9CFE-0x9D0D  len=15=0xF">
+        <ucVddInd>1</ucVddInd>
+        <usVddcOffset>65510 = 0xFFE6 = 0b1111111111100110</usVddcOffset>
+        <ulSclk>60000 = 0xEA60 = 0b1110101001100000</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9D0D-0x9D1C  len=15=0xF">
+        <ucVddInd>2 = 0x2 = 0b10</ucVddInd>
+        <usVddcOffset>65510 = 0xFFE6 = 0b1111111111100110</usVddcOffset>
+        <ulSclk>90000 = 0x15F90 = 0b10101111110010000</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9D1C-0x9D2B  len=15=0xF">
+        <ucVddInd>3 = 0x3 = 0b11</ucVddInd>
+        <usVddcOffset>65510 = 0xFFE6 = 0b1111111111100110</usVddcOffset>
+        <ulSclk>116200 = 0x1C5E8 = 0b11100010111101000</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9D2B-0x9D3A  len=15=0xF">
+        <ucVddInd>4 = 0x4 = 0b100</ucVddInd>
+        <usVddcOffset>65510 = 0xFFE6 = 0b1111111111100110</usVddcOffset>
+        <ulSclk>123300 = 0x1E1A4 = 0b11110000110100100</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9D3A-0x9D49  len=15=0xF">
+        <ucVddInd>5 = 0x5 = 0b101</ucVddInd>
+        <usVddcOffset>65510 = 0xFFE6 = 0b1111111111100110</usVddcOffset>
+        <ulSclk>127500 = 0x1F20C = 0b11111001000001100</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9D49-0x9D58  len=15=0xF">
+        <ucVddInd>6 = 0x6 = 0b110</ucVddInd>
+        <usVddcOffset>65510 = 0xFFE6 = 0b1111111111100110</usVddcOffset>
+        <ulSclk>131900 = 0x2033C = 0b100000001100111100</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_SCLK_ENTRY addr="0x9D58-0x9D67  len=15=0xF">
+        <ucVddInd>7 = 0x7 = 0b111</ucVddInd>
+        <usVddcOffset>0</usVddcOffset>
+        <ulSclk>136000 = 0x21340 = 0b100001001101000000</ulSclk>
+        <usEdcCurrent>0</usEdcCurrent>
+        <ucReliabilityTemperature>0</ucReliabilityTemperature>
+        <ucCKSVOffsetandDisable>0</ucCKSVOffsetandDisable>
+        <ulSclkOffset>0</ulSclkOffset>
+      </ATOM_SCLK_ENTRY>
+      <ATOM_MCLK_TABLE addr="0x9D67-0x9D69  len=2=0x2 Name=MclkDependencyTable">
+        <ucRevId>0</ucRevId>
+        <ucNumEntries>3 = 0x3 = 0b11</ucNumEntries>
+      </ATOM_MCLK_TABLE>
+      <ATOM_MCLK_ENTRY addr="0x9D69-0x9D76  len=13=0xD">
+        <ucVddcInd>0</ucVddcInd>
+        <usVddci>800 = 0x320 = 0b1100100000</usVddci>
+        <usVddgfxOffset>0</usVddgfxOffset>
+        <usMvdd>1000 = 0x3E8 = 0b1111101000</usMvdd>
+        <ulMclk>30000 = 0x7530 = 0b111010100110000</ulMclk>
+        <usReserved>0</usReserved>
+      </ATOM_MCLK_ENTRY>
+      <ATOM_MCLK_ENTRY addr="0x9D76-0x9D83  len=13=0xD">
+        <ucVddcInd>8 = 0x8 = 0b1000</ucVddcInd>
+        <usVddci>850 = 0x352 = 0b1101010010</usVddci>
+        <usVddgfxOffset>0</usVddgfxOffset>
+        <usMvdd>1000 = 0x3E8 = 0b1111101000</usMvdd>
+        <ulMclk>100000 = 0x186A0 = 0b11000011010100000</ulMclk>
+        <usReserved>0</usReserved>
+      </ATOM_MCLK_ENTRY>
+      <ATOM_MCLK_ENTRY addr="0x9D83-0x9D90  len=13=0xD">
+        <ucVddcInd>11 = 0xB = 0b1011</ucVddcInd>
+        <usVddci>950 = 0x3B6 = 0b1110110110</usVddci>
+        <usVddgfxOffset>0</usVddgfxOffset>
+        <usMvdd>1000 = 0x3E8 = 0b1111101000</usMvdd>
+        <ulMclk>200000 = 0x30D40 = 0b110000110101000000</ulMclk>
+        <usReserved>0</usReserved>
+      </ATOM_MCLK_ENTRY>
+    </AtomClockTables>
+    <AtomMMDependencyTable>
+      <ATOM_MM_DEPENDENCY_TABLE addr="0x9D90-0x9D92  len=2=0x2">
+        <ucRevId>0</ucRevId>
+        <ucNumEntries>8 = 0x8 = 0b1000</ucNumEntries>
+      </ATOM_MM_DEPENDENCY_TABLE>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9D92-0x9DA9  len=23=0x17">
+        <ucVddcInd>8 = 0x8 = 0b1000</ucVddcInd>
+        <usVddgfxOffset>0</usVddgfxOffset>
+        <ulDClk>58000 = 0xE290 = 0b1110001010010000</ulDClk>
+        <ulVClk>75000 = 0x124F8 = 0b10010010011111000</ulVClk>
+        <ulEClk>63000 = 0xF618 = 0b1111011000011000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>57000 = 0xDEA8 = 0b1101111010101000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9DA9-0x9DC0  len=23=0x17">
+        <ucVddcInd>9 = 0x9 = 0b1001</ucVddcInd>
+        <usVddgfxOffset>65460 = 0xFFB4 = 0b1111111110110100</usVddgfxOffset>
+        <ulDClk>63000 = 0xF618 = 0b1111011000011000</ulDClk>
+        <ulVClk>80000 = 0x13880 = 0b10011100010000000</ulVClk>
+        <ulEClk>69000 = 0x10D88 = 0b10000110110001000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>64000 = 0xFA00 = 0b1111101000000000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9DC0-0x9DD7  len=23=0x17">
+        <ucVddcInd>10 = 0xA = 0b1010</ucVddcInd>
+        <usVddgfxOffset>65435 = 0xFF9B = 0b1111111110011011</usVddgfxOffset>
+        <ulDClk>68000 = 0x109A0 = 0b10000100110100000</ulDClk>
+        <ulVClk>85000 = 0x14C08 = 0b10100110000001000</ulVClk>
+        <ulEClk>75000 = 0x124F8 = 0b10010010011111000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>70000 = 0x11170 = 0b10001000101110000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9DD7-0x9DEE  len=23=0x17">
+        <ucVddcInd>11 = 0xB = 0b1011</ucVddcInd>
+        <usVddgfxOffset>65410 = 0xFF82 = 0b1111111110000010</usVddgfxOffset>
+        <ulDClk>73000 = 0x11D28 = 0b10001110100101000</ulDClk>
+        <ulVClk>89000 = 0x15BA8 = 0b10101101110101000</ulVClk>
+        <ulEClk>81000 = 0x13C68 = 0b10011110001101000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>76000 = 0x128E0 = 0b10010100011100000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9DEE-0x9E05  len=23=0x17">
+        <ucVddcInd>12 = 0xC = 0b1100</ucVddcInd>
+        <usVddgfxOffset>65385 = 0xFF69 = 0b1111111101101001</usVddgfxOffset>
+        <ulDClk>77000 = 0x12CC8 = 0b10010110011001000</ulDClk>
+        <ulVClk>92000 = 0x16760 = 0b10110011101100000</ulVClk>
+        <ulEClk>86000 = 0x14FF0 = 0b10100111111110000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>81000 = 0x13C68 = 0b10011110001101000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9E05-0x9E1C  len=23=0x17">
+        <ucVddcInd>13 = 0xD = 0b1101</ucVddcInd>
+        <usVddgfxOffset>65335 = 0xFF37 = 0b1111111100110111</usVddgfxOffset>
+        <ulDClk>80000 = 0x13880 = 0b10011100010000000</ulDClk>
+        <ulVClk>95000 = 0x17318 = 0b10111001100011000</ulVClk>
+        <ulEClk>91000 = 0x16378 = 0b10110001101111000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>85000 = 0x14C08 = 0b10100110000001000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9E1C-0x9E33  len=23=0x17">
+        <ucVddcInd>14 = 0xE = 0b1110</ucVddcInd>
+        <usVddgfxOffset>65285 = 0xFF05 = 0b1111111100000101</usVddgfxOffset>
+        <ulDClk>83000 = 0x14438 = 0b10100010000111000</ulDClk>
+        <ulVClk>98000 = 0x17ED0 = 0b10111111011010000</ulVClk>
+        <ulEClk>96000 = 0x17700 = 0b10111011100000000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>88000 = 0x157C0 = 0b10101011111000000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+      <ATOM_MM_DEPENDENCY_RECORD addr="0x9E33-0x9E4A  len=23=0x17">
+        <ucVddcInd>15 = 0xF = 0b1111</ucVddcInd>
+        <usVddgfxOffset>0</usVddgfxOffset>
+        <ulDClk>86000 = 0x14FF0 = 0b10100111111110000</ulDClk>
+        <ulVClk>100000 = 0x186A0 = 0b11000011010100000</ulVClk>
+        <ulEClk>100000 = 0x186A0 = 0b11000011010100000</ulEClk>
+        <ulAClk>0</ulAClk>
+        <ulSAMUClk>91000 = 0x16378 = 0b10110001101111000</ulSAMUClk>
+      </ATOM_MM_DEPENDENCY_RECORD>
+    </AtomMMDependencyTable>
+    <ATOM_FAN_TABLE addr="0x9E53-0x9E80  len=45=0x2D">
+      <ucRevId>9 = 0x9 = 0b1001</ucRevId>
+      <ucTHyst>3 = 0x3 = 0b11</ucTHyst>
+      <usTMin>4000 = 0xFA0 = 0b111110100000</usTMin>
+      <usTMed>6500 = 0x1964 = 0b1100101100100</usTMed>
+      <usTHigh>8500 = 0x2134 = 0b10000100110100</usTHigh>
+      <usPWMMin>2000 = 0x7D0 = 0b11111010000</usPWMMin>
+      <usPWMMed>4000 = 0xFA0 = 0b111110100000</usPWMMed>
+      <usPWMHigh>6000 = 0x1770 = 0b1011101110000</usPWMHigh>
+      <usTMax>10900 = 0x2A94 = 0b10101010010100</usTMax>
+      <ucFanControlMode>1</ucFanControlMode>
+      <usFanPWMMax>100 = 0x64 = 0b1100100</usFanPWMMax>
+      <usFanOutputSensitivity>4836 = 0x12E4 = 0b1001011100100</usFanOutputSensitivity>
+      <usFanRPMMax>2150 = 0x866 = 0b100001100110</usFanRPMMax>
+      <ulMinFanSCLKAcousticLimit>90000 = 0x15F90 = 0b10101111110010000</ulMinFanSCLKAcousticLimit>
+      <ucTargetTemperature>70 = 0x46 = 0b1000110</ucTargetTemperature>
+      <ucMinimumPWMLimit>44 = 0x2C = 0b101100</ucMinimumPWMLimit>
+      <usFanGainEdge>150 = 0x96 = 0b10010110</usFanGainEdge>
+      <usFanGainHotspot>150 = 0x96 = 0b10010110</usFanGainHotspot>
+      <usFanGainLiquid>100 = 0x64 = 0b1100100</usFanGainLiquid>
+      <usFanGainVrVddc>150 = 0x96 = 0b10010110</usFanGainVrVddc>
+      <usFanGainVrMvdd>150 = 0x96 = 0b10010110</usFanGainVrMvdd>
+      <usFanGainPlx>150 = 0x96 = 0b10010110</usFanGainPlx>
+      <usFanGainHbm>100 = 0x64 = 0b1100100</usFanGainHbm>
+      <usReserved>12801 = 0x3201 = 0b11001000000001</usReserved>
+    </ATOM_FAN_TABLE>
+    <ATOM_Polaris_PowerTune_Table addr="0x9E83-0x9EB8  len=53=0x35">
+      <ucRevId>4 = 0x4 = 0b100</ucRevId>
+      <usTDP>145 = 0x91 = 0b10010001</usTDP>
+      <usConfigurableTDP>0</usConfigurableTDP>
+      <usTDC>132 = 0x84 = 0b10000100</usTDC>
+      <usBatteryPowerLimit>145 = 0x91 = 0b10010001</usBatteryPowerLimit>
+      <usSmallPowerLimit>145 = 0x91 = 0b10010001</usSmallPowerLimit>
+      <usLowCACLeakage>0</usLowCACLeakage>
+      <usHighCACLeakage>0</usHighCACLeakage>
+      <usMaximumPowerDeliveryLimit>145 = 0x91 = 0b10010001</usMaximumPowerDeliveryLimit>
+      <usTjMax>90 = 0x5A = 0b1011010</usTjMax>
+      <usPowerTuneDataSetID>0</usPowerTuneDataSetID>
+      <usEDCLimit>0</usEDCLimit>
+      <usSoftwareShutdownTemp>94 = 0x5E = 0b1011110</usSoftwareShutdownTemp>
+      <usClockStretchAmount>2 = 0x2 = 0b10</usClockStretchAmount>
+      <usTemperatureLimitHotspot>105 = 0x69 = 0b1101001</usTemperatureLimitHotspot>
+      <usTemperatureLimitLiquid1>80 = 0x50 = 0b1010000</usTemperatureLimitLiquid1>
+      <usTemperatureLimitLiquid2>80 = 0x50 = 0b1010000</usTemperatureLimitLiquid2>
+      <usTemperatureLimitVrVddc>115 = 0x73 = 0b1110011</usTemperatureLimitVrVddc>
+      <usTemperatureLimitVrMvdd>115 = 0x73 = 0b1110011</usTemperatureLimitVrMvdd>
+      <usTemperatureLimitPlx>95 = 0x5F = 0b1011111</usTemperatureLimitPlx>
+      <ucLiquid1_I2C_address>0</ucLiquid1_I2C_address>
+      <ucLiquid2_I2C_address>0</ucLiquid2_I2C_address>
+      <ucLiquid_I2C_Line>144 = 0x90 = 0b10010000</ucLiquid_I2C_Line>
+      <ucVr_I2C_address>96 = 0x60 = 0b1100000</ucVr_I2C_address>
+      <ucVr_I2C_Line>150 = 0x96 = 0b10010110</ucVr_I2C_Line>
+      <ucPlx_I2C_address>0</ucPlx_I2C_address>
+      <ucPlx_I2C_Line>144 = 0x90 = 0b10010000</ucPlx_I2C_Line>
+      <usBoostPowerLimit>0</usBoostPowerLimit>
+      <ucCKS_LDO_REFSEL>6 = 0x6 = 0b110</ucCKS_LDO_REFSEL>
+      <ucHotSpotOnly>0</ucHotSpotOnly>
+      <ucReserve>0</ucReserve>
+      <usReserve>0</usReserve>
+    </ATOM_Polaris_PowerTune_Table>
+    <AtomVideoOutTables>
+      <ATOM_OBJECT_HEADER_V3 addr="0x9EFA-0x9F0C  len=18=0x12">
+        <sHeader>
+          <usStructureSize>350 = 0x15E = 0b101011110</usStructureSize>
+          <ucTableFormatRevision>1</ucTableFormatRevision>
+          <ucTableContentRevision>3 = 0x3 = 0b11</ucTableContentRevision>
+        </sHeader>
+        <usDeviceSupport>3720 = 0xE88 = 0b111010001000</usDeviceSupport>
+        <usConnectorObjectTableOffset>72 = 0x48 = 0b1001000</usConnectorObjectTableOffset>
+        <usRouterObjectTableOffset>0</usRouterObjectTableOffset>
+        <usEncoderObjectTableOffset>251 = 0xFB = 0b11111011</usEncoderObjectTableOffset>
+        <usProtectionObjectTableOffset>0</usProtectionObjectTableOffset>
+        <usDisplayPathTableOffset>18 = 0x12 = 0b10010</usDisplayPathTableOffset>
+        <usMiscObjectTableOffset>0</usMiscObjectTableOffset>
+      </ATOM_OBJECT_HEADER_V3>
+      <ATOM_DISPLAY_OBJECT_PATH_TABLE>
+        <ATOM_DISPLAY_OBJECT_PATH_TABLE addr="0x9F0C-0x9F10  len=4=0x4">
+          <ucNumOfDispPath>5 = 0x5 = 0b101</ucNumOfDispPath>
+          <ucVersion>1</ucVersion>
+          <ucPadding2>0</ucPadding2>
+        </ATOM_DISPLAY_OBJECT_PATH_TABLE>
+        <ATOM_DISPLAY_OBJECT_PATH addr="0x9F10-0x9F1A  len=10=0xA">
+          <usDeviceTag>8 = 0x8 = 0b1000</usDeviceTag>
+          <usSize>10 = 0xA = 0b1010</usSize>
+          <usConnObjectId>
+            <KindInNamespace>CONNECTOR_OBJECT_ID_DISPLAYPORT = 0x13</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+            <Index>1</Index>
+          </usConnObjectId>
+          <usGPUObjectId>
+            <KindInNamespace>0</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_GPU</Namespace>
+            <Index>1</Index>
+          </usGPUObjectId>
+          <usGraphicObjIdsFirst>
+            <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 = 0x20</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+            <Index>1</Index>
+          </usGraphicObjIdsFirst>
+        </ATOM_DISPLAY_OBJECT_PATH>
+        <ATOM_DISPLAY_OBJECT_PATH addr="0x9F1A-0x9F24  len=10=0xA">
+          <usDeviceTag>128 = 0x80 = 0b10000000</usDeviceTag>
+          <usSize>10 = 0xA = 0b1010</usSize>
+          <usConnObjectId>
+            <KindInNamespace>CONNECTOR_OBJECT_ID_DISPLAYPORT = 0x13</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+            <Index>2 = 0x2 = 0b10</Index>
+          </usConnObjectId>
+          <usGPUObjectId>
+            <KindInNamespace>0</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_GPU</Namespace>
+            <Index>1</Index>
+          </usGPUObjectId>
+          <usGraphicObjIdsFirst>
+            <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 = 0x20</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+            <Index>2 = 0x2 = 0b10</Index>
+          </usGraphicObjIdsFirst>
+        </ATOM_DISPLAY_OBJECT_PATH>
+        <ATOM_DISPLAY_OBJECT_PATH addr="0x9F24-0x9F2E  len=10=0xA">
+          <usDeviceTag>512 = 0x200 = 0b1000000000</usDeviceTag>
+          <usSize>10 = 0xA = 0b1010</usSize>
+          <usConnObjectId>
+            <KindInNamespace>CONNECTOR_OBJECT_ID_HDMI_TYPE_A = 0xC</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+            <Index>1</Index>
+          </usConnObjectId>
+          <usGPUObjectId>
+            <KindInNamespace>0</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_GPU</Namespace>
+            <Index>1</Index>
+          </usGPUObjectId>
+          <usGraphicObjIdsFirst>
+            <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 = 0x21</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+            <Index>1</Index>
+          </usGraphicObjIdsFirst>
+        </ATOM_DISPLAY_OBJECT_PATH>
+        <ATOM_DISPLAY_OBJECT_PATH addr="0x9F2E-0x9F38  len=10=0xA">
+          <usDeviceTag>1024 = 0x400 = 0b10000000000</usDeviceTag>
+          <usSize>10 = 0xA = 0b1010</usSize>
+          <usConnObjectId>
+            <KindInNamespace>CONNECTOR_OBJECT_ID_HDMI_TYPE_A = 0xC</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+            <Index>2 = 0x2 = 0b10</Index>
+          </usConnObjectId>
+          <usGPUObjectId>
+            <KindInNamespace>0</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_GPU</Namespace>
+            <Index>1</Index>
+          </usGPUObjectId>
+          <usGraphicObjIdsFirst>
+            <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 = 0x21</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+            <Index>2 = 0x2 = 0b10</Index>
+          </usGraphicObjIdsFirst>
+        </ATOM_DISPLAY_OBJECT_PATH>
+        <ATOM_DISPLAY_OBJECT_PATH addr="0x9F38-0x9F42  len=10=0xA">
+          <usDeviceTag>2048 = 0x800 = 0b100000000000</usDeviceTag>
+          <usSize>10 = 0xA = 0b1010</usSize>
+          <usConnObjectId>
+            <KindInNamespace>CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D = 0x4</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+            <Index>1</Index>
+          </usConnObjectId>
+          <usGPUObjectId>
+            <KindInNamespace>0</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_GPU</Namespace>
+            <Index>1</Index>
+          </usGPUObjectId>
+          <usGraphicObjIdsFirst>
+            <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY = 0x1E</KindInNamespace>
+            <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+            <Index>1</Index>
+          </usGraphicObjIdsFirst>
+        </ATOM_DISPLAY_OBJECT_PATH>
+      </ATOM_DISPLAY_OBJECT_PATH_TABLE>
+      <Connectors>
+        <ATOM_OBJECT_TABLE>
+          <ATOM_OBJECT_TABLE addr="0x9F42-0x9F46  len=4=0x4">
+            <ucNumberOfObjects>5 = 0x5 = 0b101</ucNumberOfObjects>
+            <ucPadding0>0</ucPadding0>
+            <ucPadding1>0</ucPadding1>
+            <ucPadding2>0</ucPadding2>
+          </ATOM_OBJECT_TABLE>
+          <ATOM_OBJECT addr="0x9F46-0x9F4E  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>CONNECTOR_OBJECT_ID_DISPLAYPORT = 0x13</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+              <Index>1</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>116 = 0x74 = 0b1110100</usSrcDstTableOffset>
+            <usRecordOffset>122 = 0x7A = 0b1111010</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9F74-0x9F76  len=2=0x2">
+            <ucRecordSize>12 = 0xC = 0b1100</ucRecordSize>
+            <RecordType>ATOM_CONNECTOR_DEVICE_TAG_RECORD_TYPE = 0x4</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="  10bytes [0x9F76-9F80) values                                         01001002000008000000"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9F80-0x9F82  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_I2C_RECORD_TYPE = 0x1</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9F82-9F84) values                                                         9100"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9F84-0x9F86  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_HPD_INT_RECORD_TYPE = 0x2</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9F86-9F88) values                                                         0100"/>
+          <ATOM_OBJECT addr="0x9F4E-0x9F56  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>CONNECTOR_OBJECT_ID_DISPLAYPORT = 0x13</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+              <Index>2 = 0x2 = 0b10</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>143 = 0x8F = 0b10001111</usSrcDstTableOffset>
+            <usRecordOffset>149 = 0x95 = 0b10010101</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9F8F-0x9F91  len=2=0x2">
+            <ucRecordSize>12 = 0xC = 0b1100</ucRecordSize>
+            <RecordType>ATOM_CONNECTOR_DEVICE_TAG_RECORD_TYPE = 0x4</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="  10bytes [0x9F91-9F9B) values                                         01002002000080000000"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9F9B-0x9F9D  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_I2C_RECORD_TYPE = 0x1</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9F9D-9F9F) values                                                         9300"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9F9F-0x9FA1  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_HPD_INT_RECORD_TYPE = 0x2</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FA1-9FA3) values                                                         0500"/>
+          <ATOM_OBJECT addr="0x9F56-0x9F5E  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>CONNECTOR_OBJECT_ID_HDMI_TYPE_A = 0xC</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+              <Index>1</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>170 = 0xAA = 0b10101010</usSrcDstTableOffset>
+            <usRecordOffset>176 = 0xB0 = 0b10110000</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FAA-0x9FAC  len=2=0x2">
+            <ucRecordSize>12 = 0xC = 0b1100</ucRecordSize>
+            <RecordType>ATOM_CONNECTOR_DEVICE_TAG_RECORD_TYPE = 0x4</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="  10bytes [0x9FAC-9FB6) values                                         01003002000000020000"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FB6-0x9FB8  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_I2C_RECORD_TYPE = 0x1</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FB8-9FBA) values                                                         9000"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FBA-0x9FBC  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_HPD_INT_RECORD_TYPE = 0x2</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FBC-9FBE) values                                                         0600"/>
+          <ATOM_OBJECT addr="0x9F5E-0x9F66  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>CONNECTOR_OBJECT_ID_HDMI_TYPE_A = 0xC</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+              <Index>2 = 0x2 = 0b10</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>197 = 0xC5 = 0b11000101</usSrcDstTableOffset>
+            <usRecordOffset>203 = 0xCB = 0b11001011</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FC5-0x9FC7  len=2=0x2">
+            <ucRecordSize>12 = 0xC = 0b1100</ucRecordSize>
+            <RecordType>ATOM_CONNECTOR_DEVICE_TAG_RECORD_TYPE = 0x4</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="  10bytes [0x9FC7-9FD1) values                                         01004002000000040000"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FD1-0x9FD3  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_I2C_RECORD_TYPE = 0x1</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FD3-9FD5) values                                                         9200"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FD5-0x9FD7  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_HPD_INT_RECORD_TYPE = 0x2</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FD7-9FD9) values                                                         0400"/>
+          <ATOM_OBJECT addr="0x9F66-0x9F6E  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D = 0x4</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_CONNECTOR</Namespace>
+              <Index>1</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>224 = 0xE0 = 0b11100000</usSrcDstTableOffset>
+            <usRecordOffset>230 = 0xE6 = 0b11100110</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FE0-0x9FE2  len=2=0x2">
+            <ucRecordSize>12 = 0xC = 0b1100</ucRecordSize>
+            <RecordType>ATOM_CONNECTOR_DEVICE_TAG_RECORD_TYPE = 0x4</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="  10bytes [0x9FE2-9FEC) values                                         01005002000000080000"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FEC-0x9FEE  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_I2C_RECORD_TYPE = 0x1</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FEE-9FF0) values                                                         9500"/>
+          <ATOM_COMMON_RECORD_HEADER addr="0x9FF0-0x9FF2  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_HPD_INT_RECORD_TYPE = 0x2</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0x9FF2-9FF4) values                                                         0300"/>
+        </ATOM_OBJECT_TABLE>
+      </Connectors>
+      <Encoders>
+        <ATOM_OBJECT_TABLE>
+          <ATOM_OBJECT_TABLE addr="0x9FF5-0x9FF9  len=4=0x4">
+            <ucNumberOfObjects>5 = 0x5 = 0b101</ucNumberOfObjects>
+            <ucPadding0>0</ucPadding0>
+            <ucPadding1>0</ucPadding1>
+            <ucPadding2>0</ucPadding2>
+          </ATOM_OBJECT_TABLE>
+          <ATOM_OBJECT addr="0x9FF9-0xA001  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 = 0x20</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+              <Index>1</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>295 = 0x127 = 0b100100111</usSrcDstTableOffset>
+            <usRecordOffset>301 = 0x12D = 0b100101101</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0xA027-0xA029  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_ENCODER_CAP_RECORD_TYPE = 0x14</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0xA029-A02B) values                                                         0F00"/>
+          <ATOM_OBJECT addr="0xA001-0xA009  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 = 0x20</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+              <Index>2 = 0x2 = 0b10</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>306 = 0x132 = 0b100110010</usSrcDstTableOffset>
+            <usRecordOffset>312 = 0x138 = 0b100111000</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0xA032-0xA034  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_ENCODER_CAP_RECORD_TYPE = 0x14</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0xA034-A036) values                                                         0F00"/>
+          <ATOM_OBJECT addr="0xA009-0xA011  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 = 0x21</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+              <Index>1</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>317 = 0x13D = 0b100111101</usSrcDstTableOffset>
+            <usRecordOffset>323 = 0x143 = 0b101000011</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0xA03D-0xA03F  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_ENCODER_CAP_RECORD_TYPE = 0x14</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0xA03F-A041) values                                                         0F00"/>
+          <ATOM_OBJECT addr="0xA011-0xA019  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 = 0x21</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+              <Index>2 = 0x2 = 0b10</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>328 = 0x148 = 0b101001000</usSrcDstTableOffset>
+            <usRecordOffset>334 = 0x14E = 0b101001110</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0xA048-0xA04A  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_ENCODER_CAP_RECORD_TYPE = 0x14</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0xA04A-A04C) values                                                         0F00"/>
+          <ATOM_OBJECT addr="0xA019-0xA021  len=8=0x8">
+            <usObjectID>
+              <KindInNamespace>ENCODER_OBJECT_ID_INTERNAL_UNIPHY = 0x1E</KindInNamespace>
+              <Namespace>GRAPH_OBJECT_TYPE_ENCODER</Namespace>
+              <Index>1</Index>
+            </usObjectID>
+            <usSrcDstTableOffset>339 = 0x153 = 0b101010011</usSrcDstTableOffset>
+            <usRecordOffset>345 = 0x159 = 0b101011001</usRecordOffset>
+            <usReserved>0</usReserved>
+          </ATOM_OBJECT>
+          <ATOM_COMMON_RECORD_HEADER addr="0xA053-0xA055  len=2=0x2">
+            <ucRecordSize>4 = 0x4 = 0b100</ucRecordSize>
+            <RecordType>ATOM_ENCODER_CAP_RECORD_TYPE = 0x14</RecordType>
+          </ATOM_COMMON_RECORD_HEADER>
+          <extra desc="   2bytes [0xA055-A057) values                                                         0F00"/>
+        </ATOM_OBJECT_TABLE>
+      </Encoders>
+      <Routers>
+        <Table-not-present name="ATOM_OBJECT_TABLE"/>
+      </Routers>
+    </AtomVideoOutTables>
+    <AtomVRamTables>
+      <ATOM_VRAM_INFO addr="0xA3AA-0xA3BE  len=20=0x14">
+        <sHeader>
+          <usStructureSize>1122 = 0x462 = 0b10001100010</usStructureSize>
+          <ucTableFormatRevision>2 = 0x2 = 0b10</ucTableFormatRevision>
+          <ucTableContentRevision>2 = 0x2 = 0b10</ucTableContentRevision>
+        </sHeader>
+        <usMemAdjustTblOffset>76 = 0x4C = 0b1001100</usMemAdjustTblOffset>
+        <usMemClkPatchTblOffset>91 = 0x5B = 0b1011011</usMemClkPatchTblOffset>
+        <usMcAdjustPerTileTblOffset>765 = 0x2FD = 0b1011111101</usMcAdjustPerTileTblOffset>
+        <usMcPhyInitTableOffset>947 = 0x3B3 = 0b1110110011</usMcPhyInitTableOffset>
+        <usDramDataRemapTblOffset>811 = 0x32B = 0b1100101011</usDramDataRemapTblOffset>
+        <usReserved1>0</usReserved1>
+        <ucNumOfVRAMModule>1</ucNumOfVRAMModule>
+        <ucMemoryClkPatchTblVer>1</ucMemoryClkPatchTblVer>
+        <ucVramModuleVer>8 = 0x8 = 0b1000</ucVramModuleVer>
+        <ucMcPhyTileNum>4 = 0x4 = 0b100</ucMcPhyTileNum>
+      </ATOM_VRAM_INFO>
+      <ATOM_VRAM_ENTRY addr="0xA3BE-0xA3FE  len=64=0x40">
+        <ulChannelMapCfg>1985220658 = 0x76541032 = 0b1110110010101000001000000110010</ulChannelMapCfg>
+        <usModuleSize>56 = 0x38 = 0b111000</usModuleSize>
+        <usMcRamCfg>24738 = 0x60A2 = 0b110000010100010</usMcRamCfg>
+        <usEnableChannels>255 = 0xFF = 0b11111111</usEnableChannels>
+        <ucExtMemoryID>0</ucExtMemoryID>
+        <ucMemoryType>80 = 0x50 = 0b1010000</ucMemoryType>
+        <ucChannelNum>3 = 0x3 = 0b11</ucChannelNum>
+        <ucChannelWidth>5 = 0x5 = 0b101</ucChannelWidth>
+        <ucDensity>99 = 0x63 = 0b1100011</ucDensity>
+        <ucBankCol>10 = 0xA = 0b1010</ucBankCol>
+        <ucMisc>4 = 0x4 = 0b100</ucMisc>
+        <ucVREFI>0</ucVREFI>
+        <usReserved>0</usReserved>
+        <usMemorySize>8192 = 0x2000 = 0b10000000000000</usMemorySize>
+        <ucMcTunningSetId>0</ucMcTunningSetId>
+        <ucRowNum>11 = 0xB = 0b1011</ucRowNum>
+        <usEMRS2Value>16384 = 0x4000 = 0b100000000000000</usEMRS2Value>
+        <usEMRS3Value>24832 = 0x6100 = 0b110000100000000</usEMRS3Value>
+        <ucMemoryVenderID>118 = 0x76 = 0b1110110</ucMemoryVenderID>
+        <ucRefreshRateFactor>2 = 0x2 = 0b10</ucRefreshRateFactor>
+        <ucFIFODepth>2 = 0x2 = 0b10</ucFIFODepth>
+        <ucCDR_Bandwidth>0</ucCDR_Bandwidth>
+        <ulChannelMapCfg1>0</ulChannelMapCfg1>
+        <ulBankMapCfg>484675 = 0x76543 = 0b1110110010101000011</ulBankMapCfg>
+        <ulReserved>0</ulReserved>
+        <strMemPNString>20-bytes text:H5GQ8H24MJR\0\x03\0\x04\0\xFF\xFF\0\xFF</strMemPNString>
+      </ATOM_VRAM_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA433-0xA467  len=52=0x34">
+        <ulClkRange>40000 = 0x9C40 = 0b1001110001000000</ulClkRange>
+        <LatencyString>555000000000000022DD1C008494121120550B0A1444B10200204100330414209A8800A00000712406050C0D2B11150F</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA467-0xA49B  len=52=0x34">
+        <ulClkRange>80000 = 0x13880 = 0b10011100010000000</ulClkRange>
+        <LatencyString>777000000000000022DD1C00E7AC352240550D0D20C77205002481004C0914209A8800A0000071240C08171B571A2111</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA49B-0xA4CF  len=52=0x34">
+        <ulClkRange>90000 = 0x15F90 = 0b10101111110010000</ulClkRange>
+        <LatencyString>777000000000000022DD1C002931462650550E0EA20723060026A200540A1420AA8800A0000071240D0A1A1D621C2312</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA4CF-0xA503  len=52=0x34">
+        <ulClkRange>100000 = 0x186A0 = 0b11000011010100000</ulClkRange>
+        <LatencyString>777000000000000022DD1C0029B5462960550E0F2448D3060026A2005C0B1420AA8800A0000071240E0A1C206D1E2513</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA503-0xA537  len=52=0x34">
+        <ulClkRange>112500 = 0x1B774 = 0b11011011101110100</ulClkRange>
+        <LatencyString>999000000000000022339D006BBD572F5055100F29C9B3070048C4005D0D14204A8900A000007124100C20247B202A13</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA537-0xA56B  len=52=0x34">
+        <ulClkRange>125000 = 0x1E848 = 0b11110100001001000</ulClkRange>
+        <LatencyString>999000000000000022339D008CC558345055110F2D4A94080048C4005D0F14204A8900A000007124120D232889222E14</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA56B-0xA59F  len=52=0x34">
+        <ulClkRange>137500 = 0x2191C = 0b100001100100011100</ulClkRange>
+        <LatencyString>999000000000000022339D00ADCD693A7055111131CB7409004AE4006D0114204A8900A002007124140E272D97263215</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA59F-0xA5D3  len=52=0x34">
+        <ulClkRange>150000 = 0x249F0 = 0b100100100111110000</ulClkRange>
+        <LatencyString>999000000000000022339D00CE516A3E80551212B40B450A004AE400750314204A8900A002007124150F2A30A4283516</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA5D3-0xA607  len=52=0x34">
+        <ulClkRange>162500 = 0x27AC4 = 0b100111101011000100</ulClkRange>
+        <LatencyString>999000000000000022449D00105A7B4480551312B88C250B004C0401750514204A8900A00200712417112E34B22A3916</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA607-0xA63B  len=52=0x34">
+        <ulClkRange>175000 = 0x2AB98 = 0b101010101110011000</ulClkRange>
+        <LatencyString>999000000000000022559D0031627C4990551313BC0D060C004C04017D0714204A8900A00200712419123138C02D3D17</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA63B-0xA66F  len=52=0x34">
+        <ulClkRange>200000 = 0x30D40 = 0b110000110101000000</ulClkRange>
+        <LatencyString>BBB000000000000022889D0073EE8D53A055151743CFB60D004E24010E0A14204A8900A0030071241C143840DB324418</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA66F-0xA6A3  len=52=0x34">
+        <ulClkRange>225000 = 0x36EE8 = 0b110110111011101000</ulClkRange>
+        <LatencyString>BBB000000000000033BB9D00D6FEAF5EC05517174BD1770F005264011E0E14204A8900A00300712420173F48F7384C1A</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+      <ATOM_VRAM_TIMING_ENTRY addr="0xA6A3-0xA6D7  len=52=0x34">
+        <ulClkRange>0</ulClkRange>
+        <LatencyString>060008000E0044FFFF00FFFFFF001F000000FFFFFF011F000000FFFFFF021F000000FFFFFF031F00000000000000E1B4</LatencyString>
+      </ATOM_VRAM_TIMING_ENTRY>
+    </AtomVRamTables>
+    <ATOM_VOLTAGE_OBJECT_INFO_V3_1>
+      <ATOM_VOLTAGE_OBJECT_INFO_V3_1 addr="0xA918-0xA91C  len=4=0x4">
+        <sHeader>
+          <usStructureSize>70 = 0x46 = 0b1000110</usStructureSize>
+          <ucTableFormatRevision>3 = 0x3 = 0b11</ucTableFormatRevision>
+          <ucTableContentRevision>1</ucTableContentRevision>
+        </sHeader>
+      </ATOM_VOLTAGE_OBJECT_INFO_V3_1>
+      <atom_voltage_object_header_v4 addr="0xA91C-0xA920  len=4=0x4">
+        <ucVoltageType>VOLTAGE_TYPE_VDDC_0x1</ucVoltageType>
+        <ucVoltageMode>VOLTAGE_OBJ_VR_I2C_INIT_SEQ_0x3</ucVoltageMode>
+        <usSize>18 = 0x12 = 0b10010</usSize>
+      </atom_voltage_object_header_v4>
+      <atom_i2c_voltage_object_v4_fields addr="0xA920-0xA928  len=8=0x8">
+        <regulator_id>8 = 0x8 = 0b1000</regulator_id>
+        <i2c_id>
+          <gpio_id>150 = 0x96 = 0b10010110</gpio_id>
+          <bfHW_Capable>true</bfHW_Capable>
+          <bfHW_EngineID>1</bfHW_EngineID>
+          <bfI2C_LineMux>6 = 0x6 = 0b110</bfI2C_LineMux>
+          <Description>150 = 0x96 = 0b10010110</Description>
+        </i2c_id>
+        <i2c_slave_addr>
+          <shifted_i2c_slave_addr>96 = 0x60 = 0b1100000</shifted_i2c_slave_addr>
+        </i2c_slave_addr>
+        <i2c_control_offset>0</i2c_control_offset>
+        <i2c_flag>0</i2c_flag>
+        <i2c_speed>0</i2c_speed>
+        <reserved_0xA>0</reserved_0xA>
+        <reserved_0xB>0</reserved_0xB>
+      </atom_i2c_voltage_object_v4_fields>
+      <atom_i2c_data_entry addr="0xA928-0xA92C  len=4=0x4">
+        <i2c_reg_index>50 = 0x32 = 0b110010</i2c_reg_index>
+        <i2c_reg_data>204 = 0xCC = 0b11001100</i2c_reg_data>
+      </atom_i2c_data_entry>
+      <FINAL_atom_i2c_data_entry addr="0xA92C-0xA92E  len=2=0x2">
+        <final_entry_index>255 = 0xFF = 0b11111111</final_entry_index>
+      </FINAL_atom_i2c_data_entry>
+      <atom_voltage_object_header_v4 addr="0xA92E-0xA932  len=4=0x4">
+        <ucVoltageType>VOLTAGE_TYPE_VDDC_0x1</ucVoltageType>
+        <ucVoltageMode>VOLTAGE_OBJ_SVID2_0x7</ucVoltageMode>
+        <usSize>12 = 0xC = 0b1100</usSize>
+      </atom_voltage_object_header_v4>
+      <atom_voltage_object_header_v4 addr="0xA93A-0xA93E  len=4=0x4">
+        <ucVoltageType>VOLTAGE_TYPE_VDDCI_0x4</ucVoltageType>
+        <ucVoltageMode>VOLTAGE_OBJ_GPIO_LUT_0x0</ucVoltageMode>
+        <usSize>36 = 0x24 = 0b100100</usSize>
+      </atom_voltage_object_header_v4>
+      <atom_gpio_voltage_object_v4_fields addr="0xA93E-0xA946  len=8=0x8">
+        <gpio_control_id>0</gpio_control_id>
+        <gpio_entry_num>4 = 0x4 = 0b100</gpio_entry_num>
+        <phase_delay_us>0</phase_delay_us>
+        <reserved>0</reserved>
+        <gpio_mask_val>1081346 = 0x108002 = 0b100001000000000000010</gpio_mask_val>
+      </atom_gpio_voltage_object_v4_fields>
+      <atom_voltage_gpio_map_lut addr="0xA946-0xA94C  len=6=0x6">
+        <voltage_gpio_reg_val>0</voltage_gpio_reg_val>
+        <voltage_level_mv>800 = 0x320 = 0b1100100000</voltage_level_mv>
+      </atom_voltage_gpio_map_lut>
+      <atom_voltage_gpio_map_lut addr="0xA94C-0xA952  len=6=0x6">
+        <voltage_gpio_reg_val>1048576 = 0x100000 = 0b100000000000000000000</voltage_gpio_reg_val>
+        <voltage_level_mv>850 = 0x352 = 0b1101010010</voltage_level_mv>
+      </atom_voltage_gpio_map_lut>
+      <atom_voltage_gpio_map_lut addr="0xA952-0xA958  len=6=0x6">
+        <voltage_gpio_reg_val>2 = 0x2 = 0b10</voltage_gpio_reg_val>
+        <voltage_level_mv>900 = 0x384 = 0b1110000100</voltage_level_mv>
+      </atom_voltage_gpio_map_lut>
+      <atom_voltage_gpio_map_lut addr="0xA958-0xA95E  len=6=0x6">
+        <voltage_gpio_reg_val>32768 = 0x8000 = 0b1000000000000000</voltage_gpio_reg_val>
+        <voltage_level_mv>950 = 0x3B6 = 0b1110110110</voltage_level_mv>
+      </atom_voltage_gpio_map_lut>
+    </ATOM_VOLTAGE_OBJECT_INFO_V3_1>
+  </AtomMasterDataTables>
+  <AtomMasterCommands>
+    <CMDS-NOT-IMPLEMENTED>
+      <EnableCRTCMemReq tbindex="6"/>
+      <DVOEncoderControl tbindex="8"/>
+      <DAC_LoadDetection tbindex="21"/>
+      <LVTMAEncoderControl tbindex="22"/>
+      <HW_Misc_Operation tbindex="23"/>
+      <DAC1EncoderControl tbindex="24"/>
+      <DAC2EncoderControl tbindex="25"/>
+      <DVOOutputControl tbindex="26"/>
+      <GetConditionalGoldenSetting tbindex="28"/>
+      <SMC_Init tbindex="29"/>
+      <Gfx_Harvesting tbindex="32"/>
+      <GetPixelClock tbindex="36"/>
+      <SetCRTC_Timing tbindex="39"/>
+      <ExternalEncoderControl tbindex="50"/>
+      <TMDSAOutputControl tbindex="66"/>
+      <DAC1OutputControl tbindex="68"/>
+      <ComputeMemoryClockParam tbindex="70"/>
+      <GetDispObjectInfo tbindex="73"/>
+      <DIG1EncoderControl tbindex="74"/>
+      <DIG2EncoderControl tbindex="75"/>
+    </CMDS-NOT-IMPLEMENTED>
+    <ASIC_Init                            tbindex=" 0" header="0xAA90" code=" 143bytes [0xAA96-AB25) values   020102005247520202650207520D..02010EE50208520B0D65D005025B" format_content_rev="1.2" work_stack_in_4bytes="0" params_stack_in_1bytes="8"/>
+    <GetDisplaySurfaceSize                tbindex=" 1" header="0xAB26" code="  81bytes [0xAB2C-AB7D) values   37000052140208000D1A3208000B..2D08405C1B020A0141028A01405B" format_content_rev="1.2" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <ASIC_RegistersInit_For_ASIC_Init     tbindex=" 2" header="0xAB7E" code=" 177bytes [0xAB84-AC35) values   37000001050E0002004001370300..159CA40D200105EA15209587005B" format_content_rev="1.1" work_stack_in_4bytes="4" params_stack_in_1bytes="0"/>
+    <MemoryControllerInit_For_ASIC_Init   tbindex=" 5" header="0xAC36" code=" 269bytes [0xAC3C-AD49) values   3700000301000054202415012500..FC521E5C22800A0300520752485B" format_content_rev="1.1" work_stack_in_4bytes="4" params_stack_in_1bytes="0"/>
+    <GPIOPinControl                       tbindex=" 9" header="0xAD4A" code=" 249bytes [0xAD50-AE49) values   370000660C030C4100002D0A4142..4543FA000D020100445B5520005B" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <SetEngineClock                       tbindex="10" header="0xAE4A" code=" 422bytes [0xAE50-AFF6) values   3700004BE5000844230001058200..50C0140350C0280350C02C0350C0" format_content_rev="1.2" work_stack_in_4bytes="20" params_stack_in_1bytes="0"/>
+    <SetMemoryClock                       tbindex="11" header="0xAFF6" code=" 284bytes [0xAFFC-B118) values   3700005C252B08F8015420241507..EB090107252B08F80D252415035B" format_content_rev="2.1" work_stack_in_4bytes="12" params_stack_in_1bytes="4"/>
+    <SetPixelClock                        tbindex="12" header="0xB118" code="1221bytes [0xB11E-B5E3) values   3700003D2501FF4495043D250119..640024833200A3761900A3760C00" format_content_rev="1.7" work_stack_in_4bytes="8" params_stack_in_1bytes="8"/>
+    <EnableDispPowerGating_For_ASIC_Init  tbindex="13" header="0xB5E4" code=" 385bytes [0xB5EA-B76B) values   3700003D65000744BC0056004020..4C0D41020044B7000DA5C905045B" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <ResetMemoryDLL                       tbindex="14" header="0xB76C" code="   1bytes [0xB772-B773) values                                                           5B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <ResetMemoryDevice                    tbindex="15" header="0xB774" code=" 132bytes [0xB77A-B7FE) values   3700000105032B54107632560041..6547541027633210754654103762" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <ClockSource_For_ASIC_Init            tbindex="71" header="0xB7FE" code="1102bytes [0xB804-BC52) values   37000001058200000020C007A583..00007D00680001400F000A000000" format_content_rev="1.1" work_stack_in_4bytes="8" params_stack_in_1bytes="0"/>
+    <MemoryDeviceInit                     tbindex="72" header="0xBC52" code="  76bytes [0xBC58-BCA4) values   370000523E030C411400010A0A15..0125C900F40105C400000000005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <AdjustMemoryController               tbindex="18" header="0xBCA4" code=" 267bytes [0xBCAA-BDB5) values   37000003F9460008E5007F030A41..002D0D410300038A41424371005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <EnableASIC_StaticPwrMgt              tbindex="19" header="0xBDB6" code="  27bytes [0xBDBC-BDD7) values       3700000101A4000101019400003C25950001491300020001A4005B" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <SetUniphyInstance                    tbindex="20" header="0xBDD8" code=" 136bytes [0xBDDE-BE66) values   66FF5608472D0D425C0003214700..000A0000A0004051E05180522053" format_content_rev="1.2" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <CV1OutputControl                     tbindex="27" header="0xBE66" code=" 697bytes [0xBE6C-C125) values   2005016400000003020240661F02..46403D02004648BE02020200465B" format_content_rev="2.2" work_stack_in_4bytes="28" params_stack_in_1bytes="4"/>
+    <EnableScaler                         tbindex="33" header="0xC126" code=" 114bytes [0xC12C-C19E) values   37000052140DA5511B015420541B..100125421B015430511B3A00005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <BlankCRTC                            tbindex="34" header="0xC19E" code=" 110bytes [0xC1A4-C212) values   3700004AA5CB0501441500026500..00005B4A259D1B01446900436500" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <EnableCRTC                           tbindex="35" header="0xC212" code="  56bytes [0xC218-C250) values   37000052143D6500014430000D65..0DE5001B800D259C1B013A00005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <EnableVGA_Render                     tbindex="37" header="0xC250" code="  38bytes [0xC256-C27C) values   3700003C21FC00004919000DA5C0..4926000DA5C000020DA5C100015B" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <GetSCLKOverMCLKRatio                 tbindex="38" header="0xC27C" code="  28bytes [0xC282-C29E) values     033900005538002002000003044100005638412702404102E200405B" format_content_rev="1.1" work_stack_in_4bytes="4" params_stack_in_1bytes="4"/>
+    <SetCRTC_OverScan                     tbindex="40" header="0xC29E" code="  19bytes [0xC2A4-C2B7) values                       370000521401015E1B0001015F1B013A00005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="8"/>
+    <GetSMUClockInfo                      tbindex="41" header="0xC2B8" code=" 122bytes [0xC2BE-C338) values   5600400339400055380066FF2D0D..7E006000640000327F007F006400" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <SelectCRTC_Source                    tbindex="42" header="0xC338" code=" 192bytes [0xC33E-C3FE) values   3700005600465600000321000055..00ED1B3A00005B7A040003020104" format_content_rev="1.3" work_stack_in_4bytes="4" params_stack_in_1bytes="0"/>
+    <EnableGraphSurfaces                  tbindex="43" header="0xC3FE" code=" 425bytes [0xC404-C5AD) values   3700003D6502014944014BA50203..05001001015C1B0001090D1A015B" format_content_rev="1.4" work_stack_in_4bytes="0" params_stack_in_1bytes="8"/>
+    <UpdateCRTC_DoubleBufferRegisters     tbindex="44" header="0xC5AE" code="  67bytes [0xC5B4-C5F7) values   37000052140765B61BFE3D650001..0154009E1B0725C01AF43A00005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <LUT_AutoFill                         tbindex="45" header="0xC5F8" code=" 143bytes [0xC5FE-C68D) values   37000052140D25031B045420781A..002D8D4101003E8941014565005B" format_content_rev="1.3" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <GetMemoryClock                       tbindex="47" header="0xC68E" code="  55bytes [0xC694-C6CB) values   3700005600400338409A0A210540..0000270540640000002C0200405B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <GetEngineClock                       tbindex="48" header="0xC6CC" code=" 210bytes [0xC6D2-C7A4) values   370000010582002C0050C04A2583..000925400F75024640020200465B" format_content_rev="1.1" work_stack_in_4bytes="12" params_stack_in_1bytes="0"/>
+    <SetCRTC_UsingDTDTiming               tbindex="49" header="0xC7A4" code=" 333bytes [0xC7AA-C8F7) values   37000066FF2D0D4247015528052D..0C0000000002000400260028002A" format_content_rev="2.3" work_stack_in_4bytes="0" params_stack_in_1bytes="24"/>
+    <VRAM_BlockDetectionByStrap           tbindex="52" header="0xC8F8" code=" 184bytes [0xC8FE-C9B6) values   37000003A140003DA50000494900..CD05400164800A1C0054180A155B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <VRAM_BlockVenderDetection            tbindex=" 3" header="0xC9B6" code="   4bytes [0xC9BC-C9C0) values                                                     3700005B" format_content_rev="1.1" work_stack_in_4bytes="8" params_stack_in_1bytes="0"/>
+    <MemoryParamAdjust                    tbindex=" 7" header="0xC9C0" code="  20bytes [0xC9C6-C9DA) values                     3700000105E509FCFDFCFC0105E609FDF8FCFC5B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <ProcessI2cChannelTransaction         tbindex="54" header="0xC9DA" code=" 555bytes [0xC9E0-CC0B) values   3700000D25F4160807256218FE56..49487C484B4A9848292880484D4C" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="8"/>
+    <ReadHWAssistedI2CStatus              tbindex="56" header="0xCC0C" code="  89bytes [0xCC12-CC6B) values   3700003D6500014454005530003D..00005B0D65CF05080D258001015B" format_content_rev="2.2" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <SpeedFanControl_For_ASIC_Init        tbindex="57" header="0xCC6C" code="   4bytes [0xCC72-CC76) values                                                     5B7A0000" format_content_rev="1.2" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <PowerConnectorDetection              tbindex="58" header="0xCC76" code="   4bytes [0xCC7C-CC80) values                                                     5500005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <MC_Synchronization                   tbindex="59" header="0xCC80" code="  54bytes [0xCC86-CCBC) values   5500005500010105910A03000000..0040200501E2040000020201405B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <ComputeMemoryOREnginePLLORClockParam tbindex="60" header="0xCCBC" code=" 425bytes [0xCCC2-CE6B) values   030546005125023DE5000149F300..381860006400003200327F006400" format_content_rev="1.6" work_stack_in_4bytes="4" params_stack_in_1bytes="24"/>
+    <Gfx_Init                             tbindex="61" header="0xCE6C" code="   1bytes [0xCE72-CE73) values                                                           5B" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <DynamicMemorySettings                tbindex="63" header="0xCE74" code=" 362bytes [0xCE7A-CFE4) values   370000661C2D0C4206003DE50002..012D0D4204003E254107454D015B" format_content_rev="2.1" work_stack_in_4bytes="8" params_stack_in_1bytes="4"/>
+    <MemoryTraining                       tbindex="64" header="0xCFE4" code=" 250bytes [0xCFEA-D0E4) values   3700003D2500FF49EC0002200080..21E70A0002050104000000521F5B" format_content_rev="1.2" work_stack_in_4bytes="4" params_stack_in_1bytes="4"/>
+    <EnableSpreadSpectrumOnPPLL           tbindex="65" header="0xD0E4" code=" 134bytes [0xD0EA-D170) values   0305407C0100003DA50000441500..0221494651010D6523490151015B" format_content_rev="1.4" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <MemoryPLLInit                        tbindex="16" header="0xD170" code="  43bytes [0xD176-D1A1) values   370000553800260500E204000001..3D0000152540045CA2990A8F405B" format_content_rev="1.3" work_stack_in_4bytes="4" params_stack_in_1bytes="0"/>
+    <AdjustDisplayPll                     tbindex="17" header="0xD1A2" code="  10bytes [0xD1A8-D1B2) values                                         3700005518005508015B" format_content_rev="1.3" work_stack_in_4bytes="0" params_stack_in_1bytes="8"/>
+    <SetVoltage                           tbindex="67" header="0xD1B2" code=" 445bytes [0xD1B8-D375) values   3700003D65000849230002050138..99020052362D0D42040043A3015B" format_content_rev="1.4" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <GetVoltageInfo                       tbindex="80" header="0xD376" code=" 125bytes [0xD37C-D3F9) values   3700003D650009448000030A0042..0C00030A42005B5500015B521B5B" format_content_rev="1.3" work_stack_in_4bytes="4" params_stack_in_1bytes="0"/>
+    <DIGxEncoderControl                   tbindex=" 4" header="0xD3FA" code=" 609bytes [0xD400-D661) values   370000032046CF050E2500605214..4AFE805420A04A5420B04A43F500" format_content_rev="1.5" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <VRAM_GetCurrentInfoBlock             tbindex="62" header="0xD662" code="  35bytes [0xD668-D68B) values   370000661C2D0D421400033040CD..00332540012D0C4204004315005B" format_content_rev="1.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <DIG1TransmitterControl               tbindex="76" header="0xD68C" code=" 320bytes [0xD692-D7D2) values   3700004229006307240163012500..8C00320052335B0229000052335B" format_content_rev="1.6" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <DIG2TransmitterControl               tbindex="77" header="0xD7D2" code=" 818bytes [0xD7D8-DB0A) values   3700000E25002052140825000F42..0201000103020100010302010001" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <ProcessAuxChannelTransaction         tbindex="78" header="0xDB0A" code=" 582bytes [0xDB10-DD56) values   3700003D0D00000044CE01560041..080054000C00700010008C001400" format_content_rev="1.2" work_stack_in_4bytes="0" params_stack_in_1bytes="8"/>
+    <DPEncoderService                     tbindex="79" header="0xDD56" code="  86bytes [0xDD5C-DDB2) values   0225010403314100090D410F0015..0C000000040008000C0010001400" format_content_rev="1.2" work_stack_in_4bytes="0" params_stack_in_1bytes="4"/>
+    <PatchMCSetting                       tbindex="30" header="0xDDB2" code=" 153bytes [0xDDB8-DE51) values   370000523E55000002E400160066..400D0303523F5B7A040018100804" format_content_rev="1.1" work_stack_in_4bytes="4" params_stack_in_1bytes="0"/>
+    <MC_SEQ_Control                       tbindex="31" header="0xDE52" code=" 387bytes [0xDE58-DFDB) values   370000038800280803090000032A..013E650004451200011A2808005B" format_content_rev="1.1" work_stack_in_4bytes="8" params_stack_in_1bytes="0"/>
+    <WriteOneByteToHWAssistedI2C          tbindex="55" header="0xDFDC" code=" 223bytes [0xDFE2-E0C1) values   3D250201441C003D250202443E00..E0000302004143B700020200005B" format_content_rev="2.2" work_stack_in_4bytes="20" params_stack_in_1bytes="0"/>
+    <LVTMAOutputControl                   tbindex="51" header="0xE0C2" code=" 459bytes [0xE0C8-E293) values   3700004221006307290063036600..48FC07651B48FC5C251B48EF015B" format_content_rev="2.1" work_stack_in_4bytes="4" params_stack_in_1bytes="4"/>
+    <ReadEfuseValue                       tbindex="69" header="0xE294" code=" 107bytes [0xE29A-E305) values   3700005600013DE50020481B0003..004033050101000000080200015B" format_content_rev="3.1" work_stack_in_4bytes="8" params_stack_in_1bytes="0"/>
+    <MemoryCleanUp                        tbindex="53" header="0xE306" code=" 200bytes [0xE30C-E3D4) values   3700005600404A2500EC01443000..EC010000004A6505EC0F49C5005B" format_content_rev="3.1" work_stack_in_4bytes="0" params_stack_in_1bytes="16"/>
+    <SetDCEClock                          tbindex="46" header="0xE3D4" code=" 755bytes [0xE3DA-E6CD) values   3700003D250101447B003D250102..080000260C0000281000002A1400" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
+    <FromLastToSectionEnd info=" 307bytes [0xE6CD-E800) values   FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFF" FF_count="307" NonFF_count="0"/>
+  </AtomMasterCommands>
+  <EfiGopPart>
+    <EFI_PCI_EXPANSION_ROM_HEADER addr="0xE800-0xE81C  len=28=0x1C">
+      <Signature55>85 = 0x55 = 0b1010101</Signature55>
+      <SignatureAA>170 = 0xAA = 0b10101010</SignatureAA>
+      <Bit16Length_in_512bytes>114 = 0x72 = 0b1110010</Bit16Length_in_512bytes>
+      <EfiSignature_0x00000EF1>3825 = 0xEF1 = 0b111011110001</EfiSignature_0x00000EF1>
+      <EfiSubsystem_0x000B_IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER>11 = 0xB = 0b1011</EfiSubsystem_0x000B_IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER>
+      <EfiMachineType_0x8664_IMAGE_FILE_MACHINE_X64>34404 = 0x8664 = 0b1000011001100100</EfiMachineType_0x8664_IMAGE_FILE_MACHINE_X64>
+      <EfiCompressionType_1_for_EFI_compression>1</EfiCompressionType_1_for_EFI_compression>
+      <reserved_efi>8-bytes text:\0\0\0\0\0\0\0\0</reserved_efi>
+      <CompressableEfiImageHeaderOffset>88 = 0x58 = 0b1011000</CompressableEfiImageHeaderOffset>
+      <PCIRHeaderOffset>28 = 0x1C = 0b11100</PCIRHeaderOffset>
+      <PnPHeaderOffset>0</PnPHeaderOffset>
+      <ComputedOffsetToNextHeader>0xE400</ComputedOffsetToNextHeader>
+    </EFI_PCI_EXPANSION_ROM_HEADER>
+    <PCIR_2_3_DATA_STRUCTURE addr="0xE81C-0xE840  len=36=0x24">
+      <Signature_PCIR>4-bytes text:PCIR</Signature_PCIR>
+      <usVendorID>4098 = 0x1002 = 0b1000000000010</usVendorID>
+      <usDeviceID>26591 = 0x67DF = 0b110011111011111</usDeviceID>
+      <DeviceListOffset>0</DeviceListOffset>
+      <HeaderLength>24 = 0x18 = 0b11000</HeaderLength>
+      <Revision>0</Revision>
+      <ClassCode_VGA_Controller_is_003>3-bytes text:\0\0\x03</ClassCode_VGA_Controller_is_003>
+      <ImageLength_in_512bytes>114 = 0x72 = 0b1110010</ImageLength_in_512bytes>
+      <CodeRevision>0</CodeRevision>
+      <CodeType_PC_Compatible_is_0__UEFI_is_3>3 = 0x3 = 0b11</CodeType_PC_Compatible_is_0__UEFI_is_3>
+      <Indicator_last_is_0x80>128 = 0x80 = 0b10000000</Indicator_last_is_0x80>
+      <MaxRuntimeImageLength>0</MaxRuntimeImageLength>
+      <SomeTextWithAMD>12-bytes text:GOP AMD REV:</SomeTextWithAMD>
+    </PCIR_2_3_DATA_STRUCTURE>
+    <MostlyText info="  24bytes [0xE840-E858) values             20782E782E782E782E780078787878007878787800000000" as_text=" x.x.x.x.x\0xxxx\0xxxx\0\0\0\0"/>
+    <EFI_COMPRESSED_FORMAT_HEADER addr="0xE858-0xE860  len=8=0x8">
+      <CompressedLengthAfterHeader>57898 = 0xE22A = 0b1110001000101010</CompressedLengthAfterHeader>
+      <DeCompressedLength>105272 = 0x19B38 = 0b11001101100111000</DeCompressedLength>
+    </EFI_COMPRESSED_FORMAT_HEADER>
+    <FromLastToSectionEnd info=" 374bytes [0x1CA8A-1CC00) values   FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFF" FF_count="374" NonFF_count="0"/>
+  </EfiGopPart>
+</root-of-option-rom-dump>
