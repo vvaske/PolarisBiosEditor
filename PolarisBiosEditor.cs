@@ -93,6 +93,17 @@ namespace PolarisBiosEditor
         ENCODER_OBJECT_ID_GENERAL_EXTERNAL_DVO = 0xFF,
     }
 
+
+    public class DumpByteArrAsText : XmlElementAttribute
+    {
+        public const string HEX_BINARY_BACK_DECODE = "HEX_BINARY_BACK_DECODE";
+        public DumpByteArrAsText()
+        {
+            DataType = "hexBinary";
+            Namespace = HEX_BINARY_BACK_DECODE;
+        }
+    }
+
     public partial class PolarisBiosEditor : Form
     {
 
@@ -158,12 +169,15 @@ namespace PolarisBiosEditor
         UInt32Converter uint32 = new UInt32Converter();
 
         const int ATOM_ROM_CHECKSUM_OFFSET = 0x21;
-        const int ATOM_ROM_HEADER_PTR = 0x48;
 
         #region VBIOS-fields-kept-for-later-saving
 
         int atom_rom_header_offset;
         ATOM_ROM_HEADER atom_rom_header;
+
+        int pcir_offset;
+        PCIR_2_3_DATA_STRUCTURE pcir_header;
+
         ATOM_DATA_TABLES atom_data_table;
 
         int atom_powerplay_offset;
@@ -198,6 +212,82 @@ namespace PolarisBiosEditor
         int atom_vram_timing_offset;
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct EFI_LEGACY_EXPANSION_AMD_ROM_HEADER
+        {
+            public Byte Signature55;
+            public Byte SignatureAA;
+            public Byte Bit8Length_in_512bytes;
+            public Byte JmpRel16_OpCode_E9;
+            public UInt16 Jmp_Target_Rel_To_0x6;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 18)]
+            [DumpByteArrAsText]
+            public Byte[] reserved_legacy;
+            public UInt16 PCIRHeaderOffset;
+            public UInt16 PnPHeaderOffset;
+            public UInt16 TextsAfterHeaderNullPadding;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+            [DumpByteArrAsText]
+            public Byte[] TextIBM;
+            public Byte SimpleChecksum8ToZeroOverRegion_BeforeNextHeader;
+            public UInt16 Unknown2_1;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 11)]
+            [DumpByteArrAsText]
+            public Byte[] Zeroes11;
+            public Byte Unknown1;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+            [DumpByteArrAsText]
+            public Byte[] ATIAMDSignature_SP761295520;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            [DumpByteArrAsText]
+            public Byte[] Zeroes6_1;
+            public UInt16 Unknown2_2;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            [DumpByteArrAsText]
+            public Byte[] Zeroes6_2;
+            public UInt16 AtomRomHeaderOffset;
+            public string ComputedOffsetToNextHeader
+            {
+                get { return string.Format("0x{0:X}",Bit8Length_in_512bytes * 512); }
+                set { throw new NotImplementedException(); }
+            }
+            public string ComputedJmpTarget
+            {
+                get { return string.Format("0x{0:X}",Jmp_Target_Rel_To_0x6 + 6);  }
+                set { throw new NotImplementedException(); }
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct EFI_PCI_EXPANSION_ROM_HEADER
+        {
+            public Byte Signature55;
+            public Byte SignatureAA;
+            public UInt16 Bit16Length_in_512bytes;
+            public string ComputedOffsetToNextHeader
+            {
+                get { return string.Format("0x{0:X}",Bit16Length_in_512bytes * 512); }
+                set { throw new NotImplementedException(); }
+            }
+            public UInt32 EfiSignature_0x00000EF1;
+            public UInt16 EfiSubsystem_0x000B_IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER;
+            public UInt16 EfiMachineType_0x8664_IMAGE_FILE_MACHINE_X64;
+            public UInt16 EfiCompressionType_1_for_EFI_compression;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+            [DumpByteArrAsText]
+            public Byte[] reserved_efi;
+            public UInt16 CompressableEfiImageHeaderOffset;
+            public UInt16 PCIRHeaderOffset;
+            public UInt16 PnPHeaderOffset;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct EFI_COMPRESSED_FORMAT_HEADER
+        {
+            public UInt32 CompressedLengthAfterHeader;
+            public UInt32 DeCompressedLength;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct ATOM_COMMON_TABLE_HEADER
         {
             public Int16 usStructureSize;
@@ -209,9 +299,9 @@ namespace PolarisBiosEditor
         public struct ATOM_ROM_HEADER
         {
             public ATOM_COMMON_TABLE_HEADER sHeader;
-            //public UInt32 uaFirmWareSignature;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x4)]
-            public Char[] uaFirmWareSignature;
+            [DumpByteArrAsText]
+            public Byte[] uaFirmWareSignature;
             public UInt16 usBiosRuntimeSegmentAddress;
             public UInt16 usProtectedModeInfoOffset;
             public UInt16 usConfigFilenameOffset;
@@ -227,10 +317,32 @@ namespace PolarisBiosEditor
             public UInt16 usMasterDataTableOffset;
             public Byte ucExtendedFunctionCode;
             public Byte ucReserved;
-            public UInt32 ulPSPDirTableOffset;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct PCIR_2_3_DATA_STRUCTURE
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x4)]
+            [DumpByteArrAsText]
+            public Byte[] Signature_PCIR;
             public UInt16 usVendorID;
             public UInt16 usDeviceID;
+            public UInt16 DeviceListOffset;
+            public UInt16 HeaderLength;
+            public Byte Revision;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x3)]
+            [DumpByteArrAsText]
+            public Byte[] ClassCode_VGA_Controller_is_003;
+            public UInt16 ImageLength_in_512bytes;
+            public UInt16 CodeRevision;
+            public Byte CodeType_PC_Compatible_is_0__UEFI_is_3;
+            public Byte Indicator_last_is_0x80;
+            public UInt16 MaxRuntimeImageLength;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [DumpByteArrAsText]
+            public Byte[] SomeTextWithAMD;
         }
+
 
         String BIOS_BootupMessage;
 
@@ -380,7 +492,7 @@ namespace PolarisBiosEditor
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        unsafe public struct ATOM_FIRMWARE_INFO
+        public struct ATOM_FIRMWARE_INFO
         {
             public ATOM_COMMON_TABLE_HEADER sHeader;
             public UInt32                           ulFirmwareRevision;
@@ -401,7 +513,9 @@ namespace PolarisBiosEditor
             public UInt32                           ulReserved4;
             public UInt32                           ulMinPixelClockPLL_Output_in10khz;
             public Byte                             ucRemoteDisplayConfig;
-            [XmlIgnore]public fixed Byte            ucReserved5[3];
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+            [DumpByteArrAsText]
+            public Byte[] ucReserved5;
             public UInt32                           ulReserved6;
             public UInt32                           ulReserved7;
             public UInt16                           usReserved11_usMaxPixelClockDAC_in10khz;
@@ -421,7 +535,7 @@ namespace PolarisBiosEditor
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        unsafe public struct ATOM_POWERPLAY_TABLE
+        public struct ATOM_POWERPLAY_TABLE
         {
             public ATOM_COMMON_TABLE_HEADER sHeader;
             public Byte ucTableRevision;
@@ -450,7 +564,9 @@ namespace PolarisBiosEditor
             public UInt16 usHardLimitTableOffset;
             public UInt16 usPCIETableOffset;
             public UInt16 usGPIOTableOffset;
-            [XmlIgnore] public fixed UInt16 usReserved[6];
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [DumpByteArrAsText]
+            public Byte[] usReserved;
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -973,8 +1089,9 @@ namespace PolarisBiosEditor
             public UInt32 ulBankMapCfg;
             public UInt32 ulReserved;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
-            [XmlIgnore]
+            [DumpByteArrAsText]
             public Byte[] strMemPNString;
+            [XmlIgnore]
             public string FullName
             {
                 get
@@ -1038,7 +1155,7 @@ namespace PolarisBiosEditor
                 {
                     name = " Name=" + name;
                 }
-                editor.Print(result, "of", string.Format("0x{0:X}-0x{1:X}  len=0x{2:X}={2}{3}", buffer.Offset, buffer.Offset + size, size, name));
+                editor.Print(result, "of", string.Format("0x{0:X}-0x{1:X}  len={2}=0x{2:X}{3}", buffer.Offset, buffer.Offset + size, size, name));
                 return result;
             }
             public void Jump1Structure()
@@ -1138,7 +1255,7 @@ namespace PolarisBiosEditor
             public ATOM_CMD_HEADER Header;
         };
 
-        public void PrintCmds(ATOM_CMD_TABLES_LIST cmds)
+        public void PrintCmds(ATOM_CMD_TABLES_LIST cmds, int final_offset)
         {
             Console.WriteLine("<CMDS-NOT-IMPLEMENTED>");
             const int CODE_OFFSET = 6;
@@ -1183,6 +1300,49 @@ namespace PolarisBiosEditor
                 prev = s.Addr + s.Header.usStructureSize;
                 Console.WriteLine(info);
             }
+            int last_cmd = ordered.Last().Addr + ordered.Last().Header.usStructureSize;
+            PrintCheckFF(last_cmd, final_offset);
+        }
+
+        public void PrintCheckFF(int start, int after_end)
+        {
+            int FF_count = 0;
+            int NonFF_count = 0;
+            for (int i = start; i < after_end; ++i)
+            {
+                if (buffer[i] == 0xFF) ++FF_count;
+                else ++NonFF_count;
+            }
+            Console.WriteLine("<FromLastToSectionEnd info=\"{0}\" FF_count=\"{1}\" NonFF_count=\"{2}\"/>", HexRange(start, after_end - start), FF_count, NonFF_count);
+        }
+
+        public void PrintCheckText(int start, int after_end)
+        {
+            Console.WriteLine("<MostlyText info=\"{0}\" as_text=\"{1}\"/>", HexRange(start, after_end - start), SafeDecodeAscii(new ArraySegment<byte>(buffer, start, after_end-start).ToArray()));
+        }
+
+        public static string SafeDecodeAscii(byte[] bytes)
+        {
+            var filtered_result = "";
+            foreach(var ch in bytes)
+            {
+                if (ch < 0x20 || ch > 127)
+                {
+                    if (ch == 0)
+                    {
+                    filtered_result += "\\0";
+                    }
+                    else
+                    {
+                        filtered_result += string.Format("\\x{0:X2}", ch);
+                    }
+                }
+                else
+                {
+                    filtered_result += (char)ch;
+                }
+            }
+            return filtered_result;
         }
         public void Print(object output, string desc_name = "", string desc = "")
         {
@@ -1210,6 +1370,11 @@ namespace PolarisBiosEditor
                     using (var writer = doc.CreateWriter())
                     {
                         xs.Serialize(writer, output, ns);
+                    }
+                    foreach (var e in doc.Descendants().Where(e => (string)e.Attribute("xmlns") == DumpByteArrAsText.HEX_BINARY_BACK_DECODE).ToList())
+                    {
+                        var bytes = StringToByteArray(e.Value);
+                        e.ReplaceWith(new XElement(e.Name.LocalName, string.Format("{0}-bytes text:{1}", bytes.Length, SafeDecodeAscii(bytes))));
                     }
                     foreach (var e in doc.Descendants())
                     {
@@ -1392,17 +1557,22 @@ namespace PolarisBiosEditor
             {
                 buffer = br.ReadBytes((int)fileStream.Length);
 
-                atom_rom_header_offset = getValueAtPosition(16, ATOM_ROM_HEADER_PTR);
+                var option_rom = Reader<EFI_LEGACY_EXPANSION_AMD_ROM_HEADER>(0).ReadPrint();
+                atom_rom_header_offset = option_rom.AtomRomHeaderOffset;
+                PrintCheckText(Marshal.SizeOf(option_rom), atom_rom_header_offset);
                 atom_rom_header = Reader<ATOM_ROM_HEADER>(atom_rom_header_offset).ReadPrint();
-                string deviceId = atom_rom_header.usDeviceID.ToString("X");
+
+                pcir_offset = option_rom.PCIRHeaderOffset;
+                pcir_header = Reader<PCIR_2_3_DATA_STRUCTURE>(pcir_offset).ReadPrint();
+
                 fixChecksum(false);
 
-                String firmwareSignature = new string(atom_rom_header.uaFirmWareSignature);
-                if (!firmwareSignature.Equals("ATOM"))
+                if (SafeDecodeAscii(atom_rom_header.uaFirmWareSignature) != "ATOM")
                 {
                     MessageBox.Show("WARNING! BIOS Signature is not valid. Only continue if you are 100% sure what you are doing!");
                 }
 
+                string deviceId = pcir_header.usDeviceID.ToString("X");
                 if (!supportedID.Contains(deviceId))
                 {
                     MessageBox.Show("Unsupported DeviceID 0x" + deviceId + " - Continue?", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1539,7 +1709,16 @@ namespace PolarisBiosEditor
                           reader.Jump(volt_object_header.usSize);
                       }
                       );
-                PrintCmds(atom_code.cmds); //cmds are placed after tables in VBIOS, so they are print last
+                int section_end = option_rom.Bit8Length_in_512bytes * 512;
+                PrintCmds(atom_code.cmds, section_end); //cmds are placed after tables in VBIOS, so they are print last
+                var efi_option_rom = Reader<EFI_PCI_EXPANSION_ROM_HEADER>(section_end).ReadPrint();
+                var efi_pcir = Reader<PCIR_2_3_DATA_STRUCTURE>(section_end + efi_option_rom.PCIRHeaderOffset).ReadPrint();
+                var conmprresed_start = section_end + efi_option_rom.CompressableEfiImageHeaderOffset;
+                PrintCheckText(section_end + efi_option_rom.PCIRHeaderOffset + Marshal.SizeOf(efi_pcir), conmprresed_start);
+                var compressed_efi = Reader<EFI_COMPRESSED_FORMAT_HEADER>(conmprresed_start).ReadPrint();
+                PrintCheckFF((int)(section_end + efi_option_rom.CompressableEfiImageHeaderOffset + Marshal.SizeOf(compressed_efi) + compressed_efi.CompressedLengthAfterHeader),
+                    section_end + efi_option_rom.Bit16Length_in_512bytes * 512);
+
             }
             fileStream.Close();
         }
@@ -1592,12 +1771,12 @@ namespace PolarisBiosEditor
             ));
             tableROM.Items.Add(new ListViewItem(new string[] {
                           "VendorID",
-                          "0x" + atom_rom_header.usVendorID.ToString ("X")
+                          "0x" + pcir_header.usVendorID.ToString ("X")
                     }
             ));
             tableROM.Items.Add(new ListViewItem(new string[] {
                           "DeviceID",
-                          "0x" + atom_rom_header.usDeviceID.ToString ("X")
+                          "0x" + pcir_header.usDeviceID.ToString ("X")
                     }
             ));
             tableROM.Items.Add(new ListViewItem(new string[] {
@@ -1613,7 +1792,7 @@ namespace PolarisBiosEditor
             tableROM.Items.Add(new ListViewItem(new string[] {
                           "Firmware Signature",
                           //"0x" + atom_rom_header.uaFirmWareSignature.ToString ("X")
-                          new string(atom_rom_header.uaFirmWareSignature)
+                          SafeDecodeAscii(atom_rom_header.uaFirmWareSignature)
                     }
             ));
 
@@ -1979,12 +2158,12 @@ namespace PolarisBiosEditor
                     if (name == "VendorID")
                     {
                         var num = (int)int32.ConvertFromString(value);
-                        atom_rom_header.usVendorID = (UInt16)num;
+                        pcir_header.usVendorID = (UInt16)num;
                     }
                     else if (name == "DeviceID")
                     {
                         var num = (int)int32.ConvertFromString(value);
-                        atom_rom_header.usDeviceID = (UInt16)num;
+                        pcir_header.usDeviceID = (UInt16)num;
                     }
                     else if (name == "Sub ID")
                     {
@@ -1995,10 +2174,6 @@ namespace PolarisBiosEditor
                     {
                         var num = (int)int32.ConvertFromString(value);
                         atom_rom_header.usSubsystemVendorID = (UInt16)num;
-                    }
-                    else if (name == "Firmware Signature")
-                    {
-                        atom_rom_header.uaFirmWareSignature = value.ToCharArray();
                     }
                 }
 
@@ -2172,6 +2347,7 @@ namespace PolarisBiosEditor
                 }
 
                 setBytesAtPosition(buffer, atom_rom_header_offset, getBytes(atom_rom_header));
+                setBytesAtPosition(buffer, pcir_offset, getBytes(pcir_header));
                 setBytesAtPosition(buffer, atom_powerplay_offset, getBytes(atom_powerplay_table));
                 setBytesAtPosition(buffer, atom_powertune_offset, getBytes(atom_powertune_table));
                 setBytesAtPosition(buffer, atom_fan_offset, getBytes(atom_fan_table));
@@ -2252,7 +2428,7 @@ namespace PolarisBiosEditor
         {
             if (hex.Length % 2 != 0)
             {
-                MessageBox.Show("Invalid hex string", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid hex string:" + hex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw new InvalidDataException();
             }
             byte[] bytes = new byte[hex.Length / 2];
