@@ -1495,14 +1495,17 @@ namespace PolarisBiosEditor
         }
         private void ReadPrintTableDetailed<TTable, TObject>(int offset, Func<TTable, int, bool> continue_parse, Action<TObject, ConsecutiveReader<TObject>> next_jumper)
         {
-            var table_reader = Reader<TTable>(offset);
-            var table = table_reader.ReadPrint();
-            table_reader.Jump1Structure();
-            var object_reader = ConsecutiveReader<TObject>.From(table_reader);
-            for (var i = 0; continue_parse(table, i); i++)
+            using(AutoClosingXml(typeof(TTable).Name))
             {
-                var atom_object = object_reader.ReadPrint();
-                next_jumper(atom_object, object_reader);
+                var table_reader = Reader<TTable>(offset);
+                var table = table_reader.ReadPrint();
+                table_reader.Jump1Structure();
+                var object_reader = ConsecutiveReader<TObject>.From(table_reader);
+                for (var i = 0; continue_parse(table, i); i++)
+                {
+                    var atom_object = object_reader.ReadPrint();
+                    next_jumper(atom_object, object_reader);
+                }
             }
         }
 
@@ -1729,42 +1732,51 @@ namespace PolarisBiosEditor
                     atom_powerplay_offset = atom_data_table.PowerPlayInfo;
                     atom_powerplay_table = Reader<ATOM_POWERPLAY_TABLE>(atom_powerplay_offset).ReadPrint();
 
-                    atom_vddc_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddcLookupTableOffset;
-                    atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint("VddcLookupTable");
-                    atom_vddc_entries = new ATOM_VOLTAGE_ENTRY[atom_vddc_table.ucNumEntries];
-                    for (var i = 0; i < atom_vddc_table.ucNumEntries; i++)
+                    using(AutoClosingXml("AtomVoltageTables"))
                     {
-                        atom_vddc_entries[i] = Reader<ATOM_VOLTAGE_ENTRY>(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                        atom_vddc_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddcLookupTableOffset;
+                        atom_vddc_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddc_table_offset).ReadPrint("VddcLookupTable");
+                        atom_vddc_entries = new ATOM_VOLTAGE_ENTRY[atom_vddc_table.ucNumEntries];
+                        for (var i = 0; i < atom_vddc_table.ucNumEntries; i++)
+                        {
+                            atom_vddc_entries[i] = Reader<ATOM_VOLTAGE_ENTRY>(atom_vddc_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                        }
+
+                        var atom_vddgfx_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddgfxLookupTableOffset;
+                        var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint("VddgfxLookupTable");
+                        for (var i = 0; i < atom_vddgfx_table.ucNumEntries; i++)
+                        {
+                            Reader<ATOM_VOLTAGE_ENTRY>(atom_vddgfx_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                        }
                     }
 
-                    var atom_vddgfx_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usVddgfxLookupTableOffset;
-                    var atom_vddgfx_table = Reader<ATOM_VOLTAGE_TABLE>(atom_vddgfx_table_offset).ReadPrint("VddgfxLookupTable");
-                    for (var i = 0; i < atom_vddgfx_table.ucNumEntries; i++)
+                    using(AutoClosingXml("AtomClockTables"))
                     {
-                        Reader<ATOM_VOLTAGE_ENTRY>(atom_vddgfx_table_offset + Marshal.SizeOf(typeof(ATOM_VOLTAGE_TABLE)) + Marshal.SizeOf(typeof(ATOM_VOLTAGE_ENTRY)) * i).ReadPrint();
+                        atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
+                        atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint("SclkDependencyTable");
+                        atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
+                        for (var i = 0; i < atom_sclk_entries.Length; i++)
+                        {
+                            atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
+                        }
+
+                        atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
+                        atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint("MclkDependencyTable");
+                        atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
+                        for (var i = 0; i < atom_mclk_entries.Length; i++)
+                        {
+                            atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
+                        }
                     }
 
-                    atom_sclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usSclkDependencyTableOffset;
-                    atom_sclk_table = Reader<ATOM_SCLK_TABLE>(atom_sclk_table_offset).ReadPrint("SclkDependencyTable");
-                    atom_sclk_entries = new ATOM_SCLK_ENTRY[atom_sclk_table.ucNumEntries];
-                    for (var i = 0; i < atom_sclk_entries.Length; i++)
+                    using(AutoClosingXml("AtomMMDependencyTable"))
                     {
-                        atom_sclk_entries[i] = Reader<ATOM_SCLK_ENTRY>(atom_sclk_table_offset + Marshal.SizeOf(typeof(ATOM_SCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_SCLK_ENTRY)) * i).ReadPrint();
-                    }
-
-                    atom_mclk_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMclkDependencyTableOffset;
-                    atom_mclk_table = Reader<ATOM_MCLK_TABLE>(atom_mclk_table_offset).ReadPrint("MclkDependencyTable");
-                    atom_mclk_entries = new ATOM_MCLK_ENTRY[atom_mclk_table.ucNumEntries];
-                    for (var i = 0; i < atom_mclk_entries.Length; i++)
-                    {
-                        atom_mclk_entries[i] = Reader<ATOM_MCLK_ENTRY>(atom_mclk_table_offset + Marshal.SizeOf(typeof(ATOM_MCLK_TABLE)) + Marshal.SizeOf(typeof(ATOM_MCLK_ENTRY)) * i).ReadPrint();
-                    }
-
-                    var atom_mm_dependency_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMMDependencyTableOffset;
-                    var atom_mm_dependency_table = Reader<ATOM_MM_DEPENDENCY_TABLE>(atom_mm_dependency_table_offset).ReadPrint();
-                    for (var i = 0; i < atom_mm_dependency_table.ucNumEntries; i++)
-                    {
-                        Reader<ATOM_MM_DEPENDENCY_RECORD>(atom_mm_dependency_table_offset + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_TABLE)) + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_RECORD)) * i).ReadPrint();
+                        var atom_mm_dependency_table_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usMMDependencyTableOffset;
+                        var atom_mm_dependency_table = Reader<ATOM_MM_DEPENDENCY_TABLE>(atom_mm_dependency_table_offset).ReadPrint();
+                        for (var i = 0; i < atom_mm_dependency_table.ucNumEntries; i++)
+                        {
+                            Reader<ATOM_MM_DEPENDENCY_RECORD>(atom_mm_dependency_table_offset + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_TABLE)) + Marshal.SizeOf(typeof(ATOM_MM_DEPENDENCY_RECORD)) * i).ReadPrint();
+                        }
                     }
 
                     atom_fan_offset = atom_data_table.PowerPlayInfo + atom_powerplay_table.usFanTableOffset;
@@ -1774,44 +1786,50 @@ namespace PolarisBiosEditor
                     atom_powertune_table = Reader<ATOM_Polaris_PowerTune_Table>(atom_powertune_offset).ReadPrint();
                     Debug.Assert(atom_powertune_table.ucRevId == 4, "Unknown version of ATOM_POWERTUNE_TABLE");
 
-                    var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
+                    using(AutoClosingXml("AtomVideoOutTables"))
+                    {
+                        var atom_object_header = Reader<ATOM_OBJECT_HEADER_V3>(atom_data_table.Object_Header).ReadPrint();
 
-                    ReadPrintObjectTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
-                    using(AutoClosingXml("Connectors"))
-                    {
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                    }
-                    using(AutoClosingXml("Encoders"))
-                    {
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                    }
-                    using(AutoClosingXml("Routers"))
-                    {
-                        ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
-                    }
-
-                    atom_vram_info_offset = atom_data_table.VRAM_Info;
-                    atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
-                    atom_vram_entries = new ATOM_VRAM_ENTRY[atom_vram_info.ucNumOfVRAMModule];
-                    var atom_vram_entry_reader = Reader<ATOM_VRAM_ENTRY>(atom_vram_info_offset + Marshal.SizeOf(typeof(ATOM_VRAM_INFO)));
-                    for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
-                    {
-                        atom_vram_entries[i] = atom_vram_entry_reader.ReadPrint();
-                        atom_vram_entry_reader.Jump(atom_vram_entries[i].usModuleSize);
-                    }
-
-                    atom_vram_timing_offset = atom_vram_info_offset + atom_vram_info.usMemClkPatchTblOffset + 0x2E;
-                    atom_vram_timing_entries = new ATOM_VRAM_TIMING_ENTRY[MAX_VRAM_ENTRIES];
-                    for (var i = 0; i < MAX_VRAM_ENTRIES; i++)
-                    {
-                        atom_vram_timing_entries[i] = Reader<ATOM_VRAM_TIMING_ENTRY>(atom_vram_timing_offset + Marshal.SizeOf(typeof(ATOM_VRAM_TIMING_ENTRY)) * i).ReadPrint();
-
-                        // atom_vram_timing_entries have an undetermined length
-                        // attempt to determine the last entry in the array
-                        if (atom_vram_timing_entries[i].ulClkRange == 0)
+                        ReadPrintObjectTable<ATOM_DISPLAY_OBJECT_PATH_TABLE, ATOM_DISPLAY_OBJECT_PATH>(atom_object_header.usDisplayPathTableOffset, tb => tb.ucNumOfDispPath, o => o.usSize);
+                        using(AutoClosingXml("Connectors"))
                         {
-                            Array.Resize(ref atom_vram_timing_entries, i);
-                            break;
+                            ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usConnectorObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        }
+                        using(AutoClosingXml("Encoders"))
+                        {
+                            ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usEncoderObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        }
+                        using(AutoClosingXml("Routers"))
+                        {
+                            ReadPrintObjectTable<ATOM_OBJECT_TABLE, ATOM_OBJECT>(atom_object_header.usRouterObjectTableOffset, tb => tb.ucNumberOfObjects, PrintAndReturnLen);
+                        }
+                    }
+
+                    using(AutoClosingXml("AtomVRamTables"))
+                    {
+                        atom_vram_info_offset = atom_data_table.VRAM_Info;
+                        atom_vram_info = Reader<ATOM_VRAM_INFO>(atom_vram_info_offset).ReadPrint();
+                        atom_vram_entries = new ATOM_VRAM_ENTRY[atom_vram_info.ucNumOfVRAMModule];
+                        var atom_vram_entry_reader = Reader<ATOM_VRAM_ENTRY>(atom_vram_info_offset + Marshal.SizeOf(typeof(ATOM_VRAM_INFO)));
+                        for (var i = 0; i < atom_vram_info.ucNumOfVRAMModule; i++)
+                        {
+                            atom_vram_entries[i] = atom_vram_entry_reader.ReadPrint();
+                            atom_vram_entry_reader.Jump(atom_vram_entries[i].usModuleSize);
+                        }
+
+                        atom_vram_timing_offset = atom_vram_info_offset + atom_vram_info.usMemClkPatchTblOffset + 0x2E;
+                        atom_vram_timing_entries = new ATOM_VRAM_TIMING_ENTRY[MAX_VRAM_ENTRIES];
+                        for (var i = 0; i < MAX_VRAM_ENTRIES; i++)
+                        {
+                            atom_vram_timing_entries[i] = Reader<ATOM_VRAM_TIMING_ENTRY>(atom_vram_timing_offset + Marshal.SizeOf(typeof(ATOM_VRAM_TIMING_ENTRY)) * i).ReadPrint();
+
+                            // atom_vram_timing_entries have an undetermined length
+                            // attempt to determine the last entry in the array
+                            if (atom_vram_timing_entries[i].ulClkRange == 0)
+                            {
+                                Array.Resize(ref atom_vram_timing_entries, i);
+                                break;
+                            }
                         }
                     }
 
