@@ -1212,7 +1212,8 @@ namespace PolarisBiosEditor
             }
             else
             {
-                Console.Error.WriteLine("Open a AMD Polaris VBIOS file to see it's some detalied info as XML in this console (or pass single filename as argument)");
+                Console.Error.WriteLine("Open a AMD Polaris VBIOS file to see it's as XML in this console");
+                Console.Error.WriteLine("Or close application and open it with a singe file as argument, for example by drag&drop vbios on .exe file");
             }
             Application.Run(pbe);
         }
@@ -1346,11 +1347,11 @@ namespace PolarisBiosEditor
         {
             PrintXml("MostlyText", "", new Attrs{
                 {"info", HexRange(start, after_end - start)},
-                {"as_text", SafeDecodeAscii(new ArraySegment<byte>(buffer, start, after_end-start).ToArray())},
+                {"as_text", SafeDecodeAscii(new ArraySegment<byte>(buffer, start, after_end-start))},
                 });
         }
 
-        public static string SafeDecodeAscii(byte[] bytes)
+        public static string SafeDecodeAscii(IEnumerable<byte> bytes)
         {
             var filtered_result = "";
             foreach(var ch in bytes)
