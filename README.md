@@ -7,6 +7,15 @@ To get xml - just open vbios file and look in console/stdout
 [Example XML output (large, ~1k lines)](./output-example.xml)
 
 ### 📉Changelog📉
+v1.7xml-2021-07
+ * Fix exceptions while runing linux-built binary on windows
+ * Dump all parsed data as valid xml
+ * add dumping for generic option rom & EFI headers
+ * add dumping of VDCCI-related tables, sligtly extend VDCCI viewing GUI
+
+v1.7xml-2021-01
+ * Introduce xml dump
+ * Add parsing i2c and video-output realted tables
 
 ### 📎Download and run with [prebuilt cross-platform .Net exe file](./bin/Debug/PolarisBiosEditor.exe)📎
 Please see ⛏️Build⛏️ section below and compile yourself if you don't trust prebuilt binary.
