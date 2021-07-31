@@ -1,9 +1,15 @@
 ## 🧾PolarisBiosEditor 1.7xml🧾
 VBIOS editor fork with detailed dumping data as XML in console.<br>
 The intended usage is **viewing** and/or help with **editing by external HEX editor**.<br>
-Editing functionality is 99% identical to the upstream, NO major new GUI features.
+Editing functionality is 99% identical to the upstream, no major new GUI features.
 
-To get xml - just open vbios file and look in console/stdout
+To view XML just open vbios file via file dialog and look in console/stdout.
+To save XML to file:
+* open cmd in folder containing PolarisBiosEditor.exe
+* start program with stdout redirection, like<br>
+`PolarisBiosEditor.exe path\to\input-file.rom > outfile.xml`
+* close gui window to finish application and finalize/flush file writing
+
 [Example XML output (large, ~1k lines)](./output-example.xml)
 
 ### 📉Changelog📉
