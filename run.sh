@@ -6,4 +6,4 @@ SELF_DIR="`dirname "$SELF"`"
 #  libmono-system-windows-forms4.0-cil
 #  libmono-system-xml-linq4.0-cil
 
-mono "$SELF_DIR/bin/Debug/PolarisBiosEditor.exe" "$@"
+mono --debug "$SELF_DIR/bin/Debug/PolarisBiosEditor.exe" "$@"
