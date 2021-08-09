@@ -13,6 +13,9 @@ To save XML to file:
 [Example XML output (large, ~1k lines)](./output-example.xml)
 
 ### 📉Changelog📉
+v1.7xml-2021-08
+ * Try partially parsing without crashing even unsupported VBIOSes
+
 v1.7xml-2021-07
  * Fix exceptions while runing linux-built binary on windows
  * Dump all parsed data as valid xml

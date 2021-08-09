@@ -1,4 +1,4 @@
-<root-of-option-rom-dump name="bioses/Asus.RX580.8192.170417_1-stock.rom" dump-software-version="PolarisBiosEditor-1.7xml-2021.07">
+<root-of-option-rom-dump name="bioses/Asus.RX580.8192.170417_1-stock.rom" dump-software-version="PolarisBiosEditor-1.7xml-2021.08">
   <OptionRomAndAtomHeaders>
     <EFI_LEGACY_EXPANSION_AMD_ROM_HEADER addr="0x0-0x4A  len=74=0x4A">
       <Signature55>85 = 0x55 = 0b1010101</Signature55>
@@ -1409,7 +1409,7 @@
     <ReadEfuseValue                       tbindex="69" header="0xE294" code=" 107bytes [0xE29A-E305) values   3700005600013DE50020481B0003..004033050101000000080200015B" format_content_rev="3.1" work_stack_in_4bytes="8" params_stack_in_1bytes="0"/>
     <MemoryCleanUp                        tbindex="53" header="0xE306" code=" 200bytes [0xE30C-E3D4) values   3700005600404A2500EC01443000..EC010000004A6505EC0F49C5005B" format_content_rev="3.1" work_stack_in_4bytes="0" params_stack_in_1bytes="16"/>
     <SetDCEClock                          tbindex="46" header="0xE3D4" code=" 755bytes [0xE3DA-E6CD) values   3700003D250101447B003D250102..080000260C0000281000002A1400" format_content_rev="2.1" work_stack_in_4bytes="0" params_stack_in_1bytes="0"/>
-    <FromLastToSectionEnd info=" 307bytes [0xE6CD-E800) values   FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFF" FF_count="307" NonFF_count="0"/>
+    <BinaryAreaFastCheck info=" 307bytes [0xE6CD-E800) values   FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFF" FF_count="307" Zero_count="0" Other_count="0"/>
   </AtomMasterCommands>
   <EfiGopPart>
     <EFI_PCI_EXPANSION_ROM_HEADER addr="0xE800-0xE81C  len=28=0x1C">
@@ -1446,6 +1446,6 @@
       <CompressedLengthAfterHeader>57898 = 0xE22A = 0b1110001000101010</CompressedLengthAfterHeader>
       <DeCompressedLength>105272 = 0x19B38 = 0b11001101100111000</DeCompressedLength>
     </EFI_COMPRESSED_FORMAT_HEADER>
-    <FromLastToSectionEnd info=" 374bytes [0x1CA8A-1CC00) values   FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFF" FF_count="374" NonFF_count="0"/>
+    <BinaryAreaFastCheck info=" 374bytes [0x1CA8A-1CC00) values   FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFF" FF_count="374" Zero_count="0" Other_count="0"/>
   </EfiGopPart>
 </root-of-option-rom-dump>
