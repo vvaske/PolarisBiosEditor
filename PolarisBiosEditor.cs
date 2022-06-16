@@ -1911,15 +1911,18 @@ namespace PolarisBiosEditor
                 {
                     PrintCmds(atom_code.cmds, section_end); //cmds are placed after tables in VBIOS, so they are print last
                 }
-                using(AutoClosingXml("EfiGopPart"))
+                if (pcir_header.Indicator_last_is_0x80 != 0x80)
                 {
-                    var efi_option_rom = Reader<EFI_PCI_EXPANSION_ROM_HEADER>(section_end).ReadPrint();
-                    var efi_pcir = Reader<PCIR_2_3_DATA_STRUCTURE>(section_end + efi_option_rom.PCIRHeaderOffset).ReadPrint();
-                    var conmprresed_start = section_end + efi_option_rom.CompressableEfiImageHeaderOffset;
-                    PrintCheckText(section_end + efi_option_rom.PCIRHeaderOffset + Marshal.SizeOf(efi_pcir), conmprresed_start);
-                    var compressed_efi = Reader<EFI_COMPRESSED_FORMAT_HEADER>(conmprresed_start).ReadPrint();
-                    PrintCheckFF((int)(section_end + efi_option_rom.CompressableEfiImageHeaderOffset + Marshal.SizeOf(compressed_efi) + compressed_efi.CompressedLengthAfterHeader),
-                        section_end + efi_option_rom.Bit16Length_in_512bytes * 512);
+                    using(AutoClosingXml("EfiGopPart"))
+                    {
+                        var efi_option_rom = Reader<EFI_PCI_EXPANSION_ROM_HEADER>(section_end).ReadPrint();
+                        var efi_pcir = Reader<PCIR_2_3_DATA_STRUCTURE>(section_end + efi_option_rom.PCIRHeaderOffset).ReadPrint();
+                        var conmprresed_start = section_end + efi_option_rom.CompressableEfiImageHeaderOffset;
+                        PrintCheckText(section_end + efi_option_rom.PCIRHeaderOffset + Marshal.SizeOf(efi_pcir), conmprresed_start);
+                        var compressed_efi = Reader<EFI_COMPRESSED_FORMAT_HEADER>(conmprresed_start).ReadPrint();
+                        PrintCheckFF((int)(section_end + efi_option_rom.CompressableEfiImageHeaderOffset + Marshal.SizeOf(compressed_efi) + compressed_efi.CompressedLengthAfterHeader),
+                            section_end + efi_option_rom.Bit16Length_in_512bytes * 512);
+                    }
                 }
             }
             fileStream.Close();
